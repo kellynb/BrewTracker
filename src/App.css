@@ -1,11 +1,41 @@
 .App {
-  text-align: center;
+  width: 100%;
+  height: auto;
 }
 
-.App-logo {
+
+#logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  height: 70px;
   pointer-events: none;
+}
+
+#homePageBrew {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: #c5a901;
+}
+
+.allButtons {
+    box-sizing: border-box;
+    color: #5c4925;
+    letter-spacing: normal;
+    text-transform: none;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 16px;
+    border-color: #5c4925;
+    border-width: 2px;
+    border-style: solid;
+    padding: .6em 1em;
+}
+
+.links {
+  text-decoration: none;
+  color: inherit
 }
 
 .App-header {
