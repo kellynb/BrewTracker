@@ -10,7 +10,7 @@
   pointer-events: none;
 }
 
-#homePageBrew {
+.topTitle {
   height: 60px;
   display: flex;
   align-items: center;
@@ -52,6 +52,49 @@
 .App-link {
   color: #61dafb;
 }
+
+#brewMain {
+  background-color: #d1d0bb;
+}
+
+#startBatch {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.batchValue {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#batchEnter {
+  margin-top: 8px;
+  text-align: center
+}
+
+h2 {
+  margin: 0;
+  padding-top: 16px;
+  text-align: center;
+  font-family: 'Rakkas', cursive;
+  font-weight: normal;
+  font-size: 30px;
+  color:  black;
+}
+
+.userInputs {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border: 2px solid #282c34;
+  border-radius: 6px;
+  background-color: white;
+}
+
+
+
 
 @keyframes App-logo-spin {
   from {

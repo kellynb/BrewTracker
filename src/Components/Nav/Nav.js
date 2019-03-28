@@ -46,7 +46,7 @@ const Nav = (props) => {
       <AppBar position="fixed" className={classes.appbar}>
         <Toolbar className={classes.toolbar}>
           <img src={logo} alt='Thirsy Planet Logo' id='logo' />
-          <Typography variant="h6" color="inherit" className={classes.grow}>
+          <Typography variant="h1" color="inherit" className={classes.grow}>
             Thirsty Planet Brewing
           </Typography>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">

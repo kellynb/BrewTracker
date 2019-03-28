@@ -3,15 +3,17 @@ import Nav from '../Nav/Nav';
 import '../../App.css';
 import StartBatch from './StartBatch/StartBatch';
 import BrewMetrics from './BrewMetrics/BrewMetrics';
+import Transfer from './Transfer/Transfer';
 
 const BrewView = (props) => {
 
     return (
-        <main>
+        <main id="brewMain">
             <Nav />
-            <section>
+            <section id="startBatch">
                 <StartBatch {...props} />
                 {props.brewBatch.enter ? <BrewMetrics {...props}/> : null}
+                {props.brewBatch.enter ? <Transfer {...props} />: null}
             </section>
         </main>
     )

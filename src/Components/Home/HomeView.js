@@ -8,7 +8,7 @@ const HomeView = (props) => {
     return (
         <main>
             <Nav />
-            <section id='homePageBrew'>
+            <section className='topTitle'>
                 <BrewButton/>
             </section>
         </main>
