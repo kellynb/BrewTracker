@@ -55,10 +55,12 @@
 
 #brewMain {
   background-color: #d1d0bb;
+  height: 100%;
 }
 
 #startBatch {
   margin-top: 32px;
+  margin-bottom: 32px;
   text-align: center;
 }
 

@@ -7,17 +7,26 @@ export function enterBatch(batch) {
         },
         method: 'POST'
       })
-      .then(response => response.json()) 
 }
 
 export function updateBatch(id, batchObj) {
-  setInterval(() => {
-  return fetch(`/Brew/${id}`, {
-    body: JSON.stringify(batchObj),
-    headers: {
-      'content-type': 'application/json'
-    },
-    method: 'PUT'
-  })
-  },30000)
+    fetch(`/Brew/${id}`, {
+      body: JSON.stringify(batchObj),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'PUT'
+      }).catch(err => {
+        console.error('Request failed', err)
+      })
+}
+
+export function getBatch() {
+  return fetch("/Brew", {
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'GET'
+    })
+    .then(response => response.json()) 
 }

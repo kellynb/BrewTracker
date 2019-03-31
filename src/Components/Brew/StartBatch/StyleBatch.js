@@ -50,19 +50,39 @@ const styles = theme => ({
     const inputNames = ['Brew Number', 'Brew Letter', 'Style', 'Tank'];
 
     const inputs = [
-        <input type="number" name="number" value={props.brewBatch.number} onChange={props.handleBrewNumber}>
-        </input>,
-        <input type="text" name="id" value={props.brewBatch.batch.id}  onChange={props.handleBatch}>
-        </input>,
-        <input type="text"  name="style" value={props.brewBatch.style}  onChange={props.handleBrewNumber}>
-        </input>,
-        <input type="text"  name="tank" value={props.brewBatch.tank}  onChange={props.handleBrewNumber}>
-        </input>
+        {
+          type: "number", 
+          name:"number",
+          value: props.brewBatch.number,
+          onChange: props.handleBrewNumber
+        },
+        {
+          type: "text", 
+          name:"id",
+          value: props.brewBatch.id,
+          onChange: props.handleBatch
+        },
+        {
+          type: "text", 
+          name:"style",
+          value: props.brewBatch.style,
+          onChange: props.handleBrewNumber
+        },
+        {
+          type: "text", 
+          name:"tank",
+          value: props.brewBatch.tank,
+          onChange: props.handleBrewNumber
+        }
       ];
 
     return (
-        inputs.map( (input,index) =>
+      inputs.map((input,index) =>
             <TextField
+                value={input.value}
+                onChange={input.onChange}
+                type= {input.type}
+                name = {input.name}
                 key ={index} 
                 className={classes.textField} 
                 variant="outlined" 
@@ -80,9 +100,9 @@ const styles = theme => ({
                       notchedOutline: classes.notchedOutline,
                       input: classes.input
                     }
-                }} >{input}
+              }}  >
              </TextField>
-             )
+          )
         )
 
   }

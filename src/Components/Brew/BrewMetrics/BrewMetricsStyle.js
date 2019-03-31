@@ -50,50 +50,86 @@ const styles = theme => ({
                         'Flow Meter Volume', 'Notes'];
 
     const inputs = [
-        <input type="number" name="strikeVolume" value={props.brewBatch.batch.strikeVolume} onChange={props.handleBatch}>
-        </input>,
-        <input type="number" name="mashTemp" value={props.brewBatch.batch.mashTemp} onChange={props.handleBatch}>
-        </input>,
-        <input type="number" name="spargeVolume" value={props.brewBatch.batch.spargeVolume} onChange={props.handleBatch}>
-        </input>,
-        <input type="number" name="startingBrix" value={props.brewBatch.batch.startingBrix} onChange={props.handleBatch}>
-        </input>,
-        <input type="number" name="kettleVolume" value={props.brewBatch.batch.kettleVolume} onChange={props.handleBatch}>
-        </input>,
-        <input type="number" name="whirlPoolVolume" value={props.brewBatch.batch.whirlPoolVolume} onChange={props.handleBatch}>
-        </input>,
-        <input type="number" name="fmVolume" value={props.brewBatch.batch.fmVolume} onChange={props.handleBatch}>
-        </input>,
-        <input type="text" name="notes" value={props.brewBatch.batch.notes} onChange={props.handleBatch}>
-        </input>
-      ];
+      {
+        type: "number", 
+        name:"strikeVolume",
+        value: props.brewBatch.batch.strikeVolume,
+        onChange: props.handleBatch
+      },
+      {
+        type: "number", 
+        name:"mashTemp",
+        value: props.brewBatch.batch.mashTemp,
+        onChange: props.handleBatch
+      },
+      {
+        type: "number", 
+        name:"spargeVolume",
+        value: props.brewBatch.batch.spargeVolume,
+        onChange: props.handleBatch
+      },
+      {
+        type: "number", 
+        name:"startingBrix",
+        value: props.brewBatch.batch.startingBrix,
+        onChange: props.handleBatch
+      },
+      {
+        type: "number", 
+        name:"kettleVolume",
+        value: props.brewBatch.batch.kettleVolume,
+        onChange: props.handleBatch
+      },
+      {
+        type: "number", 
+        name:"whirlPoolVolume",
+        value: props.brewBatch.batch.whirlPoolVolume,
+        onChange: props.handleBatch
+      },
+      {
+        type: "number", 
+        name:"fmVolume",
+        value: props.brewBatch.batch.fmVolume,
+        onChange: props.handleBatch
+      },
+      {
+        type: "text", 
+        name:"notes",
+        value: props.brewBatch.batch.notes,
+        onChange: props.handleBatch
+      }
+    ];
 
     return (
-        inputs.map( (input,index) =>
-            <TextField
-                key ={index} 
-                className={classes.textField} 
-                variant="outlined" 
-                label= {inputNames[index]}
-                margin="normal"
-                InputLabelProps={{
-                    classes: {
-                      root: classes.cssLabel,
-                      focused: classes.cssFocused,
-                    },
-                  }} 
-                InputProps={{classes: 
-                    { root: classes.cssOutlinedInput,
-                      focused: classes.cssFocused,
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.input
-                    }
-                }} >{input}
-             </TextField>
-             )
-        )
+      inputs.map((input,index) =>
+        <TextField
+            value={input.value}
+            onChange={input.onChange}
+            type= {input.type}
+            name = {input.name}
+            key ={index} 
+            className={classes.textField} 
+            variant="outlined" 
+            label= {inputNames[index]}
+            margin="normal"
+            InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }} 
+            InputProps={{classes: 
+                { root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline,
+                  input: classes.input
+                }
+          }}  >
+        </TextField>
+      )
+    )
 
-  }
+}
 
 
 
