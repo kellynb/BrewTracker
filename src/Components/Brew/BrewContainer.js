@@ -6,10 +6,14 @@ class BrewContainer extends Component {
 
     state = {
       number: undefined,
+      prevNum: undefined,
       style: '',
+      prevStyle: '',
       tank: '',
+      prevTank: '',
       batch: 
           {id: "",
+           prevId: "",
            strikeVolume: "",
            mashTemp: "",
            spargeVolume: "",
@@ -58,9 +62,9 @@ class BrewContainer extends Component {
 
     handleEnter = (e) => {
       e.preventDefault();
-      const getData = this.state;
-      enterBatch(getData);
       this.setState({ enter: !this.state.enter}, () => {
+        const getData = this.state;
+        enterBatch(getData);
         this.runInterval = setInterval(() => this.updateMetricData(),30000)
       });   
       
@@ -68,7 +72,6 @@ class BrewContainer extends Component {
 
     handleTransfer = (e) => {
       this.setState({submit: !this.state.submit}, () => {
-        clearInterval(this.runInterval);
         const id = this.state.number;
         const batch = this.state.batch;
         const turnOff = this.state.submit;
@@ -82,14 +85,18 @@ class BrewContainer extends Component {
         })      
     }
 
+    componentWillUnmount = () => {
+      clearInterval(this.runInterval);
+    }
+
     // user get redirected to homepage after clicking on Runoff Button
     renderRedirect = () => {
         this.props.history.push('/')
     }
   
-    // componentDidMount = () => {
-    //   getBatch();
-    // }
+    componentDidMount = () => {
+      getBatch(this);
+    }
 
     render () {
       return(

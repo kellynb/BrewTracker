@@ -16,7 +16,8 @@ const BrewBatchSchema = new mongoose.Schema({
        notes: String
       }
     ],
-    submit: Boolean    
+    enter: Boolean,
+    submit: Boolean
   });
 
 const BrewBatch = mongoose.model('BrewBatch', BrewBatchSchema);

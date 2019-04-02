@@ -13,7 +13,6 @@ exports.create =  function create(request, response) {
 
 exports.update =  function create(request, response) {
     const newBatch = request.body;
-    console.log(newBatch.submit)
     const find = {'number': newBatch.number, 'batch': {$elemMatch : {'id': newBatch.batch.id}}};
     const update ={'$set': {
                             'batch': newBatch.batch,
@@ -29,12 +28,15 @@ exports.update =  function create(request, response) {
 }
 
 exports.find =  function find(request, response) {
-    console.log('hi');
+    BrewBatch.find({'submit': false}, (err,brewbatch) => {
+        if (err) return console.error(err);
+        return response.json(brewbatch);
+    })    
+}
 
-    // const newBrewBatch = new BrewBatch(newBatch);
-    // newBrewBatch.save((err, models) => {
-    //     if (err) return console.error(err);
-    //     return response.json(models);
-    // })
-    
+exports.findSubmit =  function find(request, response) {
+    BrewBatch.find({'submit': true}).sort({"number": -1}).exec( (err,brewbatch) => {
+        if (err) return console.error(err);
+        return response.json(brewbatch[0]);
+    })    
 }
