@@ -12,8 +12,8 @@ const BrewView = (props) => {
             <Nav />
             <section id="startBatch">
                 <StartBatch {...props} />
-                {props.brewBatch.enter ? <BrewMetrics {...props}/> : null}
-                {props.brewBatch.enter ? <Transfer {...props} />: null}
+                {props.brewBatch.batch.enter ? <BrewMetrics {...props}/> : null}
+                {props.brewBatch.batch.enter ? <Transfer {...props} />: null}
             </section>
         </main>
     )

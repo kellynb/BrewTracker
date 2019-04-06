@@ -1,5 +1,5 @@
 
-export function enterBatch(batch) {
+export function enterBrew(batch) {
     return fetch("/Brew", {
         body: JSON.stringify(batch),
         headers: {
@@ -7,6 +7,18 @@ export function enterBatch(batch) {
         },
         method: 'POST'
       })
+}
+
+export function enterBatch(batch) {
+  return fetch("/Brew", {
+    body: JSON.stringify(batch),
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'PUT'
+  }).catch(err => {
+    console.error('Request failed', err)
+  })
 }
 
 export function updateBatch(id, batchObj) {
@@ -21,6 +33,7 @@ export function updateBatch(id, batchObj) {
       })
 }
 
+
 export function getBatch(state) {
   fetch("/Brew", {
       headers: {
@@ -30,9 +43,8 @@ export function getBatch(state) {
     })
     .then(response => response.json())
       .then(data => {
-
         const changeNull = (data) => {
-          const batchVal = data[0].batch[0];
+          const batchVal = data[0].batch[data[0].batch.length-1];
           
           for (let val in batchVal) {
             const values = batchVal[val]
@@ -45,30 +57,36 @@ export function getBatch(state) {
         }
        
         if (data[0] !== undefined) {
-            changeNull(data);
-            state.setState({
+          changeNull(data);
+          state.setState(
+            {
               number: data[0].number,
               style: data[0].style,
               tank: data[0].tank,
-              enter: data[0].enter,
               batch: {
-                id: data[0].batch[0].id,
-                strikeVolume: data[0].batch[0].strikeVolume,
-                mashTemp: data[0].batch[0].mashTemp,
-                spargeVolume: data[0].batch[0].spargeVolume,
-                startingBrix: data[0].batch[0].startingBrix,
-                kettleVolume: data[0].batch[0].kettleVolume,
-                whirlPoolVolume: data[0].batch[0].whirlPoolVolume,
-                fmVolume: data[0].batch[0].fmVolume,
-                notes: data[0].batch[0].notes
+                id: data[0].batch[data[0].batch.length-1].id,
+                strikeVolume: data[0].batch[data[0].batch.length-1].strikeVolume,
+                mashTemp: data[0].batch[data[0].batch.length-1].mashTemp,
+                spargeVolume: data[0].batch[data[0].batch.length-1].spargeVolume,
+                startingBrix: data[0].batch[data[0].batch.length-1].startingBrix,
+                kettleVolume: data[0].batch[data[0].batch.length-1].kettleVolume,
+                whirlPoolVolume: data[0].batch[data[0].batch.length-1].whirlPoolVolume,
+                fmVolume: data[0].batch[data[0].batch.length-1].fmVolume,
+                notes: data[0].batch[data[0].batch.length-1].notes,
+                enter: data[0].batch[data[0].batch.length-1].enter,
+                submit: data[0].batch[data[0].batch.length-1].submit
               }
-            }, () => {
-                state.runInterval = setInterval(() => state.updateMetricData(),30000);
-              })
-             
-            } else {
-              getLastSubmit(state);
-            } 
+            },
+            () => {
+              state.runInterval = setInterval(
+                () => state.updateMetricData(),
+                30000
+              );
+            }
+          );
+        } else {
+          getLastSubmit(state);
+        } 
       }) 
 }
 
@@ -80,14 +98,14 @@ function getLastSubmit (state) {
     method: 'GET'
   }).then(response => response.json())
     .then(data => {
-
+        console.log(data);
         state.setState({
           prevNum: data.number,
           prevStyle: data.style,
           prevTank: data.tank,
           batch: {
             ...state.state.batch,
-            prevId: data.batch[0].id
+            prevId: data.batch[data.batch.length-1].id
           }
       })
     })

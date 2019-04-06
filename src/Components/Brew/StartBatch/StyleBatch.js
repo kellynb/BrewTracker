@@ -54,13 +54,17 @@ const styles = theme => ({
     const {classes} = props;
 
     const userNumberOptions = () => {
-      if (props.brewBatch.prevNum) {
+      if (props.brewBatch.prevNum && props.brewBatch.batch.prevId !== 'D') {
         const previousBatch = props.brewBatch.prevNum
         const numOptions = [previousBatch, previousBatch+1];
         return numOptions
-      } else {
+      } else if (props.brewBatch.prevNum && props.brewBatch.batch.prevId === 'D') {
+        return [props.brewBatch.prevNum+1]
+      } else if (!props.brewBatch.prevNum && props.brewBatch.number) {
         const num = [props.brewBatch.number];
         return num
+      } else {
+        return [1];
       }
     }
 
@@ -68,24 +72,26 @@ const styles = theme => ({
       if(props.brewBatch.prevNum === props.brewBatch.number) {
           const getLastId = props.brewBatch.batch.prevId;
           const toChar = getLastId.charCodeAt(0)
-          const optionArr = [toChar];
+          const optionArr = [];
 
-          // for(let i=toChar+1; i<69; i++) {
-          //     console.log(optionArr)
-          //     optionArr.push(i);
-          // }
+          for(let i=toChar+1; i<69; i++) {
+              optionArr.push(i);
+          }
 
-          // const letterOptions = optionArr.map ( num => {
-          //     return String.fromCharCode(num)
-          // })
+          const letterOptions = optionArr.map ( num => {
+              return String.fromCharCode(num)
+          })
 
-          return optionArr;
-      } else if (props.brewBatch.prevNum !== props.brewBatch.number) {
+          return letterOptions;
+      } else if (props.brewBatch.prevNum !== props.brewBatch.number && !props.brewBatch.batch.enter) {
          let optionB = [];
          return optionB=['A'];
+      } else if(props.brewBatch.batch.enter) {
+         let optionC = [];
+        return optionC = [props.brewBatch.batch.id]
       } else {
-        let optionC = [];
-        return optionC=[props.brewBatch.number];
+        let optionD = [];
+        return optionD=[props.brewBatch.number];
       }
     }
 

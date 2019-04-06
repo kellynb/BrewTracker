@@ -13,11 +13,11 @@ const BrewBatchSchema = new mongoose.Schema({
        kettleVolume: Number,
        whirlPoolVolume: Number,
        fmVolume: Number,
-       notes: String
+       notes: String,
+       enter: Boolean,
+       submit: Boolean
       }
-    ],
-    enter: Boolean,
-    submit: Boolean
+    ]
   });
 
 const BrewBatch = mongoose.model('BrewBatch', BrewBatchSchema);

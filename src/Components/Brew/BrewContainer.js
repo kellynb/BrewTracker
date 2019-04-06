@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BrewView from './BrewView';
-import {enterBatch, getBatch, updateBatch} from './BrewFetch';
+import {enterBrew, enterBatch, getBatch, updateBatch} from './BrewFetch';
 
 class BrewContainer extends Component {
 
@@ -21,10 +21,10 @@ class BrewContainer extends Component {
            kettleVolume: "",
            whirlPoolVolume: "",
            fmVolume: "",
-           notes: ''
-          },
-      enter: false,
-      submit: false,
+           notes: '',
+           enter: false,
+           submit: false,
+          }      
     }
 
     // stores the setInterval value
@@ -51,34 +51,41 @@ class BrewContainer extends Component {
     updateMetricData = () => {
       const id = this.state.number;
       const batch = this.state.batch;
-      const turnOff = this.state.submit;
       const batchObj = {
         number: id,
         batch: batch,
-        submit: turnOff
       }
       updateBatch(id, batchObj)
     }
 
     handleEnter = (e) => {
       e.preventDefault();
-      this.setState({ enter: !this.state.enter}, () => {
-        const getData = this.state;
-        enterBatch(getData);
-        this.runInterval = setInterval(() => this.updateMetricData(),30000)
-      });   
-      
+      this.setState({ 
+        batch: {
+            ...this.state.batch,
+            enter: !this.state.enter
+          }}, () => {
+            const getData = this.state;
+            if (this.state.prevNum === this.state.number) {
+              enterBatch(getData);
+            } else {
+              enterBrew(getData);
+            }
+            this.runInterval = setInterval(() => this.updateMetricData(),30000)
+          });   
     }
 
     handleTransfer = (e) => {
-      this.setState({submit: !this.state.submit}, () => {
+      this.setState({
+        batch: {
+        ...this.state.batch,
+        submit: !this.state.submit
+        }}, () => {
         const id = this.state.number;
         const batch = this.state.batch;
-        const turnOff = this.state.submit;
         const batchObj = {
             number: id,
-            batch: batch,
-            submit: turnOff
+            batch: batch
         }
         updateBatch(id, batchObj)
         this.renderRedirect();
