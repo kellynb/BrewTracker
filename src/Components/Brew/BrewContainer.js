@@ -5,8 +5,8 @@ import {enterBatch, getBatch, updateBatch} from './BrewFetch';
 class BrewContainer extends Component {
 
     state = {
-      number: undefined,
-      prevNum: undefined,
+      number: '',
+      prevNum: '',
       style: '',
       prevStyle: '',
       tank: '',

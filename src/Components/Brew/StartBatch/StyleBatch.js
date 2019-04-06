@@ -1,6 +1,7 @@
 import '../../../App.css';
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -8,15 +9,17 @@ const styles = theme => ({
     formControl: {
       margin: theme.spacing.unit,
     },
-
+    
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
+        width: 200,
         backgroundColor: '#d1d0bb',
       },
     
     input: {
-        color: '#5c4925'
+        color: '#5c4925',
+        fontSize: 15
     },
 
       cssLabel: {
@@ -26,7 +29,8 @@ const styles = theme => ({
           fontSize: 15
         },
       },
-      cssFocused: {},
+      cssFocused: {
+      },
       cssUnderline: {
         '&:after': {
           borderBottomColor: '#5c4925',
@@ -42,46 +46,110 @@ const styles = theme => ({
       },
   });
 
+
  
 
   const StyleBatch = (props) => {
+    
     const {classes} = props;
+
+    const userNumberOptions = () => {
+      if (props.brewBatch.prevNum) {
+        const previousBatch = props.brewBatch.prevNum
+        const numOptions = [previousBatch, previousBatch+1];
+        return numOptions
+      } else {
+        const num = [props.brewBatch.number];
+        return num
+      }
+    }
+
+    const userIdOptions = () => {
+      if(props.brewBatch.prevNum === props.brewBatch.number) {
+          const getLastId = props.brewBatch.batch.prevId;
+          const toChar = getLastId.charCodeAt(0)
+          const optionArr = [toChar];
+
+          // for(let i=toChar+1; i<69; i++) {
+          //     console.log(optionArr)
+          //     optionArr.push(i);
+          // }
+
+          // const letterOptions = optionArr.map ( num => {
+          //     return String.fromCharCode(num)
+          // })
+
+          return optionArr;
+      } else if (props.brewBatch.prevNum !== props.brewBatch.number) {
+         let optionB = [];
+         return optionB=['A'];
+      } else {
+        let optionC = [];
+        return optionC=[props.brewBatch.number];
+      }
+    }
+
+    const styleOptions = () => {
+      let style = ['Goat', 'BucketHead', 'Dillo', 'Pailhead', 'Specialty']
+      if (props.brewBatch.prevNum === props.brewBatch.number) {
+        style = [props.brewBatch.prevStyle];
+        return style
+      } else if (props.brewBatch.prevNum !== props.brewBatch.number) {
+        return style
+     } else {
+        return style
+     }
+    }
+
+    const tankOptions = () => {
+      let tank = ["C2", "C3", "C4", "C5", "C6", "C7"]
+      if (props.brewBatch.prevNum === props.brewBatch.number) {
+        const tank = [props.brewBatch.prevTank];
+        return tank
+      } else if (props.brewBatch.prevNum !== props.brewBatch.number) {
+        return tank
+      } else {
+        return tank
+      }
+    }
 
     const inputNames = ['Brew Number', 'Brew Letter', 'Style', 'Tank'];
 
     const inputs = [
         {
-          type: "number", 
           name:"number",
           value: props.brewBatch.number,
-          onChange: props.handleBrewNumber
+          onChange: props.handleBrewNumber,
+          options: userNumberOptions()
         },
         {
-          type: "text", 
           name:"id",
-          value: props.brewBatch.id,
-          onChange: props.handleBatch
+          value: props.brewBatch.batch.id,
+          onChange: props.handleBatch,
+          options: userIdOptions()
         },
         {
-          type: "text", 
           name:"style",
           value: props.brewBatch.style,
-          onChange: props.handleBrewNumber
+          onChange: props.handleBrewNumber,
+          options: styleOptions()
         },
         {
-          type: "text", 
           name:"tank",
           value: props.brewBatch.tank,
-          onChange: props.handleBrewNumber
+          onChange: props.handleBrewNumber,
+          options: tankOptions()
         }
       ];
+
+      
 
     return (
       inputs.map((input,index) =>
             <TextField
+                select
                 value={input.value}
                 onChange={input.onChange}
-                type= {input.type}
                 name = {input.name}
                 key ={index} 
                 className={classes.textField} 
@@ -100,11 +168,23 @@ const styles = theme => ({
                       notchedOutline: classes.notchedOutline,
                       input: classes.input
                     }
-              }}  >
-             </TextField>
+              }}  > 
+
+                  {input.options 
+                    ? 
+                      input.options.map( (option, index) =>
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
+                        )
+                  : null}
+              </TextField>
+              
           )
         )
 
   }
 
   export default withStyles(styles)(StyleBatch);
+
+  

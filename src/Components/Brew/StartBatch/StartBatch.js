@@ -3,7 +3,7 @@ import React from 'react';
 import StyleBatch from './StyleBatch';
 
 
-const StartBatchView = (props) => {
+const StartBatch = (props) => {
 
     return (
       <section className="userInputs">
@@ -18,4 +18,4 @@ const StartBatchView = (props) => {
     )
 }
 
-export default StartBatchView;
+export default StartBatch;

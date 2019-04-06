@@ -30,7 +30,22 @@ export function getBatch(state) {
     })
     .then(response => response.json())
       .then(data => {
-        if (data[0] != undefined) {
+
+        const changeNull = (data) => {
+          const batchVal = data[0].batch[0];
+          
+          for (let val in batchVal) {
+            const values = batchVal[val]
+            if (typeof values === 'object') {
+              batchVal[val] = '';
+            }
+          }
+
+          return data
+        }
+       
+        if (data[0] !== undefined) {
+            changeNull(data);
             state.setState({
               number: data[0].number,
               style: data[0].style,
@@ -65,11 +80,13 @@ function getLastSubmit (state) {
     method: 'GET'
   }).then(response => response.json())
     .then(data => {
+
         state.setState({
           prevNum: data.number,
           prevStyle: data.style,
           prevTank: data.tank,
           batch: {
+            ...state.state.batch,
             prevId: data.batch[0].id
           }
       })
