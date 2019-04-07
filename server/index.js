@@ -2,7 +2,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-mongoose.connect('mongodb://brewDaddy:brewGoat6.9@ds227565.mlab.com:27565/brewtrack', {useNewUrlParser: true});
+const dotenv = require("dotenv");
+dotenv.config();
+mongoose.connect(process.env.mongodburi, {useNewUrlParser: true});
 const app = express();
 
 const brewBatchRoute = require("./Routes/BrewBatchRoute");
