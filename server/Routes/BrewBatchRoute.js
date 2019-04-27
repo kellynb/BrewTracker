@@ -5,7 +5,7 @@ const {create, update, find, findSubmit, updateBrew} = require("../Controllers/B
   
 
 router.get("/Brew", find);
-router.get("/Brewsubmit", findSubmit)
+router.get("/Brewsubmit", findSubmit);
 router.post("/Brew", create);
 router.put("/Brew", updateBrew);
 router.put("/Brew/:id", update);

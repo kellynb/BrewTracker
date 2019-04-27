@@ -119,6 +119,26 @@ function getLastSubmit (state) {
             ...state.state.batch,
             prevId: data.batch[data.batch.length-1].id
           }
-      })
+      });
+        getTanks(state)
+    })
+}
+
+function getTanks (state) {
+  fetch("/OpenTanks", {
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'GET'
+  }).then(response => response.json())
+    .then(data => {
+        const tankList = [];
+        data.forEach(tank => {
+          tankList.push(tank.tank)
+        })
+        state.setState({
+          tanks: tankList
+        })
+     
     })
 }

@@ -108,12 +108,13 @@ const styles = theme => ({
     }
 
     const tankOptions = () => {
+      let tanks = props.brewBatch.tanks
       let tank = ["C2", "C3", "C4", "C5", "C6", "C7"]
       if (props.brewBatch.prevNum === props.brewBatch.number) {
         const tank = [props.brewBatch.prevTank];
         return tank
       } else if (props.brewBatch.prevNum !== props.brewBatch.number) {
-        return tank
+        return tanks
       } else {
         return tank
       }

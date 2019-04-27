@@ -11,6 +11,7 @@ class BrewContainer extends Component {
       prevStyle: '',
       tank: '',
       prevTank: '',
+      tanks: [],
       batch: 
           {id: "",
            prevId: "",
