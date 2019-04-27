@@ -15,8 +15,7 @@ class App extends Component {
       <div className='App'>
         <Switch>
           <Route path ='/' exact render ={ (props) => <HomeContainer {...props}/> } />
-          <Route path ='/Brew' render ={ (props) => 
-            <BrewContainer {...props}/> } />
+          <Route path ='/Brew' render ={ (props) => <BrewContainer {...props}/> } />
         </Switch>
       </div>
     );
