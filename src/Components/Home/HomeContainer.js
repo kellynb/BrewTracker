@@ -1,10 +1,10 @@
 import React from 'react';
 import HomeView from './HomeView';
 
-const HomeContainer = (props) => {
+const HomeContainer = () => {
    
     return (
-        <HomeView {...props}/>
+        <HomeView/>
     )
     
 }

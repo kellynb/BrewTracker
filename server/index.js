@@ -8,6 +8,7 @@ mongoose.connect(process.env.mongodburi, {useNewUrlParser: true});
 const app = express();
 
 const brewBatchRoute = require("./Routes/BrewBatchRoute");
+const fermenterRoute = require("./Routes/FermenterRoute");
 
 
 app.use(function(req, res, next) {
@@ -17,6 +18,7 @@ app.use(function(req, res, next) {
 });
 app.use(bodyParser.json());
 app.use(brewBatchRoute);
+app.use(fermenterRoute);
 
 
 

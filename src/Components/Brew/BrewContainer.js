@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BrewView from './BrewView';
-import {enterBrew, enterBatch, getBatch, updateBatch} from './BrewFetch';
+import {enterBrew, enterBatch, getBatch, updateBatch,fillTank} from './BrewFetch';
 
 class BrewContainer extends Component {
 
@@ -82,12 +82,23 @@ class BrewContainer extends Component {
         submit: !this.state.submit
         }}, () => {
         const id = this.state.number;
+        const tank = this.state.tank;
+        const style = this.state.style;
+        const runOff = this.state.batch.submit
         const batch = this.state.batch;
         const batchObj = {
             number: id,
             batch: batch
         }
-        updateBatch(id, batchObj)
+        const tankObj = {
+            number: id,
+            tank: tank,
+            style: style,
+            batch: batch.fmVolume,
+            runOff: runOff
+        }
+        updateBatch(id, batchObj);
+        fillTank(id, tankObj);
         this.renderRedirect();
         })      
     }

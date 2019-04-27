@@ -33,6 +33,19 @@ export function updateBatch(id, batchObj) {
       })
 }
 
+// Putting batch into a tank. Not sure this is the best organizational practice
+export function fillTank(id, batchObj) {
+  fetch(`/Tank/${id}`, {
+    body: JSON.stringify(batchObj),
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'PUT'
+    }).catch(err => {
+      console.error('Request failed', err)
+    })
+}
+
 
 export function getBatch(state) {
   fetch("/Brew", {
@@ -98,7 +111,6 @@ function getLastSubmit (state) {
     method: 'GET'
   }).then(response => response.json())
     .then(data => {
-        console.log(data);
         state.setState({
           prevNum: data.number,
           prevStyle: data.style,
