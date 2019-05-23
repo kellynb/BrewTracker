@@ -97,24 +97,28 @@ const styles = theme => ({
 
     const styleOptions = () => {
       let style = ['Goat', 'BucketHead', 'Dillo', 'Pailhead', 'Specialty']
+      const currentStyle = [props.brewBatch.style]
       if (props.brewBatch.prevNum === props.brewBatch.number) {
         style = [props.brewBatch.prevStyle];
         return style
-      } else if (props.brewBatch.prevNum !== props.brewBatch.number) {
+      } else if (props.brewBatch.prevNum !== props.brewBatch.number && props.brewBatch.prevNum === '') {
+        return currentStyle
+      } else {
         return style
-     } else {
-        return style
-     }
+      }
     }
 
     const tankOptions = () => {
-      let tanks = props.brewBatch.tanks
+      let tanks = props.brewBatch.tanks;
+      const currentTank = [props.brewBatch.tank];
       let tank = ["C2", "C3", "C4", "C5", "C6", "C7"]
       if (props.brewBatch.prevNum === props.brewBatch.number) {
-        const tank = [props.brewBatch.prevTank];
+        tank = [props.brewBatch.prevTank];
         return tank
-      } else if (props.brewBatch.prevNum !== props.brewBatch.number) {
+      } else if (props.brewBatch.prevNum !== props.brewBatch.number && props.brewBatch.prevNum !== '') {
         return tanks
+      } else if (props.brewBatch.prevNum !== props.brewBatch.number && props.brewBatch.prevNum === '') {
+        return currentTank
       } else {
         return tank
       }

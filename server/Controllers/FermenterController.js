@@ -25,7 +25,6 @@ exports.list =  function list(request, response) {
 }
 
 exports.openTank =  function openTank(request, response) {
-    console.log("hi")
     Fermenter.find({'runOff': false}, (err,brewbatch) => {
         if (err) return console.error(err);
         return response.json(brewbatch);

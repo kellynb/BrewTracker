@@ -71,23 +71,24 @@ export function getBatch(state) {
        
         if (data[0] !== undefined) {
           changeNull(data);
+          const lastBatch = data[0].batch[data[0].batch.length-1];
           state.setState(
             {
               number: data[0].number,
               style: data[0].style,
               tank: data[0].tank,
               batch: {
-                id: data[0].batch[data[0].batch.length-1].id,
-                strikeVolume: data[0].batch[data[0].batch.length-1].strikeVolume,
-                mashTemp: data[0].batch[data[0].batch.length-1].mashTemp,
-                spargeVolume: data[0].batch[data[0].batch.length-1].spargeVolume,
-                startingBrix: data[0].batch[data[0].batch.length-1].startingBrix,
-                kettleVolume: data[0].batch[data[0].batch.length-1].kettleVolume,
-                whirlPoolVolume: data[0].batch[data[0].batch.length-1].whirlPoolVolume,
-                fmVolume: data[0].batch[data[0].batch.length-1].fmVolume,
-                notes: data[0].batch[data[0].batch.length-1].notes,
-                enter: data[0].batch[data[0].batch.length-1].enter,
-                submit: data[0].batch[data[0].batch.length-1].submit
+                id: lastBatch.id,
+                strikeVolume: lastBatch.strikeVolume,
+                mashTemp: lastBatch.mashTemp,
+                spargeVolume: lastBatch.spargeVolume,
+                startingBrix: lastBatch.startingBrix,
+                kettleVolume: lastBatch.kettleVolume,
+                whirlPoolVolume: lastBatch.whirlPoolVolume,
+                fmVolume: lastBatch.fmVolume,
+                notes: lastBatch.notes,
+                enter: lastBatch.enter,
+                submit: lastBatch.submit
               }
             },
             () => {

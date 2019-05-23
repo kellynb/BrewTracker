@@ -9,6 +9,7 @@ export function getFermenters(state) {
         })
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             state.setState({
               cTanks: data
         })
