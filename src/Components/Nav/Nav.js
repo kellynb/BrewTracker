@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import logo from '../../Images/logo.png'
+import logo from '../../Images/beerLogo.png';
 import MenuList from './MenuList/MenuList';
 import Icon from '@material-ui/core/Icon';
 import '../../App.css';
@@ -63,7 +63,7 @@ class Nav extends Component {
           <Toolbar className={classes.toolbar}>
             <img src={logo} alt='Thirsy Planet Logo' id='logo' />
             <Typography variant="h1" color="inherit" className={classes.grow}>
-              Thirsty Planet Brewing
+              Very Good Brewing Company
             </Typography>
             <IconButton className={classes.menuButton} color="inherit"
               aria-owns={anchorEl ? 'simple-menu' : undefined}

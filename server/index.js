@@ -23,9 +23,11 @@ app.use(fermenterRoute);
 
 
 
-app.listen(3001, (err) => {
+const port=process.env.PORT || 3001;
+app.listen(port, (err) => {
     if (err) {
       return console.log("Error", err);
     }
-    console.log("Web server is now listening for messages", err);
+    console.log(`Web server is now listening for messages on port ${port}`, err);
+
 });
