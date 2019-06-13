@@ -3,7 +3,6 @@ const BrewBatch = require("../Models/BrewBatchModel");
 
 exports.create =  function create(request, response) {
     const newBatch = request.body;
-
     const newBrewBatch = new BrewBatch(newBatch);
     newBrewBatch.save((err, models) => {
         if (err) return console.error(err);
@@ -12,9 +11,10 @@ exports.create =  function create(request, response) {
     
 }
 
-exports.updateBrew =  function updateBrew(request, response) {
+exports.updateBatch =  function updateBrew(request, response) {
     const newBatch = request.body;
-    const find = {'number': newBatch.number};
+    
+    const find = {'number': request.params.number};
     const update ={'$push': {
                             'batch': newBatch.batch
                             }   

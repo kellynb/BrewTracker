@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BrewView from './BrewView';
-import {enterBrew, enterBatch, getBatch, updateBatch,fillTank} from './BrewFetch';
+import {createNewBatch, addNewBrew, getBatch, updateBatch, fillTank, getLastSubmit, getTanks} from './BrewFetch';
 
 class BrewContainer extends Component {
 
@@ -68,15 +68,21 @@ class BrewContainer extends Component {
           }}, () => {
             const getData = this.state;
             if (this.state.prevNum === this.state.number) {
-              enterBatch(getData);
+              // fetch call to update a brew with a new batch. There a multiple batches to a brew
+              addNewBrew(getData);
             } else {
-              enterBrew(getData);
+              // fetch call to create a new batch into a new brew
+              createNewBatch(getData);
             }
             this.runInterval = setInterval(() => this.updateMetricData(),30000)
           });   
     }
 
-    handleTransfer = (e) => {
+    handleDelete = () => {
+      console.log('hi');
+    }
+
+    handleTransfer = () => {
       this.setState({
         batch: {
         ...this.state.batch,
@@ -112,9 +118,84 @@ class BrewContainer extends Component {
     renderRedirect = () => {
         this.props.history.push('/')
     }
+
+    // change data from componentdidmount fetch to "" instead of null
+    changeNull = (data) => {
+        const batchVal = data.batch[data.batch.length-1];
+        
+        for (let val in batchVal) {
+          const values = batchVal[val]
+          if (typeof values === 'object') {
+            batchVal[val] = '';
+          }
+        }
+        return data
+    }
+    // set state after fetch call with data from a batch where brewer is still entering information
+    updateStateBatchBrewing = (data) => {
+      const lastBatch = data.batch[data.batch.length-1];
+      this.setState(
+        {
+          number: data.number,
+          style: data.style,
+          tank: data.tank,
+          batch: {
+            id: lastBatch.id,
+            strikeVolume: lastBatch.strikeVolume,
+            mashTemp: lastBatch.mashTemp,
+            spargeVolume: lastBatch.spargeVolume,
+            startingBrix: lastBatch.startingBrix,
+            kettleVolume: lastBatch.kettleVolume,
+            whirlPoolVolume: lastBatch.whirlPoolVolume,
+            fmVolume: lastBatch.fmVolume,
+            notes: lastBatch.notes,
+            enter: lastBatch.enter,
+            submit: lastBatch.submit
+          }
+        })
+    }
+
+    // set state after fetch call with data from a batch that has been finished a placed into a fermenter
+    updateStateLastCompletedBrew = (data) => {
+      this.setState({
+        prevNum: data.number,
+        prevStyle: data.style,
+        prevTank: data.tank,
+        batch: {
+          ...this.state.batch,
+          prevId: data.batch[data.batch.length-1].id
+        }
+      })
+    }
   
     componentDidMount = () => {
-      getBatch(this);
+       getBatch()
+          .then(data => {
+            const dataObj = data[0];      
+            if (dataObj !== undefined) {
+                this.changeNull(dataObj);
+                this.updateStateBatchBrewing(dataObj);              
+                //run interval to post data about that batch to save data during the brew process
+                this.runInterval = setInterval(() => this.updateMetricData(),30000)
+              } else {
+                // if last batch has runOff to fermenter get information from this batch for input options
+                getLastSubmit()
+                    .then(data => {
+                        this.updateStateLastCompletedBrew(data);
+                      });
+                      // grab tanks that are empty for user fill options
+                    getTanks()
+                      .then(data => {
+                           const tankList = [];
+                           data.forEach(tank => {
+                            tankList.push(tank.tank)
+                            })
+                            this.setState({
+                              tanks: tankList
+                            })
+                          });
+              }
+        })
     }
 
     render () {
@@ -126,6 +207,7 @@ class BrewContainer extends Component {
               handleBatch={this.handleBatch} 
               handleEnter={this.handleEnter}
               handleTransfer={this.handleTransfer}
+              handleDelete={this.handleDelete}
             />
         </div>
         )
