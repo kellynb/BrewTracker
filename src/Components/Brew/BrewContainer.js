@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BrewView from './BrewView';
-import {createNewBatch, addNewBrew, getBatch, updateBatch, fillTank, getLastSubmit, getTanks} from './BrewFetch';
+import {createNewBatch, addNewBrew, getBatch, updateBatch, fillFermenters, getLastSubmit, getTanks, deleteBrew, deleteBatch} from './BrewFetch';
 
 class BrewContainer extends Component {
 
@@ -50,13 +50,16 @@ class BrewContainer extends Component {
     }
 
     updateMetricData = () => {
-      const id = this.state.number;
+      const number = this.state.number;
       const batch = this.state.batch;
       const batchObj = {
-        number: id,
+        number: number,
         batch: batch,
       }
-      updateBatch(id, batchObj)
+      updateBatch(batchObj)
+      .catch(err => {
+        console.error('Request failed', err)
+      })
     }
 
     handleEnter = (e) => {
@@ -79,7 +82,48 @@ class BrewContainer extends Component {
     }
 
     handleDelete = () => {
-      console.log('hi');
+      const number = this.state.number;
+      const id = this.state.batch.id;
+
+      if(id === 'A') {
+        clearInterval(this.runInterval);
+        deleteBrew(number)
+        this.setState({
+          batch: {
+            ...this.state.batch,
+            strikeVolume: "",
+            mashTemp: "",
+            spargeVolume: "",
+            startingBrix: "",
+            kettleVolume: "",
+            whirlPoolVolume: "",
+            fmVolume: "",
+            notes: '',
+            enter: !this.state.batch.enter
+          }
+        })      
+      } else {
+        clearInterval(this.runInterval);
+        deleteBatch(number,id);
+        this.setState({
+          number: "",
+          style: "",
+          tank: "",
+          batch : {
+            ...this.state.batch,
+            strikeVolume: "",
+            mashTemp: "",
+            spargeVolume: "",
+            startingBrix: "",
+            kettleVolume: "",
+            whirlPoolVolume: "",
+            fmVolume: "",
+            notes: '',
+            id: "",
+            enter: !this.state.batch.enter
+          }
+        })
+      }
     }
 
     handleTransfer = () => {
@@ -104,9 +148,16 @@ class BrewContainer extends Component {
             batch: batch.fmVolume,
             runOff: runOff
         }
-        updateBatch(id, batchObj);
-        fillTank(id, tankObj);
-        this.renderRedirect();
+        updateBatch(batchObj)
+          .then(() => {
+            fillFermenters(id, tankObj, batch.id)
+              .then(() => {
+                this.renderRedirect();
+              });
+          })
+          .catch(err => {
+            console.error('Request failed', err)
+          })
         })      
     }
 
@@ -167,9 +218,9 @@ class BrewContainer extends Component {
         }
       })
     }
-  
-    componentDidMount = () => {
-       getBatch()
+
+    inputBatchSequence = () => {
+      getBatch()
           .then(data => {
             const dataObj = data[0];      
             if (dataObj !== undefined) {
@@ -182,20 +233,33 @@ class BrewContainer extends Component {
                 getLastSubmit()
                     .then(data => {
                         this.updateStateLastCompletedBrew(data);
+                      })
+                      .catch(err => {
+                        console.error('Request failed', err)
                       });
-                      // grab tanks that are empty for user fill options
-                    getTanks()
-                      .then(data => {
-                           const tankList = [];
-                           data.forEach(tank => {
-                            tankList.push(tank.tank)
-                            })
-                            this.setState({
-                              tanks: tankList
-                            })
-                          });
+                // grab tanks that are empty for user fill options
+                getTanks()
+                  .then(data => {
+                    const tankList = [];
+                    data.forEach(tank => {
+                      tankList.push(tank.tank)
+                    })
+                    this.setState({
+                      tanks: tankList
+                    })
+                  })
+                  .catch(err => {
+                    console.error('Request failed', err)
+                  });
               }
         })
+        .catch(err => {
+          console.error('Request failed', err)
+        })
+    }
+  
+    componentDidMount = () => {
+       this.inputBatchSequence();
     }
 
     render () {

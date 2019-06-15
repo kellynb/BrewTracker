@@ -1,6 +1,6 @@
 const Fermenter = require("../Models/FermenterModel");
 
-exports.transfer =  function tranfer(request, response) {
+exports.update =  function update(request, response) {
     const newBatch = request.body;
     const findTank = {'tank': newBatch.tank};
     const updateTank = {'$set': {
