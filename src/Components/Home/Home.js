@@ -1,7 +1,7 @@
 import React from 'react';
 import HomeView from './HomeView';
 
-const HomeContainer = () => {
+const Home = () => {
    
     return (
         <HomeView/>
@@ -9,4 +9,4 @@ const HomeContainer = () => {
     
 }
 
-export default HomeContainer;
+export default Home;

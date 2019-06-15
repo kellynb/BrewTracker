@@ -1,7 +1,7 @@
 import Nav from '../Nav/Nav';
 import BrewButton from '../Home/BrewButton/BrewButton';
 import React from 'react';
-import FermenterContainer from './Fermenter/FermenterContainer'; 
+import Fermenter from './Fermenter/Fermenter'; 
 import '../../App.css';
 
 
@@ -13,7 +13,7 @@ const HomeView = () => {
                 <BrewButton/>
             </section>
             <section id="brewFarm">
-                <FermenterContainer/>
+                <Fermenter/>
                 {/* <BriteTank/> */}
             </section>
         </main>

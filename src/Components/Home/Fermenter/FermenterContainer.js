@@ -1,23 +1,16 @@
-import React, { Component } from 'react';
-import FermenterView from './FermenterView';
-import {getFermenters} from './FermenterFetch';
+import {connect} from 'react-redux';
+import {update} from './FermenterActions';
+import Fermenter from './Fermenter';
 
-class FermenterContainer extends Component {
-    state = {
-        cTanks : [],
-        briteTanks: []
-    }
 
-    componentDidMount () {
-        getFermenters(this);
-    }
-
-    render () {
-        return (
-            <FermenterView state={this.state.cTanks}/>
-        )
-    }   
-    
+const mapDispatchToProps = {
+    tanks: update
 }
 
-export default FermenterContainer;
+const mapStateToProps = (state) => {
+    return{
+      clicks: state.clicks
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Fermenter);

@@ -52,16 +52,18 @@ const styles = theme => ({
   const StyleBatch = (props) => {
     
     const {classes} = props;
+    const previousBatch = props.brewBatch.prevNum;
+    const batchNum = props.brewBatch.number;
+
 
     const userNumberOptions = () => {
-      if (props.brewBatch.prevNum && props.brewBatch.batch.prevId !== 'D') {
-        const previousBatch = props.brewBatch.prevNum
+      if (previousBatch && props.brewBatch.batch.prevId !== 'D') {
         const numOptions = [previousBatch, previousBatch+1];
         return numOptions
-      } else if (props.brewBatch.prevNum && props.brewBatch.batch.prevId === 'D') {
-        return [props.brewBatch.prevNum+1]
-      } else if (!props.brewBatch.prevNum && props.brewBatch.number) {
-        const num = [props.brewBatch.number];
+      } else if (previousBatch && props.brewBatch.batch.prevId === 'D') {
+        return [previousBatch+1]
+      } else if (!previousBatch && batchNum) {
+        const num = [batchNum];
         return num
       } else {
         return [1];
@@ -69,7 +71,7 @@ const styles = theme => ({
     }
 
     const userIdOptions = () => {
-      if(props.brewBatch.prevNum === props.brewBatch.number) {
+      if(previousBatch === batchNum) {
           const getLastId = props.brewBatch.batch.prevId;
           const toChar = getLastId.charCodeAt(0)
           const optionArr = [];
@@ -83,7 +85,7 @@ const styles = theme => ({
           })
 
           return letterOptions;
-      } else if (props.brewBatch.prevNum !== props.brewBatch.number && !props.brewBatch.batch.enter) {
+      } else if (previousBatch !== batchNum && !props.brewBatch.batch.enter) {
          let optionB = [];
          return optionB=['A'];
       } else if(props.brewBatch.batch.enter) {
@@ -91,30 +93,34 @@ const styles = theme => ({
         return optionC = [props.brewBatch.batch.id]
       } else {
         let optionD = [];
-        return optionD=[props.brewBatch.number];
+        return optionD=[batchNum];
       }
     }
 
     const styleOptions = () => {
       let style = ['Goat', 'BucketHead', 'Dillo', 'Pailhead', 'Specialty']
-      if (props.brewBatch.prevNum === props.brewBatch.number) {
+      const currentStyle = [props.brewBatch.style]
+      if (previousBatch === batchNum) {
         style = [props.brewBatch.prevStyle];
         return style
-      } else if (props.brewBatch.prevNum !== props.brewBatch.number) {
+      } else if (previousBatch !== batchNum && previousBatch === '') {
+        return currentStyle
+      } else {
         return style
-     } else {
-        return style
-     }
+      }
     }
 
     const tankOptions = () => {
-      let tanks = props.brewBatch.tanks
+      let tanks = props.brewBatch.tanks;
+      const currentTank = [props.brewBatch.tank];
       let tank = ["C2", "C3", "C4", "C5", "C6", "C7"]
-      if (props.brewBatch.prevNum === props.brewBatch.number) {
-        const tank = [props.brewBatch.prevTank];
+      if (previousBatch === batchNum) {
+        tank = [props.brewBatch.prevTank];
         return tank
-      } else if (props.brewBatch.prevNum !== props.brewBatch.number) {
+      } else if (previousBatch !== batchNum && previousBatch !== '') {
         return tanks
+      } else if (previousBatch !== batchNum && previousBatch === '') {
+        return currentTank
       } else {
         return tank
       }
@@ -125,7 +131,7 @@ const styles = theme => ({
     const inputs = [
         {
           name:"number",
-          value: props.brewBatch.number,
+          value: batchNum,
           onChange: props.handleBrewNumber,
           options: userNumberOptions()
         },

@@ -1,6 +1,6 @@
 const Fermenter = require("../Models/FermenterModel");
 
-exports.transfer =  function tranfer(request, response) {
+exports.update =  function update(request, response) {
     const newBatch = request.body;
     const findTank = {'tank': newBatch.tank};
     const updateTank = {'$set': {
@@ -24,8 +24,7 @@ exports.list =  function list(request, response) {
     })    
 }
 
-exports.openTank =  function openTank(request, response) {
-    console.log("hi")
+exports.listOpen =  function listOpen(request, response) {
     Fermenter.find({'runOff': false}, (err,brewbatch) => {
         if (err) return console.error(err);
         return response.json(brewbatch);
