@@ -50,7 +50,7 @@ exports.find =  function find(request, response) {
 }
 
 exports.findSubmit =  function findSubmit(request, response) {
-    BrewBatch.find({'batch': {$elemMatch : {'submit': true}}}).sort({"number": -1}).exec( (err,brewbatch) => {
+    BrewBatch.find({'batch': {$elemMatch : {'submit': true}}}).sort({"number": -1}).limit(1).exec( (err,brewbatch) => {
         if (err) return console.error(err);
         return response.json(brewbatch[0]);
     })
