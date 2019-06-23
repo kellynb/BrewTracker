@@ -4,7 +4,7 @@ const {list, update, listOpen} = require("../Controllers/FermenterController")
 
   
 
-router.get("/Fermenters", list);
+router.get("/fermenters", list);
 router.get("/fermenters/open", listOpen);
 router.put("/fermenters/:tankNumber/brew/:number/batch/:id", update);
 

@@ -50,10 +50,11 @@ const styles = theme => ({
  
 
   const StyleBatch = (props) => {
-    
     const {classes} = props;
     const previousBatch = props.brewBatch.prevNum;
     const batchNum = props.brewBatch.number;
+    const batchEnter = props.brewBatch.batch.enter;
+
 
 
     const userNumberOptions = () => {
@@ -85,10 +86,10 @@ const styles = theme => ({
           })
 
           return letterOptions;
-      } else if (previousBatch !== batchNum && !props.brewBatch.batch.enter) {
+      } else if (previousBatch !== batchNum && !batchEnter) {
          let optionB = [];
          return optionB=['A'];
-      } else if(props.brewBatch.batch.enter) {
+      } else if(batchEnter) {
          let optionC = [];
         return optionC = [props.brewBatch.batch.id]
       } else {
@@ -179,9 +180,10 @@ const styles = theme => ({
                     { root: classes.cssOutlinedInput,
                       focused: classes.cssFocused,
                       notchedOutline: classes.notchedOutline,
-                      input: classes.input
-                    }
-              }}  > 
+                      input: classes.input,
+                    },
+                    readOnly: batchEnter
+                  }}  > 
 
                   {input.options 
                     ? 

@@ -1,7 +1,7 @@
 import Nav from '../Nav/Nav';
 import BrewButton from '../Home/BrewButton/BrewButton';
 import React from 'react';
-import Fermenter from './Fermenter/Fermenter'; 
+import Fermenter from './Fermenter/FermenterContainer'; 
 import '../../App.css';
 
 

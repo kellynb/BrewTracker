@@ -208,26 +208,51 @@ class BrewContainer extends Component {
 
     // set state after fetch call with data from a batch that has been finished a placed into a fermenter
     updateStateLastCompletedBrew = (data) => {
-      this.setState({
-        prevNum: data.number,
-        prevStyle: data.style,
-        prevTank: data.tank,
-        batch: {
-          ...this.state.batch,
-          prevId: data.batch[data.batch.length-1].id
-        }
-      })
+      const findLastSubmit = data;
+      const batchArr = findLastSubmit.batch
+      for(let i=batchArr.length-1; i >= 0; i--) {
+        if (batchArr[i].submit === true) {
+          return this.setState({
+            prevNum: data.number,
+            prevStyle: data.style,
+            prevTank: data.tank,
+            batch: {
+              ...this.state.batch,
+              prevId: batchArr[i].id
+            }
+          })
+        } 
+      }
     }
 
     inputBatchSequence = () => {
       getBatch()
           .then(data => {
-            const dataObj = data[0];      
-            if (dataObj !== undefined) {
-                this.changeNull(dataObj);
-                this.updateStateBatchBrewing(dataObj);              
-                //run interval to post data about that batch to save data during the brew process
-                this.runInterval = setInterval(() => this.updateMetricData(),30000)
+            const brewIsEnterObj = data[0];      
+            if (brewIsEnterObj !== undefined) {
+                this.changeNull(brewIsEnterObj)
+                this.updateStateBatchBrewing(brewIsEnterObj)
+                getLastSubmit()
+                  .then(lastBrewEnter => {
+                    this.updateStateLastCompletedBrew(lastBrewEnter);
+                  })
+                  .then(() =>{
+                    this.runInterval = setInterval(() => this.updateMetricData(),30000)
+                  }).catch(err => {
+                    console.error('Request failed', err)
+                  })
+                getTanks()
+                  .then(data => {
+                          const tankList = [];
+                          data.forEach(tank => {
+                              tankList.push(tank.tank)
+                            })
+                          this.setState({
+                              tanks: tankList
+                          })
+                  }).catch(err => {
+                    console.error('Request failed', err)
+                  })                           
               } else {
                 // if last batch has runOff to fermenter get information from this batch for input options
                 getLastSubmit()
