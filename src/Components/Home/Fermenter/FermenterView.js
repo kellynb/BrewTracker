@@ -2,9 +2,10 @@ import React from 'react';
 import '../../../App.css';
 
 const FermenterView = (props) => {
+    console.log(props.tanks)
     return (
         <section>
-            {props.state.map( fermenter => {
+            {props.tanks.map( (fermenter,index) => {
                 
                 const styles = {
                     backgroundColor: "#5d9732",
@@ -16,7 +17,7 @@ const FermenterView = (props) => {
                 }
 
                 return (
-                        <div className = "cFermenter" key={fermenter.tank} style={styles}>
+                        <div className = "cFermenter" key={index} style={styles}>
                             <h3 className="TankNumber">{fermenter.tank}</h3>
                             {fermenter.runOff ? 
                                 <div className="fermenterData">

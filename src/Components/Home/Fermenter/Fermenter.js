@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import FermenterView from './FermenterView';
-import {getFermenters} from './FermenterFetch';
+import FermenterView from './FermenterViewContainer';
 
 class Fermenter extends Component {
     state = {
@@ -9,17 +8,12 @@ class Fermenter extends Component {
     }
 
     componentDidMount () {
-        getFermenters(this)
-            .then(response => response.json())
-                .then(data => {
-                    // this.props.tanks
-                        this.setState({cTanks: [...data]});
-        })
+      this.props.getTanks()
     }
 
     render () {
         return (
-            <FermenterView state={this.state.cTanks}/>
+            <FermenterView/>
         )
     }   
     

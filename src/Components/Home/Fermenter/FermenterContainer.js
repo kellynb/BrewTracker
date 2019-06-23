@@ -1,16 +1,12 @@
 import {connect} from 'react-redux';
-import {update} from './FermenterActions';
+import {getTanks} from './FermenterActions';
 import Fermenter from './Fermenter';
 
 
-const mapDispatchToProps = {
-    tanks: update
+function mapDispatchToProps(dispatch){
+   return {
+    getTanks: () => dispatch(getTanks())
+   }
 }
 
-const mapStateToProps = (state) => {
-    return{
-      clicks: state.clicks
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Fermenter);
+export default connect(null, mapDispatchToProps)(Fermenter);
