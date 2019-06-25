@@ -2,7 +2,6 @@ import React from 'react';
 import '../../../App.css';
 
 const FermenterView = (props) => {
-    console.log(props.tanks)
     return (
         <section>
             {props.tanks.map( (fermenter,index) => {

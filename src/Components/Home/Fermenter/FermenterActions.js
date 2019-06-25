@@ -5,10 +5,22 @@ export function getTanks() {
         return getFermenters()
             .then(response => response.json())
             .then(data => {
-                console.log(data)
+                // FIND only empty tanks
+                const emptyTanks = data.reduce( (acc,tank) => {
+                    if(!tank.runOff) {
+                      acc.push(tank.tank);
+                    }
+                    return acc
+                }, [])
+
                 dispatch({
                     type: "GET_CTANKS",
                     value: data
+                })
+
+                dispatch({
+                    type: "EMPTY_CTANKS",
+                    value: emptyTanks
                 })
             })
     }

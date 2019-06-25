@@ -65,16 +65,6 @@ export function getLastSubmit() {
     .then(response => response.json())
 }
 
-export function getTanks() {
-  return fetch("/fermenters/open", {
-    headers: {
-      'content-type': 'application/json'
-    },
-    method: 'GET'
-    })
-    .then(response => response.json())
-  }
-
 export function deleteBrew(number) {
   return fetch(`/brews/${number}`, {
     headers: {

@@ -5,8 +5,6 @@ import BrewContainer from './Components/Brew/BrewContainer';
 import './App.css';
 
 class App extends Component {
-  state = {
-  }
   
 
   render() {

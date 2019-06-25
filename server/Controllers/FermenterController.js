@@ -23,11 +23,4 @@ exports.list =  function list(request, response) {
         return response.json(fermenter);
     })    
 }
-
-exports.listOpen =  function listOpen(request, response) {
-    Fermenter.find({'runOff': false}, (err,brewbatch) => {
-        if (err) return console.error(err);
-        return response.json(brewbatch);
-    })    
-}
   

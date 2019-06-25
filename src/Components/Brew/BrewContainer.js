@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BrewView from './BrewView';
-import {createNewBatch, addNewBrew, getBatch, updateBatch, fillFermenters, getLastSubmit, getTanks, deleteBrew, deleteBatch} from './BrewFetch';
+import {createNewBatch, addNewBrew, getBatch, updateBatch, fillFermenters, getLastSubmit, deleteBrew, deleteBatch} from './BrewFetch';
 
 class BrewContainer extends Component {
 
@@ -11,7 +11,6 @@ class BrewContainer extends Component {
       prevStyle: '',
       tank: '',
       prevTank: '',
-      tanks: [],
       batch: 
           {id: "",
            prevId: "",
@@ -240,19 +239,7 @@ class BrewContainer extends Component {
                     this.runInterval = setInterval(() => this.updateMetricData(),30000)
                   }).catch(err => {
                     console.error('Request failed', err)
-                  })
-                getTanks()
-                  .then(data => {
-                          const tankList = [];
-                          data.forEach(tank => {
-                              tankList.push(tank.tank)
-                            })
-                          this.setState({
-                              tanks: tankList
-                          })
-                  }).catch(err => {
-                    console.error('Request failed', err)
-                  })                           
+                  })                          
               } else {
                 // if last batch has runOff to fermenter get information from this batch for input options
                 getLastSubmit()
@@ -262,20 +249,6 @@ class BrewContainer extends Component {
                       .catch(err => {
                         console.error('Request failed', err)
                       });
-                // grab tanks that are empty for user fill options
-                getTanks()
-                  .then(data => {
-                    const tankList = [];
-                    data.forEach(tank => {
-                      tankList.push(tank.tank)
-                    })
-                    this.setState({
-                      tanks: tankList
-                    })
-                  })
-                  .catch(err => {
-                    console.error('Request failed', err)
-                  });
               }
         })
         .catch(err => {
