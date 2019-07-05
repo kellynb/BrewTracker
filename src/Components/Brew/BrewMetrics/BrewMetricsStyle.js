@@ -47,7 +47,7 @@ const styles = theme => ({
 
     const inputNames = ['Strike Volume', 'Mash Temp', 'Sparge Volume', 
                         'Kettle Brix', 'Kettle Volume', 'Whirlpool Volume',
-                        'Flow Meter Volume', 'Notes'];
+                        'Flow Meter Volume','Run Off Temperature', 'Fermenter Temperature', 'Notes'];
 
     const inputs = [
       {
@@ -90,7 +90,22 @@ const styles = theme => ({
         type: "number", 
         name:"fmVolume",
         value: props.brewBatch.batch.fmVolume,
-        onChange: props.handleBatch
+        onChange: props.handleBatch,
+        required: true
+      },
+      {
+        type: "number", 
+        name:"runOffTemp",
+        value: props.brewBatch.batch.runOffTemp,
+        onChange: props.handleBatch,
+        required: true
+      },
+      {
+        type: "number", 
+        name: "tankTemp",
+        value: props.brewBatch.batch.tankTemp,
+        onChange: props.handleBatch,
+        required: true
       },
       {
         type: "text", 
@@ -112,6 +127,7 @@ const styles = theme => ({
             variant="outlined" 
             label= {inputNames[index]}
             margin="normal"
+            required = {input.required}
             InputLabelProps={{
                 classes: {
                   root: classes.cssLabel,

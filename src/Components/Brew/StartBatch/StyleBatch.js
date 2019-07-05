@@ -118,6 +118,8 @@ const styles = theme => ({
       if (previousBatch === batchNum) {
         tank = [props.brewBatch.prevTank];
         return tank
+      } else if (previousBatch !== batchNum && previousBatch !== '' && props.brewBatch.tank !== "") {
+        return currentTank
       } else if (previousBatch !== batchNum && previousBatch !== '') {
         return tanks
       } else if (previousBatch !== batchNum && previousBatch === '') {

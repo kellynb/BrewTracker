@@ -6,7 +6,8 @@ exports.update =  function update(request, response) {
     const updateTank = {'$set': {
             'number': newBatch.number,
             'style' : newBatch.style,
-            'runOff': newBatch.runOff
+            'runOff': newBatch.runOff,
+            'status': newBatch.status
             },
             '$push': {'bbls': newBatch.batch}
         }  

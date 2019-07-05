@@ -5,7 +5,8 @@ const FermenterSchema = new mongoose.Schema({
     style: String,
     tank: String,
     bbls : [Number],
-    runOff: Boolean
+    runOff: Boolean,
+    status: String
   });
 
 const Fermenter = mongoose.model('Fermenter', FermenterSchema);

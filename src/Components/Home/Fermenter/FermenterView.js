@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import '../../../App.css';
 
 const FermenterView = (props) => {
@@ -16,17 +17,19 @@ const FermenterView = (props) => {
                 }
 
                 return (
-                        <div className = "cFermenter" key={index} style={styles}>
+                    <div className = "cFermenter" key={index} style={styles}>
+                        <Link to={`/ProductionTank/${fermenter.tank}`} className='links'>
                             <h3 className="TankNumber">{fermenter.tank}</h3>
-                            {fermenter.runOff ? 
-                                <div className="fermenterData">
-                                    <h4>Batch Number: {fermenter.number}</h4>
-                                    <h4>Beer Style: {fermenter.style}</h4>
-                                    <h4>Volume: {fermenter.bbls.reduce( (acc, bbl) => (acc +bbl), 0)} bbls</h4>
-                                </div>
-                                :
-                                null}
-                        </div>
+                        </Link>
+                        {fermenter.runOff ? 
+                            <div className="fermenterData">
+                                <h4>Batch Number: {fermenter.number}</h4>
+                                <h4>Beer Style: {fermenter.style}</h4>
+                                <h4>Volume: {fermenter.bbls.reduce( (acc, bbl) => (acc +bbl), 0)} bbls</h4>
+                            </div>
+                        :
+                        null}
+                     </div>   
                 )
             })}
         </section>
