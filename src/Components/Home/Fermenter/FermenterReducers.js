@@ -1,7 +1,6 @@
 
-import {combineReducers} from 'redux';
 
-const cTanks = (state = [], action) =>{
+export const cTanks = (state = [], action) =>{
   switch (action.type) {
     case "GET_CTANKS":
       return action.value;
@@ -10,9 +9,11 @@ const cTanks = (state = [], action) =>{
   }
 }
 
-
-let fermenterReducers = combineReducers({
-    cTanks
-  })
-  
-export default fermenterReducers;
+export const emptyCTanks = (state = [], action) => {
+  switch (action.type) {
+    case "EMPTY_CTANKS":
+      return action.value;
+    default:
+      return state;
+  }
+}

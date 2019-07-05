@@ -13,6 +13,8 @@ const BrewBatchSchema = new mongoose.Schema({
        kettleVolume: Number,
        whirlPoolVolume: Number,
        fmVolume: Number,
+       tankTemp: Number,
+       runOffTemp: Number,
        notes: String,
        enter: Boolean,
        submit: Boolean

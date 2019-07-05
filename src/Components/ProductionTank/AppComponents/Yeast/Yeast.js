@@ -1,0 +1,103 @@
+import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+import '../../../../App.css';
+
+const styles = theme => ({
+
+    formControl: {
+      margin: theme.spacing.unit,
+    },
+
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        backgroundColor: '#d1d0bb',
+      },
+    
+    input: {
+        color: '#5c4925'
+    },
+
+    cssLabel: {
+        '&$cssFocused': {
+          color: '#5c4925',
+          fontWeight: 'bold',
+          fontSize: 15
+        },
+    },
+    cssFocused: {},
+    cssUnderline: {
+        '&:after': {
+          borderBottomColor: '#5c4925',
+        },
+      },
+    cssOutlinedInput: {
+        '&$cssFocused $notchedOutline': {
+          borderColor: '#5c4925',
+        },
+      },
+
+      notchedOutline: {
+      },
+  });
+
+const Yeast = (props) => {
+    const {classes} = props;
+
+    return (
+        <div className="fermentationData">
+            <p>Yeast Removal</p>
+            <div className = "organizeFermentation">
+                <TextField
+                    value={props}
+                    onChange={props}
+                    type= "date"
+                    name = "Dump 1"
+                    className={classes.textField} 
+                    variant="outlined" 
+                    label= "Dump 1"
+                    margin="normal"
+                    InputLabelProps={{
+                        classes: {
+                        root: classes.cssLabel,
+                        focused: classes.cssFocused,
+                        },
+                    }} 
+                    InputProps={{classes: 
+                        { root: classes.cssOutlinedInput,
+                        focused: classes.cssFocused,
+                        notchedOutline: classes.notchedOutline,
+                        input: classes.input,
+                        }
+                    }}  >
+                </TextField>
+                <TextField
+                    value={props}
+                    onChange={props}
+                    type= "date"
+                    name = "Dump 2"
+                    className={classes.textField} 
+                    variant="outlined" 
+                    label= "Dump 2"
+                    margin="normal"
+                    InputLabelProps={{
+                        classes: {
+                        root: classes.cssLabel,
+                        focused: classes.cssFocused,
+                        },
+                    }} 
+                    InputProps={{classes: 
+                        { root: classes.cssOutlinedInput,
+                        focused: classes.cssFocused,
+                        notchedOutline: classes.notchedOutline,
+                        input: classes.input,
+                        }
+                    }}  >
+                </TextField>
+            </div>
+        </div>
+    )
+}
+
+export default withStyles(styles)(Yeast);

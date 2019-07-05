@@ -1,6 +1,6 @@
 import '../../../App.css';
 import React from 'react';
-import StyleBatch from './StyleBatch';
+import StyleBatch from './StyleBatchContainer';
 
 
 const StartBatch = (props) => {

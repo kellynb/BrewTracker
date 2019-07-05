@@ -6,7 +6,8 @@ exports.update =  function update(request, response) {
     const updateTank = {'$set': {
             'number': newBatch.number,
             'style' : newBatch.style,
-            'runOff': newBatch.runOff
+            'runOff': newBatch.runOff,
+            'status': newBatch.status
             },
             '$push': {'bbls': newBatch.batch}
         }  
@@ -21,13 +22,6 @@ exports.list =  function list(request, response) {
     Fermenter.find({}, (err, fermenter) => {
         if (err) return console.error(err);
         return response.json(fermenter);
-    })    
-}
-
-exports.listOpen =  function listOpen(request, response) {
-    Fermenter.find({'runOff': false}, (err,brewbatch) => {
-        if (err) return console.error(err);
-        return response.json(brewbatch);
     })    
 }
   

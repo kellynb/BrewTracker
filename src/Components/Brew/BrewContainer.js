@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BrewView from './BrewView';
-import {createNewBatch, addNewBrew, getBatch, updateBatch, fillFermenters, getLastSubmit, getTanks, deleteBrew, deleteBatch} from './BrewFetch';
+import {createNewBatch, addNewBrew, getBatch, updateBatch, fillFermenters, getLastSubmit, deleteBrew, deleteBatch} from './BrewFetch';
 
 class BrewContainer extends Component {
 
@@ -11,7 +11,7 @@ class BrewContainer extends Component {
       prevStyle: '',
       tank: '',
       prevTank: '',
-      tanks: [],
+      status: '',
       batch: 
           {id: "",
            prevId: "",
@@ -22,6 +22,8 @@ class BrewContainer extends Component {
            kettleVolume: "",
            whirlPoolVolume: "",
            fmVolume: "",
+           tankTemp: "",
+           runOffTemp: "",
            notes: '',
            enter: false,
            submit: false,
@@ -98,6 +100,8 @@ class BrewContainer extends Component {
             kettleVolume: "",
             whirlPoolVolume: "",
             fmVolume: "",
+            tankTemp: "",
+            runOffTemp: "",
             notes: '',
             enter: !this.state.batch.enter
           }
@@ -118,6 +122,8 @@ class BrewContainer extends Component {
             kettleVolume: "",
             whirlPoolVolume: "",
             fmVolume: "",
+            tankTemp: "",
+            runOffTemp: "",
             notes: '',
             id: "",
             enter: !this.state.batch.enter
@@ -128,6 +134,7 @@ class BrewContainer extends Component {
 
     handleTransfer = () => {
       this.setState({
+        status: "fermenting",
         batch: {
         ...this.state.batch,
         submit: !this.state.submit
@@ -146,7 +153,9 @@ class BrewContainer extends Component {
             tank: tank,
             style: style,
             batch: batch.fmVolume,
-            runOff: runOff
+            runOff: runOff,
+            tankTemp: this.state.batch.tankTemp,
+            status: this.state.status
         }
         updateBatch(batchObj)
           .then(() => {
@@ -190,6 +199,7 @@ class BrewContainer extends Component {
           number: data.number,
           style: data.style,
           tank: data.tank,
+          status: data.status,
           batch: {
             id: lastBatch.id,
             strikeVolume: lastBatch.strikeVolume,
@@ -199,6 +209,8 @@ class BrewContainer extends Component {
             kettleVolume: lastBatch.kettleVolume,
             whirlPoolVolume: lastBatch.whirlPoolVolume,
             fmVolume: lastBatch.fmVolume,
+            tankTemp: lastBatch.tankTemp,
+            runOffTemp: lastBatch.runOffTemp,
             notes: lastBatch.notes,
             enter: lastBatch.enter,
             submit: lastBatch.submit
@@ -206,7 +218,7 @@ class BrewContainer extends Component {
         })
     }
 
-    // set state after fetch call with data from a batch that has been finished a placed into a fermenter
+    // set state after fetch call with data from a batch that has been finished and placed into a fermenter
     updateStateLastCompletedBrew = (data) => {
       const findLastSubmit = data;
       const batchArr = findLastSubmit.batch
@@ -240,19 +252,7 @@ class BrewContainer extends Component {
                     this.runInterval = setInterval(() => this.updateMetricData(),30000)
                   }).catch(err => {
                     console.error('Request failed', err)
-                  })
-                getTanks()
-                  .then(data => {
-                          const tankList = [];
-                          data.forEach(tank => {
-                              tankList.push(tank.tank)
-                            })
-                          this.setState({
-                              tanks: tankList
-                          })
-                  }).catch(err => {
-                    console.error('Request failed', err)
-                  })                           
+                  })                          
               } else {
                 // if last batch has runOff to fermenter get information from this batch for input options
                 getLastSubmit()
@@ -262,20 +262,6 @@ class BrewContainer extends Component {
                       .catch(err => {
                         console.error('Request failed', err)
                       });
-                // grab tanks that are empty for user fill options
-                getTanks()
-                  .then(data => {
-                    const tankList = [];
-                    data.forEach(tank => {
-                      tankList.push(tank.tank)
-                    })
-                    this.setState({
-                      tanks: tankList
-                    })
-                  })
-                  .catch(err => {
-                    console.error('Request failed', err)
-                  });
               }
         })
         .catch(err => {
