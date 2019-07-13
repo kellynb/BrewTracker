@@ -25,3 +25,10 @@ export function getTanks() {
             })
     }
 }
+
+export function setTank(tank) {
+    return {
+            type: "SET_TANK",
+            value: tank
+            }
+}
