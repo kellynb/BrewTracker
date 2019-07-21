@@ -26,9 +26,12 @@ export function getTanks() {
     }
 }
 
-export function setTank(tank) {
-    return {
-            type: "SET_TANK",
-            value: tank
-            }
+export function setTank(tank,history) {
+    return function (dispatch) {
+        dispatch({
+                type: "SET_TANK",
+                value: tank
+                })
+        history.push(`/ProductionTank/${tank.tank}`)
+    }
 }

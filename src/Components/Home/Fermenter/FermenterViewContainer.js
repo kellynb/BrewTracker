@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
 import {setTank} from './FermenterActions';
+import {withRouter} from 'react-router-dom';
 import FermenterView from './FermenterView';
 
 
@@ -9,10 +10,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch,props){
   return {
-   setTank: tank => dispatch(setTank(tank))
+   setTank: tank => dispatch(setTank(tank,props.history))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FermenterView)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FermenterView))

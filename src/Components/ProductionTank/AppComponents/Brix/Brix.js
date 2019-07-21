@@ -45,13 +45,13 @@ const styles = theme => ({
 
 const Brix = (props) => {
     const {classes} = props;
-
+    const brixAvg = props.brix.reduce((acc,brix,index) => acc+(brix-acc)/(index+1),0);
     return (
         <div className="fermentationData">
             <p>Brix</p>
             <div className = "organizeFermentation">
                 <TextField
-                    value={props}
+                    value={brixAvg}
                     onChange={props}
                     type= "number"
                     name = "Brix"

@@ -1,15 +1,17 @@
 import React from 'react';
 import Nav from '../Nav/Nav';
-import FermenterIcon from './FermenterIcon/FermenterIcon';
+import FermenterIcon from './FermenterIcon/FermenterIconContainer';
 import AppBar from './AppComponents/AppBar/AppBarContainer';
-import TemperatureList from './AppComponents/Temperature';
+import TemperatureList from './AppComponents/Temperature/TemparatureContainer';
 import Spund from './AppComponents/Spund/Spund';
 import Yeast from './AppComponents/Yeast/Yeast';
-import Brix from './AppComponents/Brix/Brix';
+import Brix from './AppComponents/Brix/BrixContainer';
 import '../../App.css';
 
 
-const ProductionView = () => {
+
+const ProductionView = (props) => {
+    console.log(props.status)
     return (
         <main>
             <Nav />
@@ -21,10 +23,14 @@ const ProductionView = () => {
                     <section id = "fermentationForm">
                         <div>
                             <AppBar />
-                            <TemperatureList />
-                            <Brix />
-                            <Spund />
-                            <Yeast />
+                                <div>
+                                    <TemperatureList />
+                                    {props.status === 'fermenting' ? <Brix /> : null}
+                                    <Spund />
+                                    {props.status === 'conditioning' ? <Yeast /> : null}
+                                </div>
+                                <div>
+                                </div>
                         </div>
                     </section>
                 </div>

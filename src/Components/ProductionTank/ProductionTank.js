@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import ProductionView from './ProductionView';
+import ProductionView from './ProductionViewContainer';
 
 
 class ProductionTank extends Component  {
-    state = {
-        
-    }
+    
     
     
     render () {
