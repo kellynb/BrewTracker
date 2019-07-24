@@ -2,10 +2,11 @@ import React from 'react';
 import '../../../App.css';
 
 const FermenterView = (props) => {
+    
     return (
         <section>
             {props.tanks.map( (fermenter,index) => {
-                
+                const fermenterTemp =  fermenter.tankTemp;
                 const styles = {
                     backgroundColor: "#5d9732",
 
@@ -16,6 +17,7 @@ const FermenterView = (props) => {
                 }
 
                 return (
+                    
                     <div className = "cFermenter" key={index} style={styles}>
                         <button onClick={() =>{props.setTank(fermenter)}} className="TankNumber">
                             <h3 id="fermenterVal">{fermenter.tank}</h3>
@@ -25,7 +27,7 @@ const FermenterView = (props) => {
                                 <h4>Batch Number: {fermenter.number}</h4>
                                 <h4>Beer Style: {fermenter.style}</h4>
                                 <h4>Volume: {fermenter.bbls.reduce( (acc, bbl) => (acc +bbl), 0)} bbls</h4>
-                                <h4>Temp: {fermenter.tankTemp} F</h4>
+                                <h4>Temp: {fermenterTemp[fermenterTemp.length-1] ? fermenterTemp[fermenterTemp.length-1].temp: 0} F</h4>
                                 <h4>Starting Brix: {fermenter.brix.reduce((acc,brix,index) => acc+(brix-acc)/(index+1),0)} brix </h4>
                             </div>
                         :

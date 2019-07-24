@@ -4,7 +4,10 @@ const FermenterSchema = new mongoose.Schema({
     number: Number,
     style: String,
     tank: String,
-    tankTemp: Number,
+    tankTemp: [{
+      temp: Number,
+      date: Date
+    }],
     bbls : [Number],
     brix: [Number],
     runOff: Boolean,

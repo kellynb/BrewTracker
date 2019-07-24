@@ -51,7 +51,7 @@ const TemperatureList = (props) => {
             <p>Temperature</p>
             <div className = "organizeFermentation">
                 <TextField
-                    value={props.temp}
+                    value={props.temp[props.temp.length-1] ? props.temp[props.temp.length-1].temp : 0}
                     onChange={props}
                     type= "number"
                     name = "Temp"

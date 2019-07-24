@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import logo from '../../Images/beerLogo.png';
 import MenuList from './MenuList/MenuList';
-import Icon from '@material-ui/core/Icon';
+import MenuIcon from '@material-ui/icons/Menu';
 import '../../App.css';
 
 const styles = {
@@ -20,16 +20,15 @@ const styles = {
   },
 
   grow: {
-    width: 'auto',
     fontFamily: 'Fira Sans Condensed',
     color: '#e6e5d4',
-    fontSize: '25px'
+    fontSize: '25px',
+    flexGrow: 1
   },
 
   toolbar: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     textAlign: 'center'
   },
 
@@ -69,9 +68,9 @@ class Nav extends Component {
               aria-owns={anchorEl ? 'simple-menu' : undefined}
               aria-haspopup="true"
               onClick={this.handleClick}>
-              <Icon>menu</Icon>
-              <MenuList anchorEl ={this.state.anchorEl} handleClose={this.handleClose}/>
+              <MenuIcon/>
             </IconButton>
+            <MenuList anchorEl ={this.state.anchorEl} handleClose={this.handleClose}/>
           </Toolbar>
         </AppBar>
       </div>

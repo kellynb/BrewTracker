@@ -11,7 +11,6 @@ import '../../App.css';
 
 
 const ProductionView = (props) => {
-    console.log(props.status)
     return (
         <main>
             <Nav />
