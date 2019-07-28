@@ -4,12 +4,12 @@ import React from 'react';
 // Change color of background image
 const fillColor = {
     fermenting: "#5d9732",
-    conditioning: "blue"
+    conditioning: "#3490db"
 }
 
 const fermenterIcon = (props) => {
     return  (   
-    <svg height="600px" width="600px" fill={fillColor[props.status]} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 432 288" enableBackground="new 0 0 432 288" xmlSpace="preserve">
+    <svg height="500px" width="600px" fill={fillColor[props.status]} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 432 288" enableBackground="new 0 0 432 288" xmlSpace="preserve">
         <circle cx={216} cy="271.3" r={4} />
         <polygon points="213.1,257.2 213.1,261.5 172.8,261.5 172.8,205.3 163.9,190.1 163.9,277.3 166.5,277.3 166.5,281.4 161.9,281.4   161.9,284.3 174.5,284.3 174.5,281.4 169.9,281.4 169.9,277.3 172.8,277.3 172.8,267.3 259.5,267.3 259.5,277.3 262.4,277.3   262.4,281.4 257.8,281.4 257.8,284.3 270.1,284.3 270.1,281.4 265.5,281.4 265.5,277.3 268.1,277.3 268.1,190.1 259.5,205.3   259.5,261.5 218.9,261.5 218.9,257.2 ">
         </polygon>

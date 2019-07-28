@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Home from './Components/Home/Home';
-import ProductionTank from './Components/ProductionTank/ProductionTank';
+import ProductionTank from './Components/ProductionTank/ProductionContainer';
 import BrewContainer from './Components/Brew/BrewContainer';
 import './App.css';
 

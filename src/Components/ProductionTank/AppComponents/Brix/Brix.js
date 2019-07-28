@@ -46,15 +46,16 @@ const styles = theme => ({
 const Brix = (props) => {
     const {classes} = props;
     const brixAvg = props.brix.reduce((acc,brix,index) => acc+(brix-acc)/(index+1),0);
+
     return (
         <div className="fermentationData">
             <p>Brix</p>
             <div className = "organizeFermentation">
                 <TextField
-                    value={brixAvg}
-                    onChange={props}
+                    value={props.fermentingBrix ? props.fermentingBrix : brixAvg}
+                    onChange={props.userInput}
                     type= "number"
-                    name = "Brix"
+                    name = "fermentingBrix"
                     className={classes.textField} 
                     variant="outlined" 
                     label= "Brix"

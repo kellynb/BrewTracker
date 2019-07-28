@@ -9,7 +9,7 @@ import MenuItems from './MenuItems/MenuItems';
 
 const styles = {
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   grow: {
     flexGrow: 1,
@@ -19,10 +19,12 @@ const styles = {
     marginRight: 20,
   },
   fermenting: {
-    backgroundColor: '#5d9732'
+    backgroundColor: '#5d9732',
+    boxShadow: 'none'
   },
   conditioning: {
-    backgroundColor: 'blue'
+    backgroundColor: '#3490db',
+    boxShadow: 'none'
   }
 };
 
@@ -38,7 +40,6 @@ class ButtonAppBar extends Component {
 
   handleClose = () => {
     this.setState({ anchorEl: null });
-    this.props.changeStatus()
   };
 
   render () {
@@ -66,7 +67,11 @@ class ButtonAppBar extends Component {
               :
               null
             }
-            <MenuItems anchorEl ={this.state.anchorEl} handleClose={this.handleClose} status={this.props.status}/>
+            <MenuItems 
+              anchorEl ={this.state.anchorEl} 
+              handleClose={this.handleClose} 
+              status={this.props.status} 
+              changeStatus={this.props.changeStatus}/>
           </Toolbar>
         </AppBar>
       </div>

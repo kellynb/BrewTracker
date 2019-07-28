@@ -50,19 +50,16 @@ const Yeast = (props) => {
             <p>Yeast Removal</p>
             <div className = "organizeFermentation">
                 <TextField
-                    value={props}
-                    onChange={props}
+                    value={props.yeastDump1}
+                    onChange={props.userInput}
                     type= "date"
-                    name = "Dump 1"
+                    name = "yeastDump1"
                     className={classes.textField} 
                     variant="outlined" 
                     label= "Dump 1"
                     margin="normal"
                     InputLabelProps={{
-                        classes: {
-                        root: classes.cssLabel,
-                        focused: classes.cssFocused,
-                        },
+                        shrink: true
                     }} 
                     InputProps={{classes: 
                         { root: classes.cssOutlinedInput,
@@ -73,19 +70,16 @@ const Yeast = (props) => {
                     }}  >
                 </TextField>
                 <TextField
-                    value={props}
-                    onChange={props}
+                    value={props.yeastDump2}
+                    onChange={props.userInput}
                     type= "date"
-                    name = "Dump 2"
+                    name = "yeastDump2"
                     className={classes.textField} 
                     variant="outlined" 
                     label= "Dump 2"
                     margin="normal"
                     InputLabelProps={{
-                        classes: {
-                        root: classes.cssLabel,
-                        focused: classes.cssFocused,
-                        },
+                        shrink: true
                     }} 
                     InputProps={{classes: 
                         { root: classes.cssOutlinedInput,

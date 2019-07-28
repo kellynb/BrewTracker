@@ -12,7 +12,7 @@ import '../../App.css';
 const styles = {
   root: {
     flexGrow: 1,
-    height: '70px',
+    height: '9.5vh',
   },
 
   appbar: {
@@ -34,7 +34,7 @@ const styles = {
 
   menuButton: {
     padding: 0
-  },
+  }
 
 };
 

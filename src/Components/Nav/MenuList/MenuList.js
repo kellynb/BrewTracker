@@ -12,7 +12,7 @@ const MenuList = (props) => {
           anchorEl={props.anchorEl} 
           open={Boolean(props.anchorEl)}
           onClose={props.handleClose}>
-          <Link to='/' className="links">
+          <Link to='/' className='links'>
             <MenuItem onClick={props.handleClose}>Home</MenuItem>
           </Link>
           <Link to='/Brew' className='links'>

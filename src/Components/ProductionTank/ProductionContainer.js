@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import ProductionView from './ProductionView';
+import ProductionTank from './ProductionTank';
 
 
 const mapStateToProps = (state) => {
@@ -8,4 +8,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(ProductionView);
+export default connect(mapStateToProps)(ProductionTank);
