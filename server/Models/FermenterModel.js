@@ -5,13 +5,21 @@ const FermenterSchema = new mongoose.Schema({
     style: String,
     tank: String,
     tankTemp: [{
-      temp: Number,
+      tankTemp: Number,
       date: Date
     }],
     bbls : [Number],
     brix: [Number],
     runOff: Boolean,
-    status: String
+    status: String,
+    fermentingBrix :[{
+      fermentingBrix: Number,
+      date: Date
+    }],
+    spund: Boolean,
+    spundPressure: Number,
+    yeastDump1: Date,
+    yeastDump2: Date
   });
 
 const Fermenter = mongoose.model('Fermenter', FermenterSchema);

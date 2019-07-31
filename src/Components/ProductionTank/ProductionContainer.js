@@ -4,7 +4,10 @@ import ProductionTank from './ProductionTank';
 
 const mapStateToProps = (state) => {
     return {
-      status: state.selectTank.status
+      status: state.selectTank.status,
+      temp: state.selectTank.tankTemp,
+      number: state.selectTank.number,
+      tank: state.selectTank.tank
     }
 }
 

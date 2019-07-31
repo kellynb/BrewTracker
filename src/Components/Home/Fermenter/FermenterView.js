@@ -27,7 +27,7 @@ const FermenterView = (props) => {
                                 <h4>Batch Number: {fermenter.number}</h4>
                                 <h4>Beer Style: {fermenter.style}</h4>
                                 <h4>Volume: {fermenter.bbls.reduce( (acc, bbl) => (acc +bbl), 0)} bbls</h4>
-                                <h4>Temp: {fermenterTemp[fermenterTemp.length-1] ? fermenterTemp[fermenterTemp.length-1].temp: 0} F</h4>
+                                <h4>Temp: {fermenter.tankTemp[fermenter.tankTemp.length-1] ? fermenter.tankTemp[fermenter.tankTemp.length-1].tankTemp: 0} F</h4>
                                 <h4>Starting Brix: {fermenter.brix.reduce((acc,brix,index) => acc+(brix-acc)/(index+1),0)} brix </h4>
                             </div>
                         :

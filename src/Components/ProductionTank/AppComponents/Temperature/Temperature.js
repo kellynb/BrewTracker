@@ -64,7 +64,7 @@ const TemperatureList = (props) => {
             for(let i=props.temp.length-1; i > -1; i-- ){
                 let compareTemp = props.temp[i+1];
                 if (compareTemp !== undefined) {
-                  if (compareTemp.temp !== props.temp[i].temp) {
+                  if (compareTemp.tankTemp !== props.temp[i].tankTemp) {
                     const getChangeDate = compareTemp.date;
                     const updateDate = Date.parse(getChangeDate);
                     const timeDiff = currentTime - updateDate;
@@ -83,7 +83,7 @@ const TemperatureList = (props) => {
         if (props.tankTemp) {
             return props.tankTemp
         } else if (props.temp[props.temp.length-1]) {
-            return props.temp[props.temp.length-1].temp
+            return props.temp[props.temp.length-1].tankTemp
         } else {
             return 0
         }
@@ -119,7 +119,6 @@ const TemperatureList = (props) => {
                 </TextField>
                 <TextField
                     value={getTemperatureDays()}
-                    onChange={props}
                     type= "number"
                     name = "Time"
                     className={classes.textField} 

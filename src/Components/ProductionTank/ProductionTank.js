@@ -7,11 +7,13 @@ import Spund from './AppComponents/Spund/Spund';
 import Yeast from './AppComponents/Yeast/Yeast';
 import Brix from './AppComponents/Brix/BrixContainer';
 import Save from './AppComponents/Save/Save';
+import {updateFermentation} from './ProductionFetch';
 import '../../App.css';
 
 
 class ProductionTank extends Component  {
     state = {
+        status: "",
         tankTemp: "",
         fermentingBrix:"",
         spund: false,
@@ -32,6 +34,31 @@ class ProductionTank extends Component  {
             spund: !this.state.spund
         })
     }
+
+    statusUpdate = (value) => {
+        this.setState({
+            status: value
+        })
+    }
+
+    sendUpdate = () => {
+        const tankObj= {};
+        const loopState = Object.entries(this.state);
+        for (const [key, value] of loopState) {
+            if (value && (key === 'tankTemp' || key === 'fermentingBrix')) {
+                tankObj[key] = {
+                    [key]: value,
+                    date: new Date()
+                }
+            } else if(value) {
+                tankObj[key] = value;
+            }
+            
+        }
+        
+        updateFermentation(tankObj,this.props.tank,this.props.number) 
+        
+    }
     
     
     render () {
@@ -45,7 +72,7 @@ class ProductionTank extends Component  {
                     </section>
                     <section id = "fermentationForm">
                         <div>
-                            <AppBar />
+                            <AppBar statusUpdate={this.statusUpdate}/>
                                 <div>
                                     <TemperatureList 
                                         userInput={this.userInput} 
@@ -70,7 +97,7 @@ class ProductionTank extends Component  {
                                         userInput={this.userInput}
                                     />
                                 </div>
-                                <Save/>
+                                <Save sendUpdate={this.sendUpdate}/>
                         </div>
                     </section>
                 </div>

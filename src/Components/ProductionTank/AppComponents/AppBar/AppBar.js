@@ -42,21 +42,29 @@ class ButtonAppBar extends Component {
     this.setState({ anchorEl: null });
   };
 
+  handleStatusChange = (value) => {
+    const valueAllLowerCase = value.toLowerCase();
+    this.props.statusUpdate(valueAllLowerCase);
+    this.props.changeStatus();
+  }
+
   render () {
+    const getStatus = this.props.status
     const { classes } = this.props;
     const {anchorEl} = this.state;
-    const firstLetter = this.props.status[0];
+    const firstLetter = getStatus[0];
     const firstLetterUpperCase = firstLetter.toUpperCase();
-    const changeLetters = this.props.status.replace(firstLetter, firstLetterUpperCase)
+    const changeLetters = getStatus.replace(firstLetter, firstLetterUpperCase)
+
 
     return (
       <div className={classes.root} >
-        <AppBar position="static" className={classes[this.props.status]}>
+        <AppBar position="static" className={classes[getStatus]}>
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               {this.props.tank}: {changeLetters}
             </Typography>
-            {this.props.status === 'fermenting' ?
+            {getStatus === 'fermenting' ?
               <IconButton 
                 className={classes.menuButton} 
                 aria-owns={anchorEl ? 'simple-menu' : undefined}
@@ -70,8 +78,8 @@ class ButtonAppBar extends Component {
             <MenuItems 
               anchorEl ={this.state.anchorEl} 
               handleClose={this.handleClose} 
-              status={this.props.status} 
-              changeStatus={this.props.changeStatus}/>
+              status={getStatus} 
+              handleStatusChange={this.handleStatusChange}/>
           </Toolbar>
         </AppBar>
       </div>

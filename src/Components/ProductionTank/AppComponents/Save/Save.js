@@ -1,11 +1,11 @@
 import React from 'react';
 import '../../../../App.css';
 
-const Save = () => {
+const Save = (props) => {
 
     return (
             <div className="fermentationData" id="fermentationSave">
-                <button className="allButtons" id="saveButton">
+                <button className="allButtons" id="saveButton" onClick={props.sendUpdate}>
                     Save Updates
                 </button>
             </div>   

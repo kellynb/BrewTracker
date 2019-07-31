@@ -14,7 +14,7 @@ const MenuItems = (props) => {
           anchorEl={props.anchorEl} 
           open={Boolean(props.anchorEl)}
           onClose={props.handleClose}>
-          <div onClick ={props.changeStatus} className="links">
+          <div onClick ={()=> {props.handleStatusChange(menuOptions[props.status])}} className="links">
               <MenuItem onClick={props.handleClose}>{menuOptions[props.status]}</MenuItem>
           </div>
         </Menu>
