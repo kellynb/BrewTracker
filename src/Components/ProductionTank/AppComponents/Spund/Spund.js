@@ -1,4 +1,4 @@
-import React,  { Component } from 'react';
+import React from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -63,18 +63,8 @@ const styles = theme => ({
     }
 })
 
-class Spund extends Component {
-  state = {
-    checkedA: false
-  };
-
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
-  };
-
-  render() {
-    const { classes } = this.props;
-
+const Spund = (props) => {
+    const { classes } = props;
       return(
         <div className="fermentationData">
             <p>Fermentation Pressure</p>
@@ -82,9 +72,10 @@ class Spund extends Component {
               <FormControlLabel classes ={{root: classes.root}}
                   control={
                   <Switch
-                      checked={this.state.checkedA}
-                      onChange={this.handleChange('checkedA')}
-                      value="checkedA"
+                      checked={props.spund}
+                      onChange={props.spundInput}
+                      value={props.spund}
+                      name = "spund"
                       classes={{
                         switchBase: classes.colorSwitchBase,
                         checked: classes.colorChecked,
@@ -95,12 +86,12 @@ class Spund extends Component {
                   label="Spund"
               />
               {
-              this.state.checkedA ?
+              props.spund ?
                 <TextField
-                  value={this.props}
-                  onChange={this.props}
+                  value={props.spundPressure}
+                  onChange={props.userInput}
                   type= "number"
-                  name = "Pressure"
+                  name = "spundPressure"
                   className={classes.textField} 
                   variant="outlined" 
                   label= "Pressure"
@@ -124,7 +115,7 @@ class Spund extends Component {
             </div>
         </div>
       ) 
-    }
+    
 }
 
 

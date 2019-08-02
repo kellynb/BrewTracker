@@ -153,6 +153,7 @@ class BrewContainer extends Component {
             tank: tank,
             style: style,
             batch: batch.fmVolume,
+            brix: this.state.batch.startingBrix,
             runOff: runOff,
             tankTemp: this.state.batch.tankTemp,
             status: this.state.status

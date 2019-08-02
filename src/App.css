@@ -1,8 +1,9 @@
+
 .App {
   width: 100%;
-  height: auto;
+  background-color: #d1d0bb;
+  min-height: 100vh;
 }
-
 
 #logo {
   /* animation: App-logo-spin infinite 20s linear; */
@@ -11,7 +12,7 @@
 }
 
 .topTitle {
-  height: 60px;
+  height: 9vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,24 +39,16 @@
   color: inherit;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.links, links:hover, links:focus {
+  outline: none;
 }
 
-.App-link {
-  color: #61dafb;
+#saveButton {
+  background-color: #d1d0bb;
 }
 
 #brewMain {
-  background-color: #d1d0bb;
-  height: 100vh;
+  height: 100%;
 }
 
 #startBatch {
@@ -106,15 +99,22 @@ h2 {
 }
 
 .TankNumber {
-  font-size: 20px;
   color: #5c4925;
   background-color: white;
   margin-left: 30%;
   margin-right: 30%;
-  margin-bottom: 8px;
-  padding-bottom: 6px;
-  border: 2px solid white;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  width: 65px;
+  height: 30px;
   border-radius: 6px;
+  letter-spacing: normal;
+  border: 2px solid white;
+}
+
+#fermenterVal {
+  margin-top:0;
+  margin-bottom: 0;
 }
 
 .fermenterData, h4 {
@@ -122,35 +122,36 @@ h2 {
 }
 
 .fermentationBackground {
-  background-color: #d1d0bb;
-  height: 100vh;
-  padding-top: 16px;
+  box-sizing: border-box;
 }
 
 #fermentationBox {
-  margin-left: 5%;
-  margin-right: 5%;
-  padding-right: 50px;
-  /* margin-top: 16px; */
-  margin-bottom: 32px;
-  border-radius: 6px;
-  height: auto;
-  /* background-color: white; */
+  padding-right: 70px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 #fermentationForm {
-  width: 550px;
-  margin-top: 100px;
-  min-width: 450px;
+  margin-top: 60px;
+  min-width: 300px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  margin-bottom: 20px;
 }
 
 .fermentationData {
   border-bottom: 0.5px solid #5c4925;
   padding-bottom: 10px;
-  min-height: 130px;
+  min-height: 100px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#fermentationSave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: none;
 }
 
 .organizeFermentation {

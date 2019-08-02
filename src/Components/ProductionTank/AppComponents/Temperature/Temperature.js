@@ -2,7 +2,8 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/core/styles';
-import '../../../App.css';
+import moment from 'moment';
+import '../../../../App.css';
 
 const styles = theme => ({
 
@@ -46,15 +47,62 @@ const styles = theme => ({
 const TemperatureList = (props) => {
     const {classes} = props;
 
+    const getTemperatureDays = () => {
+        const currentDate = new Date();
+        const currentTime = currentDate.getTime()
+          
+        if(props.temp.length === 1) {
+            const lastDate = props.temp[props.temp.length-1].date
+            const update = Date.parse(lastDate)
+            const diffTime = currentTime - update;
+            const diff = new moment.duration(diffTime);
+            const days = diff.asDays();
+            return (Math.round(days *100)/100);
+        } else if (props.temp.length === 0) {
+            return 0
+        } else {
+            for(let i=props.temp.length-1; i > -1; i-- ){
+                let compareTemp = props.temp[i+1];
+                if (compareTemp !== undefined) {
+                  if (compareTemp.tankTemp !== props.temp[i].tankTemp) {
+                    const getChangeDate = compareTemp.date;
+                    const updateDate = Date.parse(getChangeDate);
+                    const timeDiff = currentTime - updateDate;
+                    const diff = new moment.duration(timeDiff)
+                    const days = diff.asDays();
+                    return (Math.round(days *100)/100);
+                    }
+                }
+            }
+          
+        }
+          
+    }
+
+    const displayTemp = () => {
+        if (props.tankTemp) {
+            return props.tankTemp
+        } else if(props.select) {
+            return props.tankTemp
+        } else if (props.temp[props.temp.length-1]) {
+            return props.temp[props.temp.length-1].tankTemp
+        } else {
+            return null
+        }
+    }
+
     return (
         <div className="fermentationData">
             <p>Temperature</p>
             <div className = "organizeFermentation">
                 <TextField
-                    value={props}
-                    onChange={props}
+                    value={displayTemp()}
+                    onChange={props.userInput}
                     type= "number"
-                    name = "Temp"
+                    name = "tankTemp"
+                    id = "tankTemp1"
+                    onFocus ={props.changeSelect}
+                    onBlur = {props.changeSelect}
                     className={classes.textField} 
                     variant="outlined" 
                     label= "Temp"
@@ -75,8 +123,7 @@ const TemperatureList = (props) => {
                     }}  >
                 </TextField>
                 <TextField
-                    value={props}
-                    onChange={props}
+                    value={getTemperatureDays()}
                     type= "number"
                     name = "Time"
                     className={classes.textField} 

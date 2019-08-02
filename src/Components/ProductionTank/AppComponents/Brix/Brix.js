@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/core/styles';
+import moment from 'moment';
 import '../../../../App.css';
 
 const styles = theme => ({
@@ -45,16 +46,65 @@ const styles = theme => ({
 
 const Brix = (props) => {
     const {classes} = props;
+    const brixAvg = props.brix.reduce((acc,brix,index) => acc+(brix-acc)/(index+1),0);
+
+    const getBrixDays = () => {
+        const currentDate = new Date();
+        const currentTime = currentDate.getTime()
+          
+        if(props.fBrix.length === 1) {
+            const lastDate = props.fBrix[props.fBrix.length-1].date
+            const update = Date.parse(lastDate)
+            const diffTime = currentTime - update;
+            const diff = new moment.duration(diffTime);
+            const days = diff.asDays();
+            return (Math.round(days *100)/100);
+        } else if (props.fBrix.length === 0) {
+            return 0
+        } else {
+            for(let i=props.fBrix.length-1; i > -1; i-- ){
+                let compareTemp = props.fBrix[i+1];
+                if (compareTemp !== undefined) {
+                  if (compareTemp.fBrix !== props.fBrix[i].fermentingBrix) {
+                    const getChangeDate = compareTemp.date;
+                    const updateDate = Date.parse(getChangeDate);
+                    const timeDiff = currentTime - updateDate;
+                    const diff = new moment.duration(timeDiff)
+                    const days = diff.asDays();
+                    return (Math.round(days *100)/100);
+                    }
+                }
+            }
+          
+        }
+          
+    }
+
+    const displayBrix = () => {
+        if (props.fermentingBrix) {
+            return props.fermentingBrix
+        } else if(props.selectBrix) {
+            return props.fermentingBrix
+        } else if (props.fBrix[props.fBrix.length-1]) {
+            return props.fBrix[props.fBrix.length-1].fermentingBrix
+        } else if(props.brix.length > 0) {
+            return brixAvg
+        } else {
+            return 0
+        }
+    }
 
     return (
         <div className="fermentationData">
             <p>Brix</p>
             <div className = "organizeFermentation">
                 <TextField
-                    value={props}
-                    onChange={props}
+                    value={displayBrix()}
+                    onChange={props.userInput}
+                    onFocus ={props.changeBrix}
+                    onBlur = {props.changeBrix}
                     type= "number"
-                    name = "Brix"
+                    name = "fermentingBrix"
                     className={classes.textField} 
                     variant="outlined" 
                     label= "Brix"
@@ -74,8 +124,7 @@ const Brix = (props) => {
                     }}  >
                 </TextField>
                 <TextField
-                    value={props}
-                    onChange={props}
+                    value={getBrixDays()}
                     type= "number"
                     name = "Time"
                     className={classes.textField} 
