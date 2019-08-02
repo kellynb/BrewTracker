@@ -2,11 +2,27 @@ import React from 'react';
 import '../../../App.css';
 
 const FermenterView = (props) => {
+    const orderedTanks = props.tanks
+    const orderTank = () => {
+        for(let i=0, w=1; w<orderedTanks.length; i++, w++) {
+            let firstItem = orderedTanks[i].tank;
+            let secondItem = orderedTanks[w].tank;
+            
+
+            if(firstItem > secondItem) {
+                let switchObjA = orderedTanks[i];
+                let switchObjB = orderedTanks[w]
+                orderedTanks[w] = switchObjA
+                orderedTanks[i] = switchObjB
+                orderTank()
+            }
+        }
+    }
+    orderTank()
     
     return (
         <section>
             {props.tanks.map( (fermenter,index) => {
-                const fermenterTemp =  fermenter.tankTemp;
                 const styles = {
                     backgroundColor: "#5d9732",
 

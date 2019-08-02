@@ -82,10 +82,12 @@ const TemperatureList = (props) => {
     const displayTemp = () => {
         if (props.tankTemp) {
             return props.tankTemp
+        } else if(props.select) {
+            return props.tankTemp
         } else if (props.temp[props.temp.length-1]) {
             return props.temp[props.temp.length-1].tankTemp
         } else {
-            return 0
+            return null
         }
     }
 
@@ -98,6 +100,9 @@ const TemperatureList = (props) => {
                     onChange={props.userInput}
                     type= "number"
                     name = "tankTemp"
+                    id = "tankTemp1"
+                    onFocus ={props.changeSelect}
+                    onBlur = {props.changeSelect}
                     className={classes.textField} 
                     variant="outlined" 
                     label= "Temp"

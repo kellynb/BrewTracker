@@ -83,6 +83,8 @@ const Brix = (props) => {
     const displayBrix = () => {
         if (props.fermentingBrix) {
             return props.fermentingBrix
+        } else if(props.selectBrix) {
+            return props.fermentingBrix
         } else if (props.fBrix[props.fBrix.length-1]) {
             return props.fBrix[props.fBrix.length-1].fermentingBrix
         } else if(props.brix.length > 0) {
@@ -99,6 +101,8 @@ const Brix = (props) => {
                 <TextField
                     value={displayBrix()}
                     onChange={props.userInput}
+                    onFocus ={props.changeBrix}
+                    onBlur = {props.changeBrix}
                     type= "number"
                     name = "fermentingBrix"
                     className={classes.textField} 

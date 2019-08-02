@@ -4,7 +4,7 @@ import FermenterIcon from './FermenterIcon/FermenterIconContainer';
 import AppBar from './AppComponents/AppBar/AppBarContainer';
 import TemperatureList from './AppComponents/Temperature/TemparatureContainer';
 import Spund from './AppComponents/Spund/Spund';
-import Yeast from './AppComponents/Yeast/Yeast';
+import Yeast from './AppComponents/Yeast/YeastContainer';
 import Brix from './AppComponents/Brix/BrixContainer';
 import Save from './AppComponents/Save/Save';
 import {updateFermentation} from './ProductionFetch';
@@ -19,7 +19,9 @@ class ProductionTank extends Component  {
         spund: false,
         spundPressure: "",
         yeastDump1: "",
-        yeastDump2: ""
+        yeastDump2: "",
+        select: false,
+        selectBrix: false
     }
 
     userInput = (e) => {
@@ -41,6 +43,18 @@ class ProductionTank extends Component  {
         })
     }
 
+    changeSelect = () => {
+        this.setState({
+            select: !this.state.select
+        })
+    }
+
+    changeBrix = () => {
+        this.setState({
+            selectBrix: !this.state.selectBrix
+        })
+    }
+
     sendUpdate = () => {
         const tankObj= {};
         const loopState = Object.entries(this.state);
@@ -55,9 +69,16 @@ class ProductionTank extends Component  {
             }
             
         }
-        
+        // fetch to update fermentation tank
         updateFermentation(tankObj,this.props.tank,this.props.number) 
         
+    }
+
+    componentDidMount = () => {
+        this.setState({
+            spund: this.props.close,
+            spundPressure: this.props.pressure,
+        })
     }
     
     
@@ -76,12 +97,16 @@ class ProductionTank extends Component  {
                                 <div>
                                     <TemperatureList 
                                         userInput={this.userInput} 
-                                        tankTemp={this.state.tankTemp} 
+                                        tankTemp={this.state.tankTemp}
+                                        changeSelect={this.changeSelect}
+                                        select={this.state.select} 
                                     />
                                     {this.props.status === 'fermenting' ? 
                                         <Brix 
                                             userInput={this.userInput} 
                                             fermentingBrix={this.state.fermentingBrix}
+                                            changeBrix={this.changeBrix}
+                                            selectBrix={this.state.selectBrix} 
                                         /> 
                                         : 
                                         <Yeast 

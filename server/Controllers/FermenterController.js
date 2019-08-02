@@ -37,17 +37,22 @@ exports.fermenterUpdate =  function fermenterUpdate(request, response) {
 
     const updateFermenter = {
         '$set': {},
-        '$push':{}
+        '$push': {}
     };
 
     for (const [key, value] of getObjectEntries) {
         if(key === 'tankTemp' || key === 'fermentingBrix') {
-            updateFermenter.$push[key] = value
+            updateFermenter.$push[key] = value;   
         } else {
             updateFermenter.$set[key] = value
         }
             
     }
+
+    if(updateFermenter.$push === undefined) {
+        delete updateFermenter.$push
+    }
+
 
     Fermenter.findOneAndUpdate(findTank, updateFermenter, (err) => {
         if (err) return console.error(err);
