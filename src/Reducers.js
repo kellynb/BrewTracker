@@ -21,7 +21,7 @@ export const emptyCTanks = (state = [], action) => {
 export const selectTank = (state = {}, action) => {
   switch (action.type) {
     case "SET_TANK":
-      return action.value;
+      return action.value
     case "CHANGE_STATUS":
       return {...state, status: "conditioning"};
     default:

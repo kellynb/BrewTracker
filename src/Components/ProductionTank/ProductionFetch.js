@@ -7,7 +7,14 @@ export function updateFermentation(data,tank,batch) {
           'content-type': 'application/json'
         },
         method: 'PUT'
-      }).catch(err => {
-        console.error('Request failed', err)
       })
+}
+
+export function getFermenter(tank) {
+  return fetch(`/fermenters/${tank}`, {
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'GET'
+    })
 } 

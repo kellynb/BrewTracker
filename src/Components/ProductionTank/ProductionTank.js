@@ -7,6 +7,7 @@ import Spund from './AppComponents/Spund/Spund';
 import Yeast from './AppComponents/Yeast/YeastContainer';
 import Brix from './AppComponents/Brix/BrixContainer';
 import Save from './AppComponents/Save/Save';
+import EmptyStatus from './AppComponents/Empty/EmptyStatus';
 import {updateFermentation} from './ProductionFetch';
 import '../../App.css';
 
@@ -55,6 +56,10 @@ class ProductionTank extends Component  {
         })
     }
 
+    renderRedirect = () => {
+        this.props.history.push('/')
+    }
+
     sendUpdate = () => {
         const tankObj= {};
         const loopState = Object.entries(this.state);
@@ -69,64 +74,97 @@ class ProductionTank extends Component  {
             }
             
         }
-        // fetch to update fermentation tank
-        updateFermentation(tankObj,this.props.tank,this.props.number) 
-        
+        // fetch to update fermentation tank then redirect to homepage
+        updateFermentation(tankObj,this.props.tank,this.props.number)
+            .then(() => {
+                this.renderRedirect()
+            })
+            .catch(err => {
+                console.error('Request failed', err)
+            })
     }
 
+
     componentDidMount = () => {
-        this.setState({
-            spund: this.props.close,
-            spundPressure: this.props.pressure,
-        })
+        if(this.props.tank) {
+            this.setState({
+                spund: this.props.close,
+                spundPressure: this.props.pressure
+            })
+        } else {
+            // fetch current tank from url params and update store
+            const getTankParams = this.props.match.params;
+                this.props.setTank(getTankParams.tank)
+                .then (() => {
+                    this.setState({
+                        spund: this.props.close,
+                        spundPressure: this.props.pressure
+                    })
+                })
+                .catch(err => {
+                    console.error('Request failed', err)
+                });
+        }
+        
+        
     }
     
     
     render () {
         return (
             <main>
-            <Nav />
-            <section className='fermentationBackground'>
-                <div id="fermentationBox">
-                    <section id="fermentationVisuals">
-                        <FermenterIcon />
-                    </section>
-                    <section id = "fermentationForm">
-                        <div>
-                            <AppBar statusUpdate={this.statusUpdate}/>
-                                <div>
-                                    <TemperatureList 
-                                        userInput={this.userInput} 
-                                        tankTemp={this.state.tankTemp}
-                                        changeSelect={this.changeSelect}
-                                        select={this.state.select} 
-                                    />
-                                    {this.props.status === 'fermenting' ? 
-                                        <Brix 
-                                            userInput={this.userInput} 
-                                            fermentingBrix={this.state.fermentingBrix}
-                                            changeBrix={this.changeBrix}
-                                            selectBrix={this.state.selectBrix} 
-                                        /> 
-                                        : 
-                                        <Yeast 
-                                            userInput={this.userInput} 
-                                            yeastDump2 = {this.state.yeastDump2} 
-                                            yeastDump1 = {this.state.yeastDump1}
-                                        />
-                                    }
-                                    <Spund 
-                                        spundInput={this.spundInput} 
-                                        spund={this.state.spund} 
-                                        spundPressure={this.state.spundPressure}
-                                        userInput={this.userInput}
-                                    />
-                                </div>
-                                <Save sendUpdate={this.sendUpdate}/>
+                {this.props.tank 
+                    ?
+                    <div>
+                        <Nav />
+                            <div id="fermentationBox">
+                                <FermenterIcon/>
+                                <section id = "fermentationForm">
+                                    <div>
+                                        <AppBar statusUpdate={this.statusUpdate}/>
+                                        {this.props.status === 'fermenting' || this.props.status === 'conditioning'
+                                            ?
+                                            <div>
+                                                <TemperatureList 
+                                                    userInput={this.userInput} 
+                                                    tankTemp={this.state.tankTemp}
+                                                    changeSelect={this.changeSelect}
+                                                    select={this.state.select} 
+                                                />
+                                                {this.props.status === 'fermenting' ? 
+                                                    <Brix 
+                                                        userInput={this.userInput} 
+                                                        fermentingBrix={this.state.fermentingBrix}
+                                                        changeBrix={this.changeBrix}
+                                                        selectBrix={this.state.selectBrix} 
+                                                    /> 
+                                                    : 
+                                                    <Yeast 
+                                                        userInput={this.userInput} 
+                                                        yeastDump2 = {this.state.yeastDump2} 
+                                                        yeastDump1 = {this.state.yeastDump1}
+                                                    />
+                                                }
+                                                <Spund 
+                                                    spundInput={this.spundInput} 
+                                                    spund={this.state.spund} 
+                                                    spundPressure={this.state.spundPressure}
+                                                    userInput={this.userInput}
+                                                />
+                                                <Save sendUpdate={this.sendUpdate}/>
+                                            </div>
+                                            :
+                                            <div>
+                                                <EmptyStatus/>
+                                            </div>
+                                            }
+                                    </div>
+                                </section>
+                            </div>
                         </div>
-                    </section>
-                </div>
-            </section>
+                    :
+                <Nav/>                
+            }
         </main>
         )      
     }

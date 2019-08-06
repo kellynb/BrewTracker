@@ -1,53 +1,45 @@
 import React from 'react';
+import Fermenting from './FermentationStats/Fermenting';
+import Conditioning from './FermentationStats/Conditioning';
+import Empty from './FermentationStats/Empty';
 import '../../../App.css';
 
-const FermenterView = (props) => {
-    const orderedTanks = props.tanks
-    const orderTank = () => {
-        for(let i=0, w=1; w<orderedTanks.length; i++, w++) {
-            let firstItem = orderedTanks[i].tank;
-            let secondItem = orderedTanks[w].tank;
-            
-
-            if(firstItem > secondItem) {
-                let switchObjA = orderedTanks[i];
-                let switchObjB = orderedTanks[w]
-                orderedTanks[w] = switchObjA
-                orderedTanks[i] = switchObjB
-                orderTank()
-            }
-        }
-    }
-    orderTank()
-    
+const FermenterView = (props) => {    
     return (
         <section>
             {props.tanks.map( (fermenter,index) => {
-                const styles = {
-                    backgroundColor: "#5d9732",
-
+                const status = {
+                    fermenting: {
+                        backgroundColor: "#5d9732"
+                    },
+                    conditioning: {
+                        backgroundColor: "#3490db"
+                    },
+                    empty: {
+                        backgroundColor: "#d1d0bb"
+                    }
                 }
                 
-                if (!fermenter.runOff) {
-                    styles.backgroundColor = "#d1d0bb"
+                const renderFermenter = () => {
+                    if (fermenter.status === 'fermenting') {
+                        return <Fermenting fermenter={fermenter} />
+                    } else if (fermenter.status === 'conditioning') {
+                        return <Conditioning fermenter={fermenter} />
+                    } else {
+                        return <Empty fermenter={fermenter} />
+                    }
                 }
 
                 return (
                     
-                    <div className = "cFermenter" key={index} style={styles}>
+                    <div className = "cFermenter" key={index} style={{backgroundColor : status[fermenter.status].backgroundColor}}>
                         <button onClick={() =>{props.setTank(fermenter)}} className="TankNumber">
                             <h3 id="fermenterVal">{fermenter.tank}</h3>
                         </button>
-                        {fermenter.runOff ? 
-                            <div className="fermenterData">
-                                <h4>Batch Number: {fermenter.number}</h4>
-                                <h4>Beer Style: {fermenter.style}</h4>
-                                <h4>Volume: {fermenter.bbls.reduce( (acc, bbl) => (acc +bbl), 0)} bbls</h4>
-                                <h4>Temp: {fermenter.tankTemp[fermenter.tankTemp.length-1] ? fermenter.tankTemp[fermenter.tankTemp.length-1].tankTemp: 0} F</h4>
-                                <h4>Starting Brix: {fermenter.brix.reduce((acc,brix,index) => acc+(brix-acc)/(index+1),0)} brix </h4>
-                            </div>
-                        :
-                        null}
+                        <div className="fermenterData">
+                            {renderFermenter()}
+                        </div>
+                        
                      </div>   
                 )
             })}

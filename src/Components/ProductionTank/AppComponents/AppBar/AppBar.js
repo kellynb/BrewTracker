@@ -25,6 +25,10 @@ const styles = {
   conditioning: {
     backgroundColor: '#3490db',
     boxShadow: 'none'
+  },
+  empty: {
+    backgroundColor: "#5c4925",
+    boxShadow: 'none'
   }
 };
 
@@ -54,7 +58,7 @@ class ButtonAppBar extends Component {
     const {anchorEl} = this.state;
     const firstLetter = getStatus[0];
     const firstLetterUpperCase = firstLetter.toUpperCase();
-    const changeLetters = getStatus.replace(firstLetter, firstLetterUpperCase)
+    const changeLetters = getStatus.replace(firstLetter, firstLetterUpperCase);
 
 
     return (
