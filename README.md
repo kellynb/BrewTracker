@@ -78,7 +78,9 @@ First Round fixes, then hoist on heroku
  - render of fermentation tank page after refreshing browser. Need to fetch current fermenter and update state yes
  - fix css styling on cellphones/tablets yes
  - check for random bugs yes
+ - launch update yes
 
 Second Round
+ - update button css
  - update batches with fermentation data
  - cip/sanitation fermentation page

@@ -37,6 +37,13 @@
     padding: .6em 1em;
 }
 
+.allButtons:hover,
+.allButtons:focus {
+  color: white;
+  background-color: #5c4925;
+  outline: none;
+}
+
 .links {
   text-decoration: none;
   color: inherit;
@@ -48,6 +55,12 @@
 
 #saveButton {
   background-color: #d1d0bb;
+}
+
+#saveButton:hover,
+#sameButton:focus {
+  background-color: #5c4925;
+  outline: none;
 }
 
 #brewMain {
@@ -113,7 +126,14 @@ h2 {
   height: 30px;
   border-radius: 6px;
   letter-spacing: normal;
-  border: 2px solid white;
+  border: 2px solid #5c4925;
+}
+
+.TankNumber:hover,
+.TankNumber:active {
+  background-color: #5c4925;
+  color: white;
+  outline: none;
 }
 
 #fermenterVal {
