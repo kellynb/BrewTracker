@@ -11,12 +11,11 @@ import '../../App.css';
 
 const styles = {
   root: {
-    flexGrow: 1,
-    height: '9.5vh',
+    flexGrow: 1
   },
 
   appbar: {
-    backgroundColor: '#5c4925;'
+    backgroundColor: '#5c4925',    
   },
 
   grow: {
@@ -29,7 +28,7 @@ const styles = {
   toolbar: {
     display: 'flex',
     flexDirection: 'row',
-    textAlign: 'center'
+    textAlign: 'center',  
   },
 
   menuButton: {
@@ -58,7 +57,7 @@ class Nav extends Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="fixed" className={classes.appbar}>
+        <AppBar position="static" className={classes.appbar}>
           <Toolbar className={classes.toolbar}>
             <img src={logo} alt='Thirsy Planet Logo' id='logo' />
             <Typography variant="h1" color="inherit" className={classes.grow}>

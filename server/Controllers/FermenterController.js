@@ -3,9 +3,10 @@ const Fermenter = require("../Models/FermenterModel");
 exports.update =  function update(request, response) {
     const newBatch = request.body;
     const objTank = {
-        'temp': newBatch.tankTemp,
+        'tankTemp': newBatch.tankTemp,
         'date': Date()
     }
+  
     const findTank = {'tank': newBatch.tank};
     const updateTank = {'$set': {
             'number': newBatch.number,
@@ -30,6 +31,14 @@ exports.list =  function list(request, response) {
     })    
 }
 
+exports.listFermenter =  function list(request, response) {
+    const tank = request.params.tankNumber;
+    Fermenter.find({'tank': tank}, (err, fermenter) => {
+        if (err) return console.error(err);
+        return response.json(fermenter);
+    })    
+}
+
 exports.fermenterUpdate =  function fermenterUpdate(request, response) {
     const updateTank = request.body;
     const findTank = {'tank': request.params.tankNumber};
@@ -48,8 +57,18 @@ exports.fermenterUpdate =  function fermenterUpdate(request, response) {
         }
             
     }
+    // if there is no tankTemp or fermentingBrix properties. check to verify
+    const checkForEmptyObj = (obj) => {
+        for(const property in obj) {
+           if(property) {
+               return false
+           }
+        }
+        return true
+    }
 
-    if(updateFermenter.$push === undefined) {
+    // delete obj if there is no tanktemp or fermentingBrix
+    if(checkForEmptyObj(updateFermenter.$push)) {
         delete updateFermenter.$push
     }
 

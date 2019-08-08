@@ -1,12 +1,22 @@
 import {connect} from 'react-redux';
-import {getTanks} from './FermenterActions';
+import {getTanks,setTank} from './FermenterActions';
+import {withRouter} from 'react-router-dom';
 import Fermenter from './Fermenter';
 
 
-function mapDispatchToProps(dispatch){
-   return {
-    getTanks: () => dispatch(getTanks())
+function mapDispatchToProps(dispatch, props){
+      return {
+      getTanks: () => dispatch(getTanks()),
+      setTank: tank => dispatch(setTank(tank, props.history))
+      }
    }
-}
 
-export default connect(null, mapDispatchToProps)(Fermenter);
+
+   const mapStateToProps = (state) => {
+      return {
+         tanks: state.cTanks
+      }
+   }
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Fermenter));

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import BrewView from './BrewView';
 import {createNewBatch, addNewBrew, getBatch, updateBatch, fillFermenters, getLastSubmit, deleteBrew, deleteBatch} from './BrewFetch';
+import {getFermenters} from '../Home/Fermenter/FermenterFetch';
 
 class BrewContainer extends Component {
 
@@ -12,6 +13,7 @@ class BrewContainer extends Component {
       tank: '',
       prevTank: '',
       status: '',
+      opentTanks: '',
       batch: 
           {id: "",
            prevId: "",
@@ -58,6 +60,7 @@ class BrewContainer extends Component {
         number: number,
         batch: batch,
       }
+      
       updateBatch(batchObj)
       .catch(err => {
         console.error('Request failed', err)
@@ -158,6 +161,7 @@ class BrewContainer extends Component {
             tankTemp: this.state.batch.tankTemp,
             status: this.state.status
         }
+        
         updateBatch(batchObj)
           .then(() => {
             fillFermenters(id, tankObj, batch.id)
@@ -253,7 +257,8 @@ class BrewContainer extends Component {
                     this.runInterval = setInterval(() => this.updateMetricData(),30000)
                   }).catch(err => {
                     console.error('Request failed', err)
-                  })                          
+                  }) 
+                                            
               } else {
                 // if last batch has runOff to fermenter get information from this batch for input options
                 getLastSubmit()
@@ -268,6 +273,23 @@ class BrewContainer extends Component {
         .catch(err => {
           console.error('Request failed', err)
         })
+        // get open fermenters
+        getFermenters()
+                  .then(response => response.json())
+                  .then(data => {
+                  // FIND only empty tanks
+                    const emptyTanks = data.reduce( (acc,tank) => {
+                        if(!tank.runOff) {
+                          acc.push(tank.tank);
+                        }
+                        return acc
+                    }, [])
+                    this.setState({
+                      openTanks: emptyTanks
+                    })
+                }).catch(err => {
+                    console.error('Request failed', err)
+                })                  
     }
   
     componentDidMount = () => {

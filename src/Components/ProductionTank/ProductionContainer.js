@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
 import ProductionTank from './ProductionTank';
+import {setTank} from './ProductionActions';
 
 
 const mapStateToProps = (state) => {
@@ -13,4 +14,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(ProductionTank);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setTank: tank => dispatch(setTank(tank))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductionTank);
