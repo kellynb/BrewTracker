@@ -7,8 +7,9 @@ import Spund from './AppComponents/Spund/Spund';
 import Yeast from './AppComponents/Yeast/YeastContainer';
 import Brix from './AppComponents/Brix/BrixContainer';
 import Save from './AppComponents/Save/Save';
-import EmptyStatus from './AppComponents/Empty/EmptyStatus';
-import {updateFermentation} from './ProductionFetch';
+import CIP from './AppComponents/CIP/CIP';
+import TransferBrite from './AppComponents/TransferBrite/TransferBrite';
+import {updateFermentation, clearFermenter} from './ProductionFetch';
 import '../../App.css';
 
 
@@ -21,6 +22,9 @@ class ProductionTank extends Component  {
         spundPressure: "",
         yeastDump1: "",
         yeastDump2: "",
+        cip1: "",
+        cip2: "",
+        clean: false,
         select: false,
         selectBrix: false
     }
@@ -36,6 +40,14 @@ class ProductionTank extends Component  {
         this.setState({
             spund: !this.state.spund
         })
+    }
+
+    switchToggle = (e) => {
+        const selectName = e.target.name
+        this.setState({
+            [selectName] : !this.state[selectName]
+        })
+        
     }
 
     statusUpdate = (value) => {
@@ -58,6 +70,23 @@ class ProductionTank extends Component  {
 
     renderRedirect = () => {
         this.props.history.push('/')
+    }
+
+    // transfer beer to brite tank, then redirect to main page
+    handleTransfer = () => {
+        const getParams = this.props.match.params;
+        const tankObj = {
+            tank: getParams.tank,
+            runOff: false,
+            status: "dirty"
+        }
+        clearFermenter(getParams.tank, this.props.number, tankObj)
+            .then (() => {
+                this.renderRedirect()
+            })
+            .catch(err => {
+                console.error('Request failed', err)
+            })
     }
 
     sendUpdate = () => {
@@ -146,18 +175,37 @@ class ProductionTank extends Component  {
                                                     />
                                                 }
                                                 <Spund 
-                                                    spundInput={this.spundInput} 
+                                                    toggle={this.switchToggle} 
                                                     spund={this.state.spund} 
                                                     spundPressure={this.state.spundPressure}
                                                     userInput={this.userInput}
                                                 />
-                                                <Save sendUpdate={this.sendUpdate}/>
+                                                <div className="fermentationData" id="fermentationSave">
+                                                    <Save sendUpdate={this.sendUpdate}/>
+                                                    {this.state.yeastDump2 || this.props.yeast2 
+                                                        ?
+                                                        <TransferBrite handleTransfer={this.handleTransfer} />
+                                                        :
+                                                        null
+                                                    }
+                                                </div>
                                             </div>
                                             :
                                             <div>
-                                                <EmptyStatus/>
+                                                {this.props.status === 'dirty'
+                                                    ?
+                                                    <CIP 
+                                                        userInput={this.userInput} 
+                                                        productionTankDateB = {this.state.cip2} 
+                                                        productionTankDateA = {this.state.cip1}
+                                                        clean = {this.state.clean}
+                                                        toggle={this.switchToggle}
+                                                    />
+                                                    :
+                                                    null
+                                                }
                                             </div>
-                                            }
+                                        }
                                     </div>
                                 </section>
                             </div>

@@ -29,6 +29,10 @@ const styles = {
   empty: {
     backgroundColor: "#5c4925",
     boxShadow: 'none'
+  },
+  dirty: {
+    backgroundColor: "#5c4925",
+    boxShadow: 'none'
   }
 };
 

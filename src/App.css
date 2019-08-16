@@ -58,7 +58,17 @@
 }
 
 #saveButton:hover,
-#sameButton:focus {
+#saveButton:focus {
+  background-color: #5c4925;
+  outline: none;
+}
+
+#transferButton {
+  background-color: #d1d0bb;
+}
+
+#transferButton:hover,
+#transferButton:focus {
   background-color: #5c4925;
   outline: none;
 }
@@ -175,8 +185,9 @@ h2 {
 
 #fermentationSave {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   border-bottom: none;
 }
 

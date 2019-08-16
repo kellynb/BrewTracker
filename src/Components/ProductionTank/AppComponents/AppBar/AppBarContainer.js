@@ -6,7 +6,8 @@ import {setStatus} from './AppBarActions';
 const mapStateToProps = (state) => {
     return {
       tank: state.selectTank.tank,
-      status: state.selectTank.status
+      status: state.selectTank.status,
+      number: state.selectTank.number
     }
 }
 

@@ -69,18 +69,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 
 Next Goals:
-First Round fixes, then hoist on heroku
- - fix temp on brew batch (fixed. Will fix fermenting brix on home page). Yes
- - have empty fermenter render to nothing so user can't interact. Yes
- - fix tank display on enter batch after deleting ***DO NEXT*** Yes. Delete redux for brewing container. Always fetching open tanks no matter what
- - update fermentation farm to include different conditioning options (fermenting, conditioning, empty) yes
- - fix push.delete on server yes
- - render of fermentation tank page after refreshing browser. Need to fetch current fermenter and update state yes
- - fix css styling on cellphones/tablets yes
- - check for random bugs yes
- - launch update yes
 
 Second Round
- - update button css
+ - update button css yes
  - update batches with fermentation data
  - cip/sanitation fermentation page

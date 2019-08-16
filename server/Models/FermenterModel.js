@@ -19,7 +19,9 @@ const FermenterSchema = new mongoose.Schema({
     spund: Boolean,
     spundPressure: Number,
     yeastDump1: Date,
-    yeastDump2: Date
+    yeastDump2: Date,
+    cip1: Date,
+    cip2: Date
   });
 
 const Fermenter = mongoose.model('Fermenter', FermenterSchema);

@@ -17,6 +17,9 @@ const FermenterView = (props) => {
                     },
                     empty: {
                         backgroundColor: "#d1d0bb"
+                    },
+                    dirty: {
+                        backgroundColor: "#d1d0bb"
                     }
                 }
                 
