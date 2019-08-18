@@ -11,10 +11,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-function mapDispatchToProps(dispatch){
-  return {
-   changeStatus: () => dispatch(setStatus())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AppBar);
+export default connect(mapStateToProps, null)(AppBar);

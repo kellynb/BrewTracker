@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -33,6 +34,17 @@ const styles = {
   dirty: {
     backgroundColor: "#5c4925",
     boxShadow: 'none'
+  },
+  clean: {
+    backgroundColor: "#707070",
+    boxShadow: 'none'
+  },
+  sanitize: {
+    backgroundColor: "white",
+    boxShadow: 'none'
+  },
+  sanitizeText: {
+   color: 'black'
   }
 };
 
@@ -53,26 +65,41 @@ class ButtonAppBar extends Component {
   handleStatusChange = (value) => {
     const valueAllLowerCase = value.toLowerCase();
     this.props.statusUpdate(valueAllLowerCase);
-    this.props.changeStatus();
   }
 
   render () {
-    const getStatus = this.props.status
+    const getComponentStatus = this.props.componentStatus;
+    const getReduxStatus = this.props.status;
     const { classes } = this.props;
     const {anchorEl} = this.state;
-    const firstLetter = getStatus[0];
-    const firstLetterUpperCase = firstLetter.toUpperCase();
-    const changeLetters = getStatus.replace(firstLetter, firstLetterUpperCase);
 
+    const determineReduxOrComponent = (componentStatus, reduxStatus) => {
+      if (componentStatus) {
+        return componentStatus
+      } else {
+        return reduxStatus
+      }
+    }
 
+    const dipslayStatus = (status) => {
+      const firstLetter = status[0];
+      const firstLetterUpperCase = firstLetter.toUpperCase();
+      const changeLetters = status.replace(firstLetter, firstLetterUpperCase);
+      return changeLetters
+    }
+    
     return (
       <div className={classes.root} >
-        <AppBar position="static" className={classes[getStatus]}>
+        <AppBar position="static" className={classes[determineReduxOrComponent(getComponentStatus, getReduxStatus)]}>
           <Toolbar>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              {this.props.tank}: {changeLetters}
+            <Typography 
+              variant="h6" 
+              color={determineReduxOrComponent(getComponentStatus, getReduxStatus) === 'sanitize' ? classes.sanitizeText : "inherit" } 
+              className={classes.grow}
+            >
+              {this.props.tank}: {dipslayStatus(determineReduxOrComponent(getComponentStatus,getReduxStatus))}
             </Typography>
-            {getStatus === 'fermenting' ?
+            {determineReduxOrComponent(getComponentStatus, getReduxStatus) === 'fermenting' ?
               <IconButton 
                 className={classes.menuButton} 
                 aria-owns={anchorEl ? 'simple-menu' : undefined}
@@ -86,7 +113,7 @@ class ButtonAppBar extends Component {
             <MenuItems 
               anchorEl ={this.state.anchorEl} 
               handleClose={this.handleClose} 
-              status={getStatus} 
+              status={determineReduxOrComponent(getComponentStatus, getReduxStatus)} 
               handleStatusChange={this.handleStatusChange}/>
           </Toolbar>
         </AppBar>

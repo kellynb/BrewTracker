@@ -1,10 +1,9 @@
 import React from 'react';
+
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { green } from '@material-ui/core/colors';
 import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core/styles';
-import '../../../../App.css';
-
 
 const styles = theme => ({
     colorSwitchBase: {

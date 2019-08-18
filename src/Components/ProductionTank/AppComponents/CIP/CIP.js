@@ -3,22 +3,8 @@ import React from 'react';
 import Toggle from '../SubComponents/toggle';
 import Date from '../SubComponents/Date';
 
-import '../../../../App.css';
-
 const CIP = (props) => {
-    // used for props in toggle component
-    const cip = {
-        name: "clean",
-        label: "Clean"
-    }
-    // used for props in date component 
-    const date = {
-        date1name: "cip1",
-        date2name: "cip2",
-        date1Label: "CIP 1",
-        date2Label: "CIP 2"
-    }
-
+    
     return (
         <div className="fermentationData">
             <p>CIP Date</p>
@@ -26,27 +12,27 @@ const CIP = (props) => {
                 <Date 
                     productionTankDate={props.productionTankDateA} 
                     // reduxDate={props.somethingelse} 
-                    name={date.date1name} 
-                    label={date.date1Label}
+                    name="cip1" 
+                    label="CIP 1"
                     onChange={props.userInput} 
                 />
                 <Date 
                     productionTankDate={props.productionTankDateB} 
                     // reduxDate={props.somethingelse} 
-                    name={date.date2name} 
-                    label={date.date2Label}
+                    name="cip2"
+                    label="CIP 2"
                     onChange={props.userInput} 
                 />                
             </div>
-                {props.cip1 || props.cipA 
+                {props.productionTankDateA || props.productionTankDateB
                     ?
                     <div className = "organizeFermentation">
                         <Toggle 
-                                checked={props.clean} 
-                                onChange={props.toggle} 
-                                value={props.clean} 
-                                name={cip.name} 
-                                label={cip.label}
+                            checked={props.clean} 
+                            onChange={props.toggle} 
+                            value={props.clean} 
+                            name="clean" 
+                            label="Clean"
                         />
                     </div>
                     :

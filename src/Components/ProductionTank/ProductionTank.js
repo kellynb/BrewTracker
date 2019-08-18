@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
-import Nav from '../Nav/Nav';
-import FermenterIcon from './FermenterIcon/FermenterIconContainer';
+
 import AppBar from './AppComponents/AppBar/AppBarContainer';
-import TemperatureList from './AppComponents/Temperature/TemparatureContainer';
-import Spund from './AppComponents/Spund/Spund';
-import Yeast from './AppComponents/Yeast/YeastContainer';
+import Button from './AppComponents/SubComponents/Button';
 import Brix from './AppComponents/Brix/BrixContainer';
-import Save from './AppComponents/Save/Save';
 import CIP from './AppComponents/CIP/CIP';
-import TransferBrite from './AppComponents/TransferBrite/TransferBrite';
+import FermenterIcon from './FermenterIcon/FermenterIconContainer';
+import Nav from '../Nav/Nav';
+import Sanitize from './AppComponents/Sanitize/Sanitze';
+import Spund from './AppComponents/Spund/Spund';
+import TemperatureList from './AppComponents/Temperature/TemparatureContainer';
+import Yeast from './AppComponents/Yeast/YeastContainer';
+
 import {updateFermentation, clearFermenter} from './ProductionFetch';
+
 import '../../App.css';
 
-
 class ProductionTank extends Component  {
+
     state = {
         status: "",
         tankTemp: "",
@@ -26,7 +29,11 @@ class ProductionTank extends Component  {
         cip2: "",
         clean: false,
         select: false,
-        selectBrix: false
+        selectBrix: false,
+        sanitizeDate: "",
+        sanitize: false,
+        selectSanitize: false,
+        ppm: ""
     }
 
     userInput = (e) => {
@@ -46,8 +53,27 @@ class ProductionTank extends Component  {
         const selectName = e.target.name
         this.setState({
             [selectName] : !this.state[selectName]
+        }, () => {
+            this.changeStatusCIP();
+            this.changeStatusSanitize();  
         })
-        
+              
+    }
+
+    changeStatusCIP = () => {
+        if (this.state.clean) {
+            this.setState({
+                status: "clean"
+            })
+        }
+    }
+
+    changeStatusSanitize = () => {
+        if(this.state.sanitize) {
+            this.setState({
+                status: "sanitize"
+            })
+        }
     }
 
     statusUpdate = (value) => {
@@ -56,15 +82,10 @@ class ProductionTank extends Component  {
         })
     }
 
-    changeSelect = () => {
+    changeSelect = (e) => {
+        const selectName = e.target.id;
         this.setState({
-            select: !this.state.select
-        })
-    }
-
-    changeBrix = () => {
-        this.setState({
-            selectBrix: !this.state.selectBrix
+            [selectName]: !this.state.select
         })
     }
 
@@ -147,10 +168,10 @@ class ProductionTank extends Component  {
                     <div>
                         <Nav />
                             <div id="fermentationBox">
-                                <FermenterIcon/>
+                                <FermenterIcon  componentStatus= {this.state.status}/>
                                 <section id = "fermentationForm">
                                     <div>
-                                        <AppBar statusUpdate={this.statusUpdate}/>
+                                        <AppBar statusUpdate={this.statusUpdate} componentStatus = {this.state.status}/>
                                         {this.props.status === 'fermenting' || this.props.status === 'conditioning'
                                             ?
                                             <div>
@@ -164,7 +185,7 @@ class ProductionTank extends Component  {
                                                     <Brix 
                                                         userInput={this.userInput} 
                                                         fermentingBrix={this.state.fermentingBrix}
-                                                        changeBrix={this.changeBrix}
+                                                        changeBrix={this.changeSelect}
                                                         selectBrix={this.state.selectBrix} 
                                                     /> 
                                                     : 
@@ -181,10 +202,18 @@ class ProductionTank extends Component  {
                                                     userInput={this.userInput}
                                                 />
                                                 <div className="fermentationData" id="fermentationSave">
-                                                    <Save sendUpdate={this.sendUpdate}/>
+                                                    <Button 
+                                                        words="Save Updates" 
+                                                        id="saveButton" 
+                                                        onClick = {this.sendUpdate} 
+                                                    />
                                                     {this.state.yeastDump2 || this.props.yeast2 
                                                         ?
-                                                        <TransferBrite handleTransfer={this.handleTransfer} />
+                                                        <Button
+                                                            words="Tranfer to Brite"
+                                                            id="transferButton"
+                                                            onClick = {this.handleTransfer}
+                                                        />
                                                         :
                                                         null
                                                     }
@@ -194,15 +223,36 @@ class ProductionTank extends Component  {
                                             <div>
                                                 {this.props.status === 'dirty'
                                                     ?
-                                                    <CIP 
-                                                        userInput={this.userInput} 
-                                                        productionTankDateB = {this.state.cip2} 
-                                                        productionTankDateA = {this.state.cip1}
-                                                        clean = {this.state.clean}
-                                                        toggle={this.switchToggle}
-                                                    />
-                                                    :
-                                                    null
+                                                    <div>
+                                                        <CIP 
+                                                            userInput={this.userInput} 
+                                                            productionTankDateB = {this.state.cip2} 
+                                                            productionTankDateA = {this.state.cip1}
+                                                            clean = {this.state.clean}
+                                                            toggle={this.switchToggle}
+                                                        />                                                
+                                                        {this.state.clean
+                                                            ?
+                                                            <Sanitize 
+                                                                sanitize = {this.state.sanitize}
+                                                                sanitizeDate = {this.state.sanitizeDate}
+                                                                toggle = {this.switchToggle}
+                                                                userInput={this.userInput}
+                                                                changeSanitize={this.changeSelect}
+                                                            />
+                                                            :
+                                                            null
+                                                        }
+                                                            <div className="fermentationData" id="fermentationSave">
+                                                                <Button 
+                                                                    words="Save Updates" 
+                                                                    id="saveButton" 
+                                                                    onClick = {this.sendUpdate} 
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        :
+                                                        null                                                 
                                                 }
                                             </div>
                                         }
