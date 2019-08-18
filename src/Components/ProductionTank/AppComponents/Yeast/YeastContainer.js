@@ -4,8 +4,8 @@ import YeastAction from './Yeast';
 
 const mapStateToProps = (state) => {
     return {
-      yeastDumpA: state.selectTank.yeastDump1,
-      yeastDumpB: state.selectTank.yeastDump2
+      yeastDump1Redux: state.selectTank.yeastDump1,
+      yeastDump2Redux: state.selectTank.yeastDump2
     }
 }
 

@@ -10,7 +10,9 @@ const mapStateToProps = (state) => {
       number: state.selectTank.number,
       tank: state.selectTank.tank,
       close: state.selectTank.spund,
-      pressure: state.selectTank.spundPressure
+      pressure: state.selectTank.spundPressure,
+      yeast2: state.selectTank.yeastDump2,
+      number: state.selectTank.number
     }
 }
 

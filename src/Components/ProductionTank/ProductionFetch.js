@@ -17,4 +17,14 @@ export function getFermenter(tank) {
       },
       method: 'GET'
     })
+}
+
+export function clearFermenter(tank,batch,data) {
+  return fetch(`/fermenters/${tank}/transfer/${batch}`, {
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'PUT'
+    })
 } 

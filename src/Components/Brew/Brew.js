@@ -4,7 +4,8 @@ import {createNewBatch, addNewBrew, getBatch, updateBatch, fillFermenters, getLa
 import {getFermenters} from '../Home/Fermenter/FermenterFetch';
 
 class BrewContainer extends Component {
-
+// put inside class container
+// use proptypes and set default values
     state = {
       number: '',
       prevNum: '',
@@ -136,6 +137,7 @@ class BrewContainer extends Component {
     }
 
     handleTransfer = () => {
+      // change to async await and try/catch. research and update
       this.setState({
         status: "fermenting",
         batch: {
@@ -309,7 +311,6 @@ class BrewContainer extends Component {
             />
         </div>
         )
-    }
+    }  
 }
-
 export default BrewContainer;

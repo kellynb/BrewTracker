@@ -24,6 +24,8 @@ class Fermenter extends Component {
         }
     }
 
+    // use sort to change into one line
+
     render () {
         // Set tank order from database 
         this.orderTank();

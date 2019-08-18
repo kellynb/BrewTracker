@@ -6,14 +6,9 @@ import {setStatus} from './AppBarActions';
 const mapStateToProps = (state) => {
     return {
       tank: state.selectTank.tank,
-      status: state.selectTank.status
+      status: state.selectTank.status,
+      number: state.selectTank.number
     }
 }
 
-function mapDispatchToProps(dispatch){
-  return {
-   changeStatus: () => dispatch(setStatus())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AppBar);
+export default connect(mapStateToProps, null)(AppBar);

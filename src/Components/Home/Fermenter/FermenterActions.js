@@ -13,6 +13,7 @@ export function getTanks() {
                     return acc
                 }, [])
 
+                // change order of tanks here
                 dispatch({
                     type: "GET_CTANKS",
                     value: data
@@ -32,6 +33,7 @@ export function setTank(tank,history) {
                 type: "SET_TANK",
                 value: tank
                 })
+
         history.push(`/ProductionTank/${tank.tank}`)
     }
 }

@@ -1,5 +1,6 @@
 
 export function getFermenters() {
+  try {
     return fetch("/fermenters", {
         body: JSON.stringify(),
         headers: {
@@ -7,4 +8,7 @@ export function getFermenters() {
         },
         method: 'GET'
         })
+    } catch (e) {
+      console.log(e);
+    }
 }
