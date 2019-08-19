@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import AppBar from './AppComponents/AppBar/AppBarContainer';
 import Button from './AppComponents/SubComponents/Button';
 import Brix from './AppComponents/Brix/BrixContainer';
-import CIP from './AppComponents/CIP/CIP';
+import CIP from './AppComponents/CIP/CIPContainer';
 import FermenterIcon from './FermenterIcon/FermenterIconContainer';
 import Nav from '../Nav/Nav';
 import Sanitize from './AppComponents/Sanitize/Sanitze';
@@ -30,7 +30,6 @@ class ProductionTank extends Component  {
         clean: false,
         select: false,
         selectBrix: false,
-        sanitizeDate: "",
         sanitize: false,
         selectSanitize: false,
         ppm: ""
@@ -64,6 +63,10 @@ class ProductionTank extends Component  {
         if (this.state.clean) {
             this.setState({
                 status: "clean"
+            })
+        } else {
+            this.setState({
+                status: "dirty"
             })
         }
     }
@@ -221,7 +224,9 @@ class ProductionTank extends Component  {
                                             </div>
                                             :
                                             <div>
-                                                {this.props.status === 'dirty'
+                                                {this.props.status === 'dirty' || 
+                                                 this.props.status === 'clean' || 
+                                                 this.props.status === 'sanitize'
                                                     ?
                                                     <div>
                                                         <CIP 

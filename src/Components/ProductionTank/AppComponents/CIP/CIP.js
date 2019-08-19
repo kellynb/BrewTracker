@@ -11,20 +11,20 @@ const CIP = (props) => {
             <div className = "organizeFermentation">
                 <Date 
                     productionTankDate={props.productionTankDateA} 
-                    // reduxDate={props.somethingelse} 
+                    reduxDate={props.reduxDate1} 
                     name="cip1" 
                     label="CIP 1"
                     onChange={props.userInput} 
                 />
                 <Date 
                     productionTankDate={props.productionTankDateB} 
-                    // reduxDate={props.somethingelse} 
+                    reduxDate={props.reduxDate2} 
                     name="cip2"
                     label="CIP 2"
                     onChange={props.userInput} 
                 />                
             </div>
-                {props.productionTankDateA || props.productionTankDateB
+                {props.reduxDate1 || props.reduxDate2 || props.productionTankDateA || props.productionTankDateB
                     ?
                     <div className = "organizeFermentation">
                         <Toggle 

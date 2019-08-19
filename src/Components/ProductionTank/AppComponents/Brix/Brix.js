@@ -7,16 +7,23 @@ import '../../../../App.css';
 
 const Brix = (props) => {
     const brixAvg = props.brix.reduce((acc,brix,index) => acc+(brix-acc)/(index+1),0);
+    const brixObj = {
+        reduxFermBrix: props.fBrix,
+        reduxRunBrix: props.brix,
+        runOffBrixAvg: brixAvg,
+        userAddedBrix: props.selectBrix,
+        componentFermBrix: props.fermentingBrix
+    }
 
-    const displayBrix = () => {
-        if (props.fermentingBrix) {
-            return props.fermentingBrix
-        } else if(props.selectBrix) {
-            return props.fermentingBrix
-        } else if (props.fBrix[props.fBrix.length-1]) {
-            return props.fBrix[props.fBrix.length-1].fermentingBrix
-        } else if(props.brix.length > 0) {
-            return brixAvg
+    const displayBrix = (brix) => {
+        if (brix.componentFermBrix) {
+            return brix.componentFermBrix
+        } else if(brix.userAddedBrix) {
+            return brix.componentFermBrix
+        } else if (brix.reduxFermBrix[brix.reduxFermBrix.length-1]) {
+            return brix.reduxFermBrix[brix.reduxFermBrix.length-1].fermentingBrix
+        } else if(brix.reduxRunBrix.length > 0) {
+            return brix.runOffBrixAvg
         } else {
             return 0
         }
@@ -27,7 +34,7 @@ const Brix = (props) => {
             <p>Brix</p>
             <div className = "organizeFermentation">
                 <Number 
-                    valueCalc={displayBrix()}
+                    valueCalc={displayBrix(brixObj)}
                     onChange = {props.userInput}
                     measurement = ""
                     changeSelect={props.changeBrix}

@@ -1,7 +1,12 @@
 import React from 'react';
-import Fermenting from './FermentationStats/Fermenting';
-import Conditioning from './FermentationStats/Conditioning';
-import Empty from './FermentationStats/Empty';
+
+import Clean from './FermentationStatus/Clean';
+import Conditioning from './FermentationStatus/Conditioning';
+import Dirty from './FermentationStatus/Dirty';
+import Empty from './FermentationStatus/Empty';
+import Fermenting from './FermentationStatus/Fermenting';
+import Sanitize from './FermentationStatus/Sanitize';
+
 import '../../../App.css';
 
 const FermenterView = (props) => {    
@@ -20,6 +25,12 @@ const FermenterView = (props) => {
                     },
                     dirty: {
                         backgroundColor: "#d1d0bb"
+                    },
+                    clean: {
+                        backgroundColor: "#707070"
+                    },
+                    sanitize: {
+                        backgroundColor: "white"
                     }
                 }
                 
@@ -28,6 +39,12 @@ const FermenterView = (props) => {
                         return <Fermenting fermenter={fermenter} />
                     } else if (fermenter.status === 'conditioning') {
                         return <Conditioning fermenter={fermenter} />
+                    } else if (fermenter.status === 'clean') {
+                        return <Clean fermenter= {fermenter} />
+                    } else if (fermenter.status === 'dirty') {
+                        return <Dirty fermenter={fermenter} />
+                    } else if (fermenter.status === 'sanitize') {
+                        return <Sanitize fermenter={fermenter} />
                     } else {
                         return <Empty fermenter={fermenter} />
                     }
