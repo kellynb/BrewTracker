@@ -1,6 +1,5 @@
 import {connect} from 'react-redux';
 import AppBar from './AppBar';
-import {setStatus} from './AppBarActions';
 
 
 const mapStateToProps = (state) => {

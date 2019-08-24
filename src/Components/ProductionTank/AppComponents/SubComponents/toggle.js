@@ -38,6 +38,7 @@ const Toggle = (props) => {
                 onChange={props.onChange}
                 value={props.value}
                 name = {props.name}
+                id = {props.id}
                 classes={{
                 switchBase: classes.colorSwitchBase,
                 checked: classes.colorChecked,

@@ -7,7 +7,7 @@ import CIP from './AppComponents/CIP/CIPContainer';
 import FermenterIcon from './FermenterIcon/FermenterIconContainer';
 import Nav from '../Nav/Nav';
 import Sanitize from './AppComponents/Sanitize/Sanitze';
-import Spund from './AppComponents/Spund/Spund';
+import Spund from './AppComponents/Spund/SpundContainer';
 import TemperatureList from './AppComponents/Temperature/TemparatureContainer';
 import Yeast from './AppComponents/Yeast/YeastContainer';
 
@@ -30,6 +30,8 @@ class ProductionTank extends Component  {
         clean: false,
         select: false,
         selectBrix: false,
+        selectSpund: 0,
+        selectPSI: false,
         sanitize: false,
         selectSanitize: false,
         ppm: ""
@@ -42,21 +44,23 @@ class ProductionTank extends Component  {
         })
     }
 
-    spundInput = () => {
-        this.setState({
-            spund: !this.state.spund
-        })
-    }
-
     switchToggle = (e) => {
         const selectName = e.target.name
-        this.setState({
-            [selectName] : !this.state[selectName]
-        }, () => {
-            this.changeStatusCIP();
-            this.changeStatusSanitize();  
-        })
-              
+        // conditional rendering of spund toggle
+        if(selectName === 'spund' && this.props.reduxSpund && !this.state.spund && this.state.selectSpund === 0) {
+            this.setState({spund: false})
+            this.changeToggleSelect(e) 
+        } else {
+            this.setState({
+                [selectName] : !this.state[selectName]
+            }, () => {
+                if (selectName !== 'spund') {
+                    this.changeStatusCIP();
+                    this.changeStatusSanitize();
+                }  
+            })
+            this.changeToggleSelect(e) 
+        }              
     }
 
     changeStatusCIP = () => {
@@ -88,7 +92,14 @@ class ProductionTank extends Component  {
     changeSelect = (e) => {
         const selectName = e.target.id;
         this.setState({
-            [selectName]: !this.state.select
+            [selectName]: !this.state[selectName]
+        })
+    }
+
+    changeToggleSelect = (e) => {
+        const selectName = e.target.id;
+        this.setState({
+            [selectName]: this.state[selectName] +1
         })
     }
 
@@ -122,11 +133,13 @@ class ProductionTank extends Component  {
                     [key]: value,
                     date: new Date()
                 }
-            } else if(value) {
+            } else if (value && (key === 'selectSpund')) {
+                tankObj.spund = this.state.spund
+            } else if(value && key !== 'selectSpund') {
                 tankObj[key] = value;
             }
-            
         }
+        console.log(tankObj)
         // fetch to update fermentation tank then redirect to homepage
         updateFermentation(tankObj,this.props.tank,this.props.number)
             .then(() => {
@@ -139,27 +152,12 @@ class ProductionTank extends Component  {
 
 
     componentDidMount = () => {
-        if(this.props.tank) {
-            this.setState({
-                spund: this.props.close,
-                spundPressure: this.props.pressure
-            })
-        } else {
-            // fetch current tank from url params and update store
-            const getTankParams = this.props.match.params;
-                this.props.setTank(getTankParams.tank)
-                .then (() => {
-                    this.setState({
-                        spund: this.props.close,
-                        spundPressure: this.props.pressure
-                    })
-                })
-                .catch(err => {
-                    console.error('Request failed', err)
-                });
-        }
-        
-        
+        // fetch current tank from url params and update store
+        const getTankParams = this.props.match.params;
+        this.props.setTank(getTankParams.tank)
+            .catch(err => {
+                console.error('Request failed', err)
+            }); 
     }
     
     
@@ -203,6 +201,9 @@ class ProductionTank extends Component  {
                                                     spund={this.state.spund} 
                                                     spundPressure={this.state.spundPressure}
                                                     userInput={this.userInput}
+                                                    selectSpund = {this.state.selectSpund}
+                                                    changeSelect = {this.changeSelect}
+                                                    selectPSI = {this.state.selectPSI}
                                                 />
                                                 <div className="fermentationData" id="fermentationSave">
                                                     <Button 
