@@ -4,6 +4,18 @@ import Toggle from '../SubComponents/toggle';
 import Date from '../SubComponents/Date';
 
 const CIP = (props) => {
+    const reduxClean = props.reduxClean;
+    const componentClean = props.clean;
+    const select = props.selectClean;
+    
+
+    const displayToggle =(redux,component, select) => {
+      if (select) {
+        return component
+      } else {
+        return redux
+      }
+    }
     
     return (
         <div className="fermentationData">
@@ -28,11 +40,12 @@ const CIP = (props) => {
                     ?
                     <div className = "organizeFermentation">
                         <Toggle 
-                            checked={props.clean} 
+                            checked={displayToggle(reduxClean, componentClean, select)} 
                             onChange={props.toggle} 
-                            value={props.clean} 
+                            value={displayToggle(reduxClean, componentClean, select)} 
                             name="clean" 
                             label="Clean"
+                            id = "selectClean"
                         />
                     </div>
                     :

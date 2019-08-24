@@ -12,6 +12,9 @@ const mapStateToProps = (state) => {
       close: state.selectTank.spund,
       pressure: state.selectTank.spundPressure,
       yeast2: state.selectTank.yeastDump2,
+      reduxClean: state.selectTank.clean,
+      reduxRunOff: state.selectTank.runOff,
+      reduxSanitize: state.selectTank.sanitize,
       reduxSpund: state.selectTank.spund
     }
 }
