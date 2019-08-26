@@ -16,28 +16,30 @@ import {updateFermentation, clearFermenter} from './ProductionFetch';
 import '../../App.css';
 
 class ProductionTank extends Component  {
+    state = this.props.currentState
+    // state = {
+        
+    //     // status: "",
+    //     // tankTemp: "",
+    //     // fermentingBrix:"",
+    //     // spund: false,
+    //     // spundPressure: "",
+    //     // yeastDump1: "",
+    //     // yeastDump2: "",
+    //     // cip1: "",
+    //     // cip2: "",
+    //     // clean: false,
+    //     // select: false,
+    //     // selectBrix: false,
+    //     // selectClean: 0,
+    //     // selectSanitize: 0,
+    //     // selectSpund: 0,
+    //     // selectPSI: false,
+    //     // sanitize: false,
+    //     // sanitizeSelect: false,
+    //     // ppm: ""
+    // }
 
-    state = {
-        status: "",
-        tankTemp: "",
-        fermentingBrix:"",
-        spund: false,
-        spundPressure: "",
-        yeastDump1: "",
-        yeastDump2: "",
-        cip1: "",
-        cip2: "",
-        clean: false,
-        select: false,
-        selectBrix: false,
-        selectClean: 0,
-        selectSanitize: 0,
-        selectSpund: 0,
-        selectPSI: false,
-        sanitize: false,
-        sanitizeSelect: false,
-        ppm: ""
-    }
 
     userInput = (e) => {
         const selectName = e.target.name;
@@ -81,7 +83,7 @@ class ProductionTank extends Component  {
             this.setState({
                 status: "sanitize"
             })
-        } else if (this.state.clean || (this.props.reduxClean && !this.state.selectClean)) {
+        } else if (this.state.clean || (this.props.reduxClean && !this.state.selectClean) && !this.props.reduxRunOff) {
             this.setState({
                 status: "clean"
             })
@@ -124,6 +126,7 @@ class ProductionTank extends Component  {
             runOff: false,
             status: "dirty"
         }
+        console.log(tankObj)
         clearFermenter(getParams.tank, this.props.number, tankObj)
             .then (() => {
                 this.renderRedirect()
@@ -167,10 +170,13 @@ class ProductionTank extends Component  {
     componentDidMount = () => {
         // fetch current tank from url params and update store
         const getTankParams = this.props.match.params;
-        this.props.setTank(getTankParams.tank)
-            .catch(err => {
-                console.error('Request failed', err)
-            }); 
+        if(!this.props.tank) {
+            this.props.setTank(getTankParams.tank)
+                .then( () => this.setState(this.props.currentState))
+                .catch(err => {
+                    console.error('Request failed', err)
+                }); 
+        }
     }
     
     

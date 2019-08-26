@@ -4,19 +4,25 @@ import {setTank} from './ProductionActions';
 
 
 const mapStateToProps = (state) => {
-    return {
-      status: state.selectTank.status,
-      temp: state.selectTank.tankTemp,
-      number: state.selectTank.number,
-      tank: state.selectTank.tank,
-      close: state.selectTank.spund,
-      pressure: state.selectTank.spundPressure,
-      yeast2: state.selectTank.yeastDump2,
-      reduxClean: state.selectTank.clean,
-      reduxRunOff: state.selectTank.runOff,
-      reduxSanitize: state.selectTank.sanitize,
-      reduxSpund: state.selectTank.spund
-    }
+   const currentTank = state.selectTank;
+   const currentState = {
+      status: currentTank.status,
+      temp: currentTank.tankTemp,
+      fermentingBrix: currentTank.fermentingBrix,
+      number: currentTank.number,
+      tank: currentTank.tank,
+      close: currentTank.spund,
+      spundPressure: currentTank.spundPressure,
+      yeastDump1: currentTank.yeastDump1,
+      yeastDump2: currentTank.yeastDump2,
+      cip1: currentTank.cip1,
+      cip2: currentTank.cip2,
+      clean: currentTank.clean,
+      runOff: currentTank.runOff,
+      sanitize: currentTank.sanitize,
+      spund: currentTank.spund
+   }
+    return {currentState}
 }
 
 const mapDispatchToProps = (dispatch) => {

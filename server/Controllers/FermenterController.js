@@ -82,7 +82,7 @@ exports.fermenterUpdate =  function fermenterUpdate(request, response) {
 
 exports.clearFermenter =  function clearFermenter(request, response) {
     const tank = request.body.tank;
-
+   
     Fermenter.findOneAndReplace({'tank': tank}, request.body,(err, fermenter) => {
         if (err) return console.error(err);
         return response.json(fermenter);
