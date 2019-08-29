@@ -4,7 +4,7 @@ import AppBar from './AppComponents/AppBar/AppBarContainer';
 import Button from './AppComponents/SubComponents/Button';
 import Brix from './AppComponents/Brix/BrixContainer';
 import CIP from './AppComponents/CIP/CIPContainer';
-import FermenterIcon from './FermenterIcon/FermenterIconContainer';
+import FermenterIcon from './FermenterIcon/FermenterIcon';
 import Nav from '../Nav/Nav';
 import Sanitize from './AppComponents/Sanitize/SanitizeContaner';
 import Spund from './AppComponents/Spund/SpundContainer';
@@ -170,9 +170,12 @@ class ProductionTank extends Component  {
     componentDidMount = () => {
         // fetch current tank from url params and update store
         const getTankParams = this.props.match.params;
-        if(!this.props.tank) {
+        if(!this.state.tank) {
             this.props.setTank(getTankParams.tank)
-                .then( () => this.setState(this.props.currentState))
+                .then( () => {
+                    console.log(this.props.currentState)
+                    this.setState(this.props.currentState)
+                })
                 .catch(err => {
                     console.error('Request failed', err)
                 }); 
@@ -181,29 +184,19 @@ class ProductionTank extends Component  {
     
     
     render () {
-        const renderStatus = (redux,component) => {
-            if(component !== '') {
-                if(component === 'fermenting') {
-                    return component
-                }
-            } else {
-                if(redux === 'fermenting') {
-                    return redux
-                }
-            }
-        }
+        console.log(this.state)
+       
         return (
             <main>
-                {this.props.tank 
-                    ?
-                    <div>
-                        <Nav />
+                <div>
+                    <Nav />
+                        {this.state.tank ?
                             <div id="fermentationBox">
                                 <FermenterIcon  componentStatus= {this.state.status}/>
                                 <section id = "fermentationFormBox">
                                     <div id="fermentationForm">
-                                        <AppBar statusUpdate={this.statusUpdate} componentStatus = {this.state.status}/>
-                                        {this.props.status === 'fermenting' || this.props.status === 'conditioning'
+                                        <AppBar statusUpdate={this.statusUpdate} batchStatus = {this.state.status}/>
+                                        {/* {this.props.status === 'fermenting' || this.props.status === 'conditioning'
                                             ?
                                             <div>
                                                 <TemperatureList 
@@ -256,8 +249,8 @@ class ProductionTank extends Component  {
                                             :
                                             <div>
                                                 {this.props.status === 'dirty' || 
-                                                 this.props.status === 'clean' || 
-                                                 this.props.status === 'sanitize'
+                                                    this.props.status === 'clean' || 
+                                                    this.props.status === 'sanitize'
                                                     ?
                                                     <div>
                                                         <CIP 
@@ -295,14 +288,13 @@ class ProductionTank extends Component  {
                                                         null                                                 
                                                 }
                                             </div>
-                                        }
+                                        } */}
                                     </div>
                                 </section>
                             </div>
-                        </div>
-                    :
-                <Nav/>                
-            }
+                           : 
+                        null}
+                </div>
         </main>
         )      
     }

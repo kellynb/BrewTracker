@@ -5,7 +5,6 @@ import AppBar from './AppBar';
 const mapStateToProps = (state) => {
     return {
       tank: state.selectTank.tank,
-      status: state.selectTank.status,
       number: state.selectTank.number
     }
 }
