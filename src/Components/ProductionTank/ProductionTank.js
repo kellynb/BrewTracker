@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import AppBar from './AppComponents/AppBar/AppBarContainer';
 import Button from './AppComponents/SubComponents/Button';
 import Brix from './AppComponents/Brix/BrixContainer';
-import CIP from './AppComponents/CIP/CIP';
-import FermenterIcon from './FermenterIcon/FermenterIconContainer';
+import CIP from './AppComponents/CIP/CIPContainer';
+import FermenterIcon from './FermenterIcon/FermenterIcon';
 import Nav from '../Nav/Nav';
-import Sanitize from './AppComponents/Sanitize/Sanitze';
-import Spund from './AppComponents/Spund/Spund';
+import Sanitize from './AppComponents/Sanitize/SanitizeContaner';
+import Spund from './AppComponents/Spund/SpundContainer';
 import TemperatureList from './AppComponents/Temperature/TemparatureContainer';
 import Yeast from './AppComponents/Yeast/YeastContainer';
 
@@ -16,25 +16,30 @@ import {updateFermentation, clearFermenter} from './ProductionFetch';
 import '../../App.css';
 
 class ProductionTank extends Component  {
+    state = this.props.currentState
+    // state = {
+        
+    //     // status: "",
+    //     // tankTemp: "",
+    //     // fermentingBrix:"",
+    //     // spund: false,
+    //     // spundPressure: "",
+    //     // yeastDump1: "",
+    //     // yeastDump2: "",
+    //     // cip1: "",
+    //     // cip2: "",
+    //     // clean: false,
+    //     // select: false,
+    //     // selectBrix: false,
+    //     // selectClean: 0,
+    //     // selectSanitize: 0,
+    //     // selectSpund: 0,
+    //     // selectPSI: false,
+    //     // sanitize: false,
+    //     // sanitizeSelect: false,
+    //     // ppm: ""
+    // }
 
-    state = {
-        status: "",
-        tankTemp: "",
-        fermentingBrix:"",
-        spund: false,
-        spundPressure: "",
-        yeastDump1: "",
-        yeastDump2: "",
-        cip1: "",
-        cip2: "",
-        clean: false,
-        select: false,
-        selectBrix: false,
-        sanitizeDate: "",
-        sanitize: false,
-        selectSanitize: false,
-        ppm: ""
-    }
 
     userInput = (e) => {
         const selectName = e.target.name;
@@ -43,35 +48,48 @@ class ProductionTank extends Component  {
         })
     }
 
-    spundInput = () => {
-        this.setState({
-            spund: !this.state.spund
-        })
-    }
-
     switchToggle = (e) => {
         const selectName = e.target.name
-        this.setState({
-            [selectName] : !this.state[selectName]
-        }, () => {
-            this.changeStatusCIP();
-            this.changeStatusSanitize();  
-        })
-              
+        // conditional rendering of spund toggle
+        if(selectName === 'spund' && this.props.reduxSpund && !this.state.spund && this.state.selectSpund === 0) {
+            this.setState({spund: false})
+            this.changeToggleSelect(e) 
+        } else if (selectName === 'clean' && this.props.reduxClean && !this.state.clean && this.state.selectClean === 0) {
+            this.setState({clean: false}, () => {
+                this.setState({
+                    status: "dirty"
+                }) 
+            })
+            this.changeToggleSelect(e)
+        } else if(selectName === 'sanitize' && this.props.reduxSanitize && !this.state.sanitize && this.state.selectSanitize === 0) {
+            this.setState({sanitize: false}, () => {
+                this.setState({
+                    status: "clean"
+                }) 
+            })
+            this.changeToggleSelect(e) 
+        } else {
+            this.setState({
+                [selectName] : !this.state[selectName]
+            }, () => {
+                this.changeStatus();  
+            })
+            this.changeToggleSelect(e) 
+        }              
     }
 
-    changeStatusCIP = () => {
-        if (this.state.clean) {
+    changeStatus = () => {
+        if (this.state.sanitize) {
+            this.setState({
+                status: "sanitize"
+            })
+        } else if (this.state.clean || (this.props.reduxClean && !this.state.selectClean) && !this.props.reduxRunOff) {
             this.setState({
                 status: "clean"
             })
-        }
-    }
-
-    changeStatusSanitize = () => {
-        if(this.state.sanitize) {
+        } else if(!this.props.reduxRunOff) {
             this.setState({
-                status: "sanitize"
+                status: "dirty"
             })
         }
     }
@@ -85,7 +103,14 @@ class ProductionTank extends Component  {
     changeSelect = (e) => {
         const selectName = e.target.id;
         this.setState({
-            [selectName]: !this.state.select
+            [selectName]: !this.state[selectName]
+        })
+    }
+
+    changeToggleSelect = (e) => {
+        const selectName = e.target.id;
+        this.setState({
+            [selectName]: this.state[selectName] +1
         })
     }
 
@@ -101,6 +126,7 @@ class ProductionTank extends Component  {
             runOff: false,
             status: "dirty"
         }
+        console.log(tankObj)
         clearFermenter(getParams.tank, this.props.number, tankObj)
             .then (() => {
                 this.renderRedirect()
@@ -119,11 +145,17 @@ class ProductionTank extends Component  {
                     [key]: value,
                     date: new Date()
                 }
-            } else if(value) {
+            } else if (!value && 
+                     ((key === 'clean' && this.state.selectClean) 
+                     || (key === 'spund' && this.state.selectSpund)
+                     || (key === 'sanitize' && this.state.selectSanitize))) 
+            {
+                  tankObj[key] = this.state[key]
+            } else if(value && key !== 'selectSpund' && key !== 'selectClean' && key !== 'selectSanitize') {
                 tankObj[key] = value;
             }
-            
         }
+        console.log(tankObj)
         // fetch to update fermentation tank then redirect to homepage
         updateFermentation(tankObj,this.props.tank,this.props.number)
             .then(() => {
@@ -136,43 +168,35 @@ class ProductionTank extends Component  {
 
 
     componentDidMount = () => {
-        if(this.props.tank) {
-            this.setState({
-                spund: this.props.close,
-                spundPressure: this.props.pressure
-            })
-        } else {
-            // fetch current tank from url params and update store
-            const getTankParams = this.props.match.params;
-                this.props.setTank(getTankParams.tank)
-                .then (() => {
-                    this.setState({
-                        spund: this.props.close,
-                        spundPressure: this.props.pressure
-                    })
+        // fetch current tank from url params and update store
+        const getTankParams = this.props.match.params;
+        if(!this.state.tank) {
+            this.props.setTank(getTankParams.tank)
+                .then( () => {
+                    console.log(this.props.currentState)
+                    this.setState(this.props.currentState)
                 })
                 .catch(err => {
                     console.error('Request failed', err)
-                });
+                }); 
         }
-        
-        
     }
     
     
     render () {
+        console.log(this.state)
+       
         return (
             <main>
-                {this.props.tank 
-                    ?
-                    <div>
-                        <Nav />
+                <div>
+                    <Nav />
+                        {this.state.tank ?
                             <div id="fermentationBox">
                                 <FermenterIcon  componentStatus= {this.state.status}/>
-                                <section id = "fermentationForm">
-                                    <div>
-                                        <AppBar statusUpdate={this.statusUpdate} componentStatus = {this.state.status}/>
-                                        {this.props.status === 'fermenting' || this.props.status === 'conditioning'
+                                <section id = "fermentationFormBox">
+                                    <div id="fermentationForm">
+                                        <AppBar statusUpdate={this.statusUpdate} batchStatus = {this.state.status}/>
+                                        {/* {this.props.status === 'fermenting' || this.props.status === 'conditioning'
                                             ?
                                             <div>
                                                 <TemperatureList 
@@ -181,7 +205,7 @@ class ProductionTank extends Component  {
                                                     changeSelect={this.changeSelect}
                                                     select={this.state.select} 
                                                 />
-                                                {this.props.status === 'fermenting' ? 
+                                                {renderStatus(this.props.status, this.state.status)  ? 
                                                     <Brix 
                                                         userInput={this.userInput} 
                                                         fermentingBrix={this.state.fermentingBrix}
@@ -200,6 +224,9 @@ class ProductionTank extends Component  {
                                                     spund={this.state.spund} 
                                                     spundPressure={this.state.spundPressure}
                                                     userInput={this.userInput}
+                                                    selectSpund = {this.state.selectSpund}
+                                                    changeSelect = {this.changeSelect}
+                                                    selectPSI = {this.state.selectPSI}
                                                 />
                                                 <div className="fermentationData" id="fermentationSave">
                                                     <Button 
@@ -221,7 +248,9 @@ class ProductionTank extends Component  {
                                             </div>
                                             :
                                             <div>
-                                                {this.props.status === 'dirty'
+                                                {this.props.status === 'dirty' || 
+                                                    this.props.status === 'clean' || 
+                                                    this.props.status === 'sanitize'
                                                     ?
                                                     <div>
                                                         <CIP 
@@ -230,8 +259,9 @@ class ProductionTank extends Component  {
                                                             productionTankDateA = {this.state.cip1}
                                                             clean = {this.state.clean}
                                                             toggle={this.switchToggle}
+                                                            selectClean = {this.state.selectClean}
                                                         />                                                
-                                                        {this.state.clean
+                                                        {this.state.clean || (this.props.reduxClean && !this.state.selectClean)
                                                             ?
                                                             <Sanitize 
                                                                 sanitize = {this.state.sanitize}
@@ -239,6 +269,9 @@ class ProductionTank extends Component  {
                                                                 toggle = {this.switchToggle}
                                                                 userInput={this.userInput}
                                                                 changeSanitize={this.changeSelect}
+                                                                selectSanitize={this.state.selectSanitize}
+                                                                sanitizeSelect = {this.state.sanitizeSelect}
+                                                                ppm = {this.state.ppm}
                                                             />
                                                             :
                                                             null
@@ -255,14 +288,13 @@ class ProductionTank extends Component  {
                                                         null                                                 
                                                 }
                                             </div>
-                                        }
+                                        } */}
                                     </div>
                                 </section>
                             </div>
-                        </div>
-                    :
-                <Nav/>                
-            }
+                           : 
+                        null}
+                </div>
         </main>
         )      
     }

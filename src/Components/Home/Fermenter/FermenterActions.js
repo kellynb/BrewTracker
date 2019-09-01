@@ -13,7 +13,24 @@ export function getTanks() {
                     return acc
                 }, [])
 
-                // change order of tanks here
+                // change order of tanks 
+                const orderTank = (data) => {
+                    for(let i=0, w=1; w<data.length; i++, w++) {
+                        let firstItem = data[i].tank;
+                        let secondItem = data[w].tank;
+                        
+            
+                        if(firstItem > secondItem) {
+                            let switchObjA = data[i];
+                            let switchObjB = data[w]
+                            data[w] = switchObjA
+                            data[i] = switchObjB
+                            orderTank(data)
+                        }
+                    }
+                }
+                orderTank(data);
+
                 dispatch({
                     type: "GET_CTANKS",
                     value: data

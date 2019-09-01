@@ -68,20 +68,13 @@ class ButtonAppBar extends Component {
   }
 
   render () {
-    const getComponentStatus = this.props.componentStatus;
-    const getReduxStatus = this.props.status;
+    const getStatus = this.props.batchStatus;
+    
     const { classes } = this.props;
     const {anchorEl} = this.state;
 
-    const determineReduxOrComponent = (componentStatus, reduxStatus) => {
-      if (componentStatus) {
-        return componentStatus
-      } else {
-        return reduxStatus
-      }
-    }
 
-    const dipslayStatus = (status) => {
+    const displayStatus = (status) => {
       const firstLetter = status[0];
       const firstLetterUpperCase = firstLetter.toUpperCase();
       const changeLetters = status.replace(firstLetter, firstLetterUpperCase);
@@ -90,16 +83,16 @@ class ButtonAppBar extends Component {
     
     return (
       <div className={classes.root} >
-        <AppBar position="static" className={classes[determineReduxOrComponent(getComponentStatus, getReduxStatus)]}>
+        <AppBar position="static" className={classes[getStatus]}>
           <Toolbar>
             <Typography 
               variant="h6" 
-              color={determineReduxOrComponent(getComponentStatus, getReduxStatus) === 'sanitize' ? classes.sanitizeText : "inherit" } 
+              color={getStatus === 'sanitize' ? classes.sanitizeText : "inherit" } 
               className={classes.grow}
             >
-              {this.props.tank}: {dipslayStatus(determineReduxOrComponent(getComponentStatus,getReduxStatus))}
+              {this.props.tank}: {displayStatus(getStatus)}
             </Typography>
-            {determineReduxOrComponent(getComponentStatus, getReduxStatus) === 'fermenting' ?
+            {getStatus === 'fermenting' ?
               <IconButton 
                 className={classes.menuButton} 
                 aria-owns={anchorEl ? 'simple-menu' : undefined}
@@ -113,7 +106,7 @@ class ButtonAppBar extends Component {
             <MenuItems 
               anchorEl ={this.state.anchorEl} 
               handleClose={this.handleClose} 
-              status={determineReduxOrComponent(getComponentStatus, getReduxStatus)} 
+              status={getStatus} 
               handleStatusChange={this.handleStatusChange}/>
           </Toolbar>
         </AppBar>

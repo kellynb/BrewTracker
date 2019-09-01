@@ -9,10 +9,12 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         backgroundColor: '#d1d0bb',
+        maxWidth: '175'
       },
     
     input: {
-        color: '#5c4925'
+        color: '#5c4925',
+        width: 'auto'
     },
 
     cssLabel: {

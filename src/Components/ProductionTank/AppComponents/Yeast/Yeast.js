@@ -14,12 +14,14 @@ const YeastAction = (props) => {
                     onChange={props.userInput} 
                     label="Dump 1" 
                     name="yeastDump1"
+                    productionTankDate={props.yeastDump1}
                     reduxDate = {props.yeastDump1Redux}
                 />
                 <Date 
                     onChange={props.userInput}
                     label="Dump 2"
                     name="yeastDump2"
+                    productionTankDate={props.yeastDump2}
                     reduxDate = {props.yeastDump2Redux}
                 />
             </div>

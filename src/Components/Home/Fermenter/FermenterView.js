@@ -1,7 +1,12 @@
 import React from 'react';
-import Fermenting from './FermentationStats/Fermenting';
-import Conditioning from './FermentationStats/Conditioning';
-import Empty from './FermentationStats/Empty';
+
+import Clean from './FermentationStatus/Clean';
+import Conditioning from './FermentationStatus/Conditioning';
+import Dirty from './FermentationStatus/Dirty';
+import Empty from './FermentationStatus/Empty';
+import Fermenting from './FermentationStatus/Fermenting';
+import Sanitize from './FermentationStatus/Sanitize';
+
 import '../../../App.css';
 
 const FermenterView = (props) => {    
@@ -10,26 +15,28 @@ const FermenterView = (props) => {
             {props.tanks.map( (fermenter,index) => {
                 const status = {
                     fermenting: {
-                        backgroundColor: "#5d9732"
+                        backgroundColor: "#5d9732",
+                        component: <Fermenting fermenter={fermenter} />
                     },
                     conditioning: {
-                        backgroundColor: "#3490db"
+                        backgroundColor: "#3490db",
+                        component: <Conditioning fermenter={fermenter} />
                     },
                     empty: {
-                        backgroundColor: "#d1d0bb"
+                        backgroundColor: "#d1d0bb",
+                        component: <Empty fermenter={fermenter} />
                     },
                     dirty: {
-                        backgroundColor: "#d1d0bb"
-                    }
-                }
-                
-                const renderFermenter = () => {
-                    if (fermenter.status === 'fermenting') {
-                        return <Fermenting fermenter={fermenter} />
-                    } else if (fermenter.status === 'conditioning') {
-                        return <Conditioning fermenter={fermenter} />
-                    } else {
-                        return <Empty fermenter={fermenter} />
+                        backgroundColor: "#d1d0bb",
+                        component: <Dirty fermenter={fermenter} />
+                    },
+                    clean: {
+                        backgroundColor: "#707070",
+                        component: <Clean fermenter= {fermenter} />
+                    },
+                    sanitize: {
+                        backgroundColor: "white",
+                        component: <Sanitize fermenter={fermenter} />
                     }
                 }
 
@@ -40,7 +47,7 @@ const FermenterView = (props) => {
                             <h3 id="fermenterVal">{fermenter.tank}</h3>
                         </button>
                         <div className="fermenterData">
-                            {renderFermenter()}
+                            {status[fermenter.status].component}
                         </div>
                         
                      </div>   
