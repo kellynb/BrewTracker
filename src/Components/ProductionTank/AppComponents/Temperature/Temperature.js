@@ -6,10 +6,11 @@ import Time from '../SubComponents/Time';
 import '../../../../App.css';
 
 const TemperatureList = (props) => {
+    
     const tempObj = {
         componentTemp: props.tankTemp,
         userAddTemp: props.select,
-        reduxTemp: props.temp
+        startTemp: props.temp
     }
 
     const displayTemp = (temp) => {
@@ -17,8 +18,8 @@ const TemperatureList = (props) => {
             return temp.componentTemp
         } else if(temp.userAddTemp) {
             return temp.componentTemp
-        } else if (temp.reduxTemp[temp.reduxTemp.length-1]) {
-            return temp.reduxTemp[temp.reduxTemp.length-1].tankTemp
+        } else if (temp.startTemp.length) {
+            return temp.startTemp[temp.startTemp.length-1].tankTemp
         } else {
             return null
         }
@@ -34,7 +35,7 @@ const TemperatureList = (props) => {
                     measurement = "F"
                     changeSelect={props.changeSelect}
                     name= "tankTemp"
-                    id= "select"
+                    id= "tankSelect"
                     label = "Temp"
                 />
                 <Time 

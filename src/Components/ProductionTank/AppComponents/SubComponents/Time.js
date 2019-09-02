@@ -45,24 +45,24 @@ const styles = theme => ({
 const Time = (props) => {
     const {classes} = props;
 
-    const getTemperatureDays = () => {
+    const getTemperatureDays = (arr) => {
         const currentDate = new Date();
         const currentTime = currentDate.getTime()
           
-        if(props.arrInput.length === 1) {
-            const lastDate = props.arrInput[props.arrInput.length-1].date
+        if(arr.length === 1) {
+            const lastDate = arr[arr.length-1].date
             const update = Date.parse(lastDate)
             const diffTime = currentTime - update;
             const diff = new moment.duration(diffTime);
             const days = diff.asDays();
             return (Math.round(days *100)/100);
-        } else if (props.arrInput.length === 0) {
+        } else if (arr.length === 0) {
             return 0
         } else {
-            for(let i=props.arrInput.length-1; i > -1; i-- ){
-                let compareTemp = props.arrInput[i+1];
+            for(let i=arr.length-1; i > -1; i-- ){
+                let compareTemp = arr[i+1];
                 if (compareTemp !== undefined) {
-                  if (compareTemp[props.value] !== props.arrInput[i][props.value]) {
+                  if (compareTemp[props.value] !== arr[i][props.value]) {
                     const getChangeDate = compareTemp.date;
                     const updateDate = Date.parse(getChangeDate);
                     const timeDiff = currentTime - updateDate;
@@ -79,7 +79,7 @@ const Time = (props) => {
 
     return (
         <TextField
-            value={getTemperatureDays()}
+            value={getTemperatureDays(props.arrInput)}
             type= "number"
             name = "Time"
             className={classes.textField} 

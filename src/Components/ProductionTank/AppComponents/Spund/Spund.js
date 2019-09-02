@@ -6,57 +6,27 @@ import Toggle from '../SubComponents/toggle';
 import '../../../../App.css';
 
 const Spund = (props) => {
-      const reduxSpund = props.reduxSpund;
-      const componentSpund = props.spund;
-      const select = props.selectSpund;
-      
-
-      const displayToggle =(reduxSpund,componentSpund, select) => {
-        if (select) {
-          return componentSpund
-        } else {
-          return reduxSpund
-        }
-      }
-
-      const componentPressure = props.spundPressure
-      const reduxPressure = props. reduxPressure
-      const userInteraction = props.selectPSI
-      
-      const displayPSI = (componentPressure,reduxPressure,userInteraction ) => {
-        if (componentPressure) {
-          return componentPressure
-        } else if (userInteraction) {
-          return componentPressure
-        } else if (reduxPressure) {
-          return reduxPressure
-        } else {
-          return null
-        }
-      }
 
       return(
         <div className="fermentationData">
             <p>Fermentation Pressure</p>
             <div className="organizeFermentation">
               <Toggle 
-                checked={displayToggle(reduxSpund, componentSpund,select)} 
+                checked={props.spund} 
                 onChange={props.toggle} 
-                value={displayToggle(reduxSpund, componentSpund, select)} 
+                value={props.spund} 
                 label="Spund" 
                 name="spund"
                 id = "selectSpund"
               />
-              {componentSpund || (reduxSpund && !select)
+              {props.spund
                 ?
                 <Number 
-                  valueCalc={displayPSI(componentPressure,reduxPressure,userInteraction)}
+                  valueCalc={props.spundPressure}
                   onChange = {props.userInput}
                   measurement = "PSI"
-                  changeSelect={props.changeSelect}
                   name= "spundPressure"
                   label= "Pressure"
-                  id = "selectPSI"
                 />
                 : 
                 null}

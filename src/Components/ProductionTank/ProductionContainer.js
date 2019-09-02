@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
    const currentState = {
       status: currentTank.status,
       temp: currentTank.tankTemp,
+      brix: currentTank.brix,
       fermentingBrix: currentTank.fermentingBrix,
       number: currentTank.number,
       tank: currentTank.tank,
