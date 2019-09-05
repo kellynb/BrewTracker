@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import AppBar from './AppComponents/AppBar/AppBarContainer';
 import Button from './AppComponents/SubComponents/Button';
@@ -9,7 +10,7 @@ import Nav from '../Nav/Nav';
 import Sanitize from './AppComponents/Sanitize/SanitizeContaner';
 import Spund from './AppComponents/Spund/SpundContainer';
 import TemperatureList from './AppComponents/Temperature/Temperature';
-import Yeast from './AppComponents/Yeast/YeastContainer';
+import Yeast from './AppComponents/Yeast/Yeast';
 
 import {updateFermentation, clearFermenter} from './ProductionFetch';
 
@@ -98,6 +99,14 @@ class ProductionTank extends Component  {
         }
     }
 
+    updateDate = (name, date) => {
+      const toDayMonthYear = moment.utc(date).format('YYYY-MM-DD');
+      this.setState({
+        [name] : toDayMonthYear
+
+      })
+    }
+
     statusUpdate = (value) => {
         this.setState({
             status: value
@@ -110,6 +119,13 @@ class ProductionTank extends Component  {
             [selectName]: !this.state[selectName]
         })
     }
+
+    selectDate = (e) => {
+      const selectName = e.target.id;
+      this.setState({
+          [selectName]: true
+      })
+  }
 
     changeToggleSelect = (e) => {
         const selectName = e.target.id;
@@ -188,7 +204,7 @@ class ProductionTank extends Component  {
     
     
     render () {
-       
+       console.log(this.state)
         return (
           <main>
             <div>
@@ -202,8 +218,8 @@ class ProductionTank extends Component  {
                         batchStatus={this.state.status}
                         statusUpdate={this.statusUpdate}
                       />
-                      {this.state.status === "conditioning" ? (
-                       this.state.status === "fermenting" ||
+                       {this.state.status === "conditioning" ||
+                       this.state.status === "fermenting" ? (
                         <div>
                           <TemperatureList
                             changeSelect={this.changeSelect}
@@ -222,8 +238,14 @@ class ProductionTank extends Component  {
                               userInput={this.userInput}
                             />
                           ) : (
+                            // Can't figure out why component goes from controlled to uncontrolled
+                            // Might need to change where moment is called
                             <Yeast
+                              changeSelect={this.selectDate}
+                              select1={this.state.yeastSelect1}
+                              select2={this.state.yeastSelect2}
                               userInput={this.userInput}
+                              updateDate={this.updateDate}
                               yeastDump2={this.state.yeastDump2}
                               yeastDump1={this.state.yeastDump1}
                             />
@@ -257,9 +279,9 @@ class ProductionTank extends Component  {
                         </div>
                       ) : (
                         <div>
-                          {this.props.status === "dirty" ||
-                          this.props.status === "clean" ||
-                          this.props.status === "sanitize" ? (
+                          {this.state.status === "dirty" ||
+                          this.state.status === "clean" ||
+                          this.state.status === "sanitize" ? (
                             <div>
                               <CIP
                                 userInput={this.userInput}

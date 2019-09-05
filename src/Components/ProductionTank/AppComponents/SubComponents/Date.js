@@ -1,7 +1,9 @@
 import React from 'react';
+
+
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
-import moment from 'moment';
+
 
 const styles = theme => ({
 
@@ -42,22 +44,25 @@ const styles = theme => ({
 
   const Date = (props) => {
     const {classes} = props;
-    const toDayMonthYear = moment.utc(props.reduxDate).format('YYYY-MM-DD');
-
-    const getValue = () => {
-        if (props.productionTankDate) {
-            return props.productionTankDate
-        } else if (props.reduxDate) {
-            return toDayMonthYear
-        } else {
-            return null
-        }
+    
+   const getDate = (inputDate,select) => {
+    if (inputDate && select) {
+      return inputDate
+    } else if (inputDate && !select)  {
+      props.updateDate(props.name, inputDate)
+    } else {
+      return inputDate
     }
+  }
+  
+    
 
     return (
         <TextField
-            value={getValue()}
+            value={getDate(props.productionTankDate,props.select)}
+            id = {props.id}
             onChange={props.onChange}
+            onFocus ={props.changeSelect}
             type= "date"
             name = {props.name}
             className={classes.textField} 

@@ -5,24 +5,30 @@ import Date from '../SubComponents/Date';
 import '../../../../App.css';
 
 const YeastAction = (props) => {
-     // used for props in date component    
+
     return (
         <div className="fermentationData">
             <p>Yeast Removal</p>
             <div className = "organizeFermentation">
                 <Date 
+                    changeSelect={props.changeSelect}
                     onChange={props.userInput} 
+                    select={props.select1}
+                    updateDate = {props.updateDate}
                     label="Dump 1" 
                     name="yeastDump1"
+                    id = "yeastSelect1"
                     productionTankDate={props.yeastDump1}
-                    reduxDate = {props.yeastDump1Redux}
                 />
                 <Date 
+                    changeSelect={props.changeSelect}
                     onChange={props.userInput}
+                    updateDate = {props.updateDate}
+                    select={props.select2}
                     label="Dump 2"
                     name="yeastDump2"
+                    id = "yeastSelect2"
                     productionTankDate={props.yeastDump2}
-                    reduxDate = {props.yeastDump2Redux}
                 />
             </div>
         </div>
