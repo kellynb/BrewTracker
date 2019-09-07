@@ -44,7 +44,7 @@ const styles = theme => ({
 
 const Time = (props) => {
     const {classes} = props;
-
+    
     const getTemperatureDays = (arr) => {
         const currentDate = new Date();
         const currentTime = currentDate.getTime()
@@ -60,10 +60,10 @@ const Time = (props) => {
             return 0
         } else {
             for(let i=arr.length-1; i > -1; i-- ){
-                let compareTemp = arr[i+1];
-                if (compareTemp !== undefined) {
-                  if (compareTemp[props.value] !== arr[i][props.value]) {
-                    const getChangeDate = compareTemp.date;
+                let compareValue = arr[i+1];
+                if (compareValue !== undefined) {
+                  if (compareValue[props.value] !== arr[i][props.value]) {
+                    const getChangeDate = compareValue.date;
                     const updateDate = Date.parse(getChangeDate);
                     const timeDiff = currentTime - updateDate;
                     const diff = new moment.duration(timeDiff)

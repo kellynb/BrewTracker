@@ -1,12 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import MenuItems from './MenuItems/MenuItems';
 
 const styles = {
   root: {
@@ -48,73 +45,31 @@ const styles = {
   }
 };
 
-class ButtonAppBar extends Component {
+const FormBar = props => {
+  const getStatus = props.batchStatus;
+  const { classes } = props;
 
-  state = {
-    anchorEl: null,
+  const displayStatus = status => {
+    const firstLetter = status[0];
+    const firstLetterUpperCase = firstLetter.toUpperCase();
+    const changeLetters = status.replace(firstLetter, firstLetterUpperCase);
+    return changeLetters;
   };
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
-  handleStatusChange = (value) => {
-    const valueAllLowerCase = value.toLowerCase();
-    this.props.statusUpdate(valueAllLowerCase);
-  }
-
-  render () {
-    const getStatus = this.props.batchStatus;
-    
-    const { classes } = this.props;
-    const {anchorEl} = this.state;
-
-
-    const displayStatus = (status) => {
-      const firstLetter = status[0];
-      const firstLetterUpperCase = firstLetter.toUpperCase();
-      const changeLetters = status.replace(firstLetter, firstLetterUpperCase);
-      return changeLetters
-    }
-    
-    return (
-      <div className={classes.root} >
-        <AppBar position="static" className={classes[getStatus]}>
-          <Toolbar>
-            <Typography 
-              variant="h6" 
-              color={getStatus === 'sanitize' ? classes.sanitizeText : "inherit" } 
-              className={classes.grow}
-            >
-              {this.props.tank}: {displayStatus(getStatus)}
-            </Typography>
-            {getStatus === 'fermenting' ?
-              <IconButton 
-                className={classes.menuButton} 
-                aria-owns={anchorEl ? 'simple-menu' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleClick}>
-                <MenuIcon/>
-              </IconButton>
-              :
-              null
-            }
-            <MenuItems 
-              anchorEl ={this.state.anchorEl} 
-              handleClose={this.handleClose} 
-              status={getStatus} 
-              handleStatusChange={this.handleStatusChange}/>
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
-  }
-  
-  
-}
-
-export default withStyles(styles)(ButtonAppBar);
+  return (
+    <div className={classes.root}>
+      <AppBar position="static" className={classes[getStatus]}>
+        <Toolbar>
+          <Typography
+            variant="h6"
+            color={getStatus === "sanitize" ? classes.sanitizeText : "inherit"}
+            className={classes.grow}
+          >
+            {props.tank}: {displayStatus(getStatus)}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+};
+export default withStyles(styles)(FormBar);

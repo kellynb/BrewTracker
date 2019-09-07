@@ -11,18 +11,18 @@ const Brix = (props) => {
     
     const brixObj = {
         didUserSelect: props.selectBrix,
-        fermentingBrix: props.fermentingBrix,
+        fBrix: props.fBrix,
         runOffBrix: brixAvg,
-        userInputBrix: props.userInputBrix
+        fermentingBrix: props.fermentingBrix
     }
 
     const displayBrix = (brix) => {
-        if (brix.userInputBrix) {
-            return brix.userInputBrix
+        if (brix.fermentingBrix) {
+            return brix.fermentingBrix
         } else if(brix.didUserSelect) {
-            return brix.userInputBrix
-        } else if (brix.fermentingBrix.length) {
-            return brix.fermentingBrix[brix.fermentingBrix.length-1].fermentingBrix
+            return brix.fermentingBrix
+        } else if (brix.fBrix.length) {
+            return brix.fBrix[brix.fBrix.length-1].fermentingBrix
         } else if(brix.runOffBrix) {
             return brix.runOffBrix
         } else {
@@ -39,12 +39,12 @@ const Brix = (props) => {
                     onChange = {props.userInput}
                     measurement = ""
                     changeSelect={props.changeBrix}
-                    name= "userInputBrix"
+                    name= "fermentingBrix"
                     id = "selectBrix"
                     label= "Brix"
                 />
                 <Time 
-                    arrInput={props.fermentingBrix}
+                    arrInput={props.fBrix}
                     value="fermentingBrix"
                 />
             </div>

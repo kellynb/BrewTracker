@@ -11,11 +11,13 @@ const FermenterSchema = new mongoose.Schema({
     bbls : [Number],
     brix: [Number],
     runOff: Boolean,
+    prevStatus: String,
     status: String,
     fermentingBrix :[{
       fermentingBrix: Number,
       date: Date
     }],
+    conditioning: Boolean,
     spund: Boolean,
     spundPressure: Number,
     yeastDump1: Date,

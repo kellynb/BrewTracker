@@ -1,6 +1,6 @@
 import React from 'react';
 
-
+import moment from 'moment';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -49,7 +49,8 @@ const styles = theme => ({
     if (inputDate && select) {
       return inputDate
     } else if (inputDate && !select)  {
-      props.updateDate(props.name, inputDate)
+      const toDayMonthYear = moment.utc(inputDate).format('YYYY-MM-DD');
+      return toDayMonthYear;
     } else {
       return inputDate
     }

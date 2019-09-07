@@ -71,8 +71,7 @@ exports.fermenterUpdate =  function fermenterUpdate(request, response) {
     if(checkForEmptyObj(updateFermenter.$push)) {
         delete updateFermenter.$push
     }
-
-
+    
     Fermenter.findOneAndUpdate(findTank, updateFermenter, (err) => {
         if (err) return console.error(err);
         return response.sendStatus(200)

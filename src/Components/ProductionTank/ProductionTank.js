@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 
-import AppBar from './AppComponents/AppBar/AppBarContainer';
+
+import AppBar from './AppComponents/AppBar/AppBar';
 import Button from './AppComponents/SubComponents/Button';
 import Brix from './AppComponents/Brix/Brix';
-import CIP from './AppComponents/CIP/CIPContainer';
+import CIP from './AppComponents/CIP/CIP';     
 import FermenterIcon from './FermenterIcon/FermenterIcon';
 import Nav from '../Nav/Nav';
-import Sanitize from './AppComponents/Sanitize/SanitizeContaner';
-import Spund from './AppComponents/Spund/SpundContainer';
+import Sanitize from './AppComponents/Sanitize/Sanitze';
+import Spund from './AppComponents/Spund/Spund';
 import TemperatureList from './AppComponents/Temperature/Temperature';
 import Yeast from './AppComponents/Yeast/Yeast';
 
@@ -17,30 +17,7 @@ import {updateFermentation, clearFermenter} from './ProductionFetch';
 import '../../App.css';
 
 class ProductionTank extends Component  {
-    state = this.props.currentState
-    // state = {
-        
-    //     // status: "",
-    //     // tankTemp: "",
-    //     // fermentingBrix:"",
-    //     // spund: false,
-    //     // spundPressure: "",
-    //     // yeastDump1: "",
-    //     // yeastDump2: "",
-    //     // cip1: "",
-    //     // cip2: "",
-    //     // clean: false,
-    //     // select: false,
-    //     // selectBrix: false,
-    //     // selectClean: 0,
-    //     // selectSanitize: 0,
-    //     // selectSpund: 0,
-    //     // selectPSI: false,
-    //     // sanitize: false,
-    //     // sanitizeSelect: false,
-    //     // ppm: ""
-    // }
-
+    state = this.props.currentState;
 
     userInput = (e) => {
         const selectName = e.target.name;
@@ -52,65 +29,33 @@ class ProductionTank extends Component  {
     switchToggle = (e) => {
         const selectName = e.target.name
 
-        this.setState({
+        if (selectName === 'spund') {
+          this.setState({
             [selectName] : !this.state[selectName]
-        })
-        // conditional rendering of spund toggle
-        // if(selectName === 'spund' && this.props.reduxSpund && !this.state.spund && this.state.selectSpund === 0) {
-        //     this.setState({spund: false})
-        //     this.changeToggleSelect(e) 
-        // } else if (selectName === 'clean' && this.props.reduxClean && !this.state.clean && this.state.selectClean === 0) {
-        //     this.setState({clean: false}, () => {
-        //         this.setState({
-        //             status: "dirty"
-        //         }) 
-        //     })
-        //     this.changeToggleSelect(e)
-        // } else if(selectName === 'sanitize' && this.props.reduxSanitize && !this.state.sanitize && this.state.selectSanitize === 0) {
-        //     this.setState({sanitize: false}, () => {
-        //         this.setState({
-        //             status: "clean"
-        //         }) 
-        //     })
-        //     this.changeToggleSelect(e) 
-        // } else {
-        //     this.setState({
-        //         [selectName] : !this.state[selectName]
-        //     }, () => {
-        //         this.changeStatus();  
-        //     })
-        //     this.changeToggleSelect(e) 
-        // }              
-    }
-
-    changeStatus = () => {
-        if (this.state.sanitize) {
-            this.setState({
-                status: "sanitize"
-            })
-        } else if (this.state.clean || (this.props.reduxClean && !this.state.selectClean) && !this.props.reduxRunOff) {
-            this.setState({
-                status: "clean"
-            })
-        } else if(!this.props.reduxRunOff) {
-            this.setState({
-                status: "dirty"
-            })
+          })
+         } else {
+          this.setState({
+            [selectName] : !this.state[selectName]
+          },
+          () => {
+            this.changeStatus(selectName);
+          })
         }
-    }
+    }             
+    // For this to work, need previous status stored in the database
+    changeStatus = (currentStatus) => {
+      const previousStatus = this.state.status;
 
-    updateDate = (name, date) => {
-      const toDayMonthYear = moment.utc(date).format('YYYY-MM-DD');
-      this.setState({
-        [name] : toDayMonthYear
-
-      })
-    }
-
-    statusUpdate = (value) => {
+      if (this.state[currentStatus]) {
         this.setState({
-            status: value
+          prevStatus: previousStatus,
+          status: currentStatus
         })
+      } else {
+        this.setState({
+          status: this.state.prevStatus
+        })
+      }
     }
 
     changeSelect = (e) => {
@@ -125,13 +70,6 @@ class ProductionTank extends Component  {
       this.setState({
           [selectName]: true
       })
-  }
-
-    changeToggleSelect = (e) => {
-        const selectName = e.target.id;
-        this.setState({
-            [selectName]: this.state[selectName] +1
-        })
     }
 
     renderRedirect = () => {
@@ -144,10 +82,11 @@ class ProductionTank extends Component  {
         const tankObj = {
             tank: getParams.tank,
             runOff: false,
+            prevStatus: "dirty",
             status: "dirty"
         }
-        console.log(tankObj)
-        clearFermenter(getParams.tank, this.props.number, tankObj)
+        
+        clearFermenter(getParams.tank, this.state.number, tankObj)
             .then (() => {
                 this.renderRedirect()
             })
@@ -157,6 +96,7 @@ class ProductionTank extends Component  {
     }
 
     sendUpdate = () => {
+        
         const tankObj= {};
         const loopState = Object.entries(this.state);
         for (const [key, value] of loopState) {
@@ -165,19 +105,20 @@ class ProductionTank extends Component  {
                     [key]: value,
                     date: new Date()
                 }
-            } else if (!value && 
-                     ((key === 'clean' && this.state.selectClean) 
-                     || (key === 'spund' && this.state.selectSpund)
-                     || (key === 'sanitize' && this.state.selectSanitize))) 
-            {
-                  tankObj[key] = this.state[key]
-            } else if(value && key !== 'selectSpund' && key !== 'selectClean' && key !== 'selectSanitize') {
+            } else if
+              (value && (
+               key !== 'fBrix' 
+               && key !== 'temp' 
+               && key !== 'tank'
+               && key !== 'number'
+               && key !== 'brix' 
+              )) {
                 tankObj[key] = value;
             }
         }
-        console.log(tankObj)
+        
         // fetch to update fermentation tank then redirect to homepage
-        updateFermentation(tankObj,this.props.tank,this.props.number)
+        updateFermentation(tankObj,this.state.tank,this.state.number)
             .then(() => {
                 this.renderRedirect()
             })
@@ -201,10 +142,8 @@ class ProductionTank extends Component  {
             });
         }
     }
-    
-    
+        
     render () {
-       console.log(this.state)
         return (
           <main>
             <div>
@@ -216,25 +155,27 @@ class ProductionTank extends Component  {
                     <div id="fermentationForm">
                       <AppBar
                         batchStatus={this.state.status}
-                        statusUpdate={this.statusUpdate}
+                        tank={this.state.tank}
                       />
-                       {this.state.status === "conditioning" ||
-                       this.state.status === "fermenting" ? (
+                      {this.state.status === "conditioning" ||
+                      this.state.status === "fermenting" ? (
                         <div>
                           <TemperatureList
                             changeSelect={this.changeSelect}
+                            conditioning={this.state.conditioning}
                             select={this.state.tankSelect}
                             tankTemp={this.state.tankTemp}
                             temp={this.state.temp}
+                            toggle={this.switchToggle}
                             userInput={this.userInput}
                           />
                           {this.state.status === "fermenting" ? (
                             <Brix
                               changeBrix={this.changeSelect}
-                              fermentingBrix={this.state.fermentingBrix}
+                              fBrix={this.state.fBrix}
                               runOffBrix={this.state.brix}
                               selectBrix={this.state.selectBrix}
-                              userInputBrix={this.state.userInputBrix}
+                              fermentingBrix={this.state.fermentingBrix}
                               userInput={this.userInput}
                             />
                           ) : (
@@ -245,7 +186,6 @@ class ProductionTank extends Component  {
                               select1={this.state.yeastSelect1}
                               select2={this.state.yeastSelect2}
                               userInput={this.userInput}
-                              updateDate={this.updateDate}
                               yeastDump2={this.state.yeastDump2}
                               yeastDump1={this.state.yeastDump1}
                             />
@@ -265,16 +205,13 @@ class ProductionTank extends Component  {
                               id="saveButton"
                               onClick={this.sendUpdate}
                             />
-                            {/* {this.state.yeastDump2 || this.props.yeast2 
-                                                        ?
-                                                        <Button
-                                                            words="Tranfer to Brite"
-                                                            id="transferButton"
-                                                            onClick = {this.handleTransfer}
-                                                        />
-                                                        :
-                                                        null
-                                                    } */}
+                            {this.state.yeastDump2 ? (
+                              <Button
+                                words="Tranfer to Brite"
+                                id="transferButton"
+                                onClick={this.handleTransfer}
+                              />
+                            ) : null}
                           </div>
                         </div>
                       ) : (
@@ -284,25 +221,22 @@ class ProductionTank extends Component  {
                           this.state.status === "sanitize" ? (
                             <div>
                               <CIP
-                                userInput={this.userInput}
-                                productionTankDateB={this.state.cip2}
-                                productionTankDateA={this.state.cip1}
+                                changeSelect={this.selectDate}
+                                cipDate1={this.state.cip1}
+                                cipDate2={this.state.cip2}
                                 clean={this.state.clean}
+                                select1={this.state.clean1}
+                                select2={this.state.clean2}
+                                status={this.state.status}
                                 toggle={this.switchToggle}
-                                selectClean={this.state.selectClean}
+                                userInput={this.userInput}
                               />
-                              {this.state.clean ||
-                              (this.props.reduxClean &&
-                                !this.state.selectClean) ? (
+                              {this.state.clean ? (
                                 <Sanitize
+                                  ppm={this.state.ppm}
                                   sanitize={this.state.sanitize}
-                                  sanitizeDate={this.state.sanitizeDate}
                                   toggle={this.switchToggle}
                                   userInput={this.userInput}
-                                  changeSanitize={this.changeSelect}
-                                  selectSanitize={this.state.selectSanitize}
-                                  sanitizeSelect={this.state.sanitizeSelect}
-                                  ppm={this.state.ppm}
                                 />
                               ) : null}
                               <div

@@ -6,22 +6,23 @@ import {setTank} from './ProductionActions';
 const mapStateToProps = (state) => {
    const currentTank = state.selectTank;
    const currentState = {
+      prevStatus: currentTank.prevStatus, 
       status: currentTank.status,
       temp: currentTank.tankTemp,
       brix: currentTank.brix,
-      fermentingBrix: currentTank.fermentingBrix,
+      fBrix: currentTank.fermentingBrix,
       number: currentTank.number,
-      tank: currentTank.tank,
-      close: currentTank.spund,
       spundPressure: currentTank.spundPressure,
       yeastDump1: currentTank.yeastDump1,
       yeastDump2: currentTank.yeastDump2,
       cip1: currentTank.cip1,
       cip2: currentTank.cip2,
       clean: currentTank.clean,
-      runOff: currentTank.runOff,
       sanitize: currentTank.sanitize,
-      spund: currentTank.spund
+      spund: currentTank.spund,
+      tank: currentTank.tank,
+      ppm: currentTank.ppm,
+      conditioning: currentTank.conditioning
    }
     return {currentState}
 }
