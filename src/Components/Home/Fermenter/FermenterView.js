@@ -5,21 +5,23 @@ import Conditioning from './FermentationStatus/Conditioning';
 import Dirty from './FermentationStatus/Dirty';
 import Empty from './FermentationStatus/Empty';
 import Fermenting from './FermentationStatus/Fermenting';
+import FermenterCard from './FermenterCard/FermenterCard'; 
 import Sanitize from './FermentationStatus/Sanitize';
+
 
 import '../../../App.css';
 
 const FermenterView = (props) => {    
     return (
-        <section>
+        <section id="brewCard">
             {props.tanks.map( (fermenter,index) => {
                 const status = {
                     fermenting: {
-                        backgroundColor: "#5d9732",
+                        backgroundColor: "#66bb6a",
                         component: <Fermenting fermenter={fermenter} />
                     },
                     conditioning: {
-                        backgroundColor: "#3490db",
+                        backgroundColor: "#29b6f6",
                         component: <Conditioning fermenter={fermenter} />
                     },
                     empty: {
@@ -27,30 +29,33 @@ const FermenterView = (props) => {
                         component: <Empty fermenter={fermenter} />
                     },
                     dirty: {
-                        backgroundColor: "#d1d0bb",
+                        backgroundColor: "#8d6e63",
                         component: <Dirty fermenter={fermenter} />
                     },
                     clean: {
-                        backgroundColor: "#707070",
+                        backgroundColor: "#ffee58",
                         component: <Clean fermenter= {fermenter} />
                     },
                     sanitize: {
-                        backgroundColor: "white",
+                        backgroundColor: "#78909c",
                         component: <Sanitize fermenter={fermenter} />
                     }
                 }
 
                 return (
-                    
-                    <div className = "cFermenter" key={index} style={{backgroundColor : status[fermenter.status].backgroundColor}}>
-                        <button onClick={() =>{props.setTank(fermenter)}} className="TankNumber">
-                            <h3 id="fermenterVal">{fermenter.tank}</h3>
-                        </button>
-                        <div className="fermenterData">
-                            {status[fermenter.status].component}
-                        </div>
+                    <FermenterCard key={index} status={status} fermenter={fermenter} setTank={props.setTank}/>
+                    // <div className = "cFermenter" key={index} style={{backgroundColor : status[fermenter.status].backgroundColor}}>
+                       
+                       
+                       
+                        /* <button onClick={() =>{props.setTank(fermenter)}} className="TankNumber">
+                    //         <h3 id="fermenterVal">{fermenter.tank}</h3>
+                    //     </button>
+                    //     <div className="fermenterData">
+                    //         {status[fermenter.status].component}
+                    //     </div> */
                         
-                     </div>   
+                    // </div>   
                 )
             })}
         </section>

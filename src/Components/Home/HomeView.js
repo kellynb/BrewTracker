@@ -1,18 +1,18 @@
 import Nav from '../Nav/Nav';
-import BrewButton from '../Home/BrewButton/BrewButton';
 import React from 'react';
 import Fermenter from './Fermenter/FermenterContainer'; 
 import '../../App.css';
+import BrewButton from './BrewButton/BrewButton';
 
 
 const HomeView = () => {
     return (
         <main>
             <Nav />
-            <section className='topTitle'>
-                <BrewButton/>
-            </section>
             <section id="brewFarm">
+                <div id="mainBrewButton">
+                    <BrewButton/>
+                </div>
                 <Fermenter/>
                 {/* <BriteTank/> */}
             </section>

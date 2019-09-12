@@ -17,31 +17,28 @@ const styles = {
     marginRight: 20,
   },
   fermenting: {
-    backgroundColor: '#5d9732',
+    backgroundColor: '#66bb6a',
     boxShadow: 'none'
   },
   conditioning: {
-    backgroundColor: '#3490db',
+    backgroundColor: '#29b6f6',
     boxShadow: 'none'
   },
   empty: {
-    backgroundColor: "#5c4925",
+    backgroundColor: "#8d6e63",
     boxShadow: 'none'
   },
   dirty: {
-    backgroundColor: "#5c4925",
+    backgroundColor: "#8d6e63",
     boxShadow: 'none'
   },
   clean: {
-    backgroundColor: "#707070",
+    backgroundColor: "#ffee58",
     boxShadow: 'none'
   },
   sanitize: {
-    backgroundColor: "white",
+    backgroundColor: "#78909c",
     boxShadow: 'none'
-  },
-  sanitizeText: {
-   color: 'black'
   }
 };
 
@@ -62,7 +59,7 @@ const FormBar = props => {
         <Toolbar>
           <Typography
             variant="h6"
-            color={getStatus === "sanitize" ? classes.sanitizeText : "inherit"}
+            color= "black"
             className={classes.grow}
           >
             {props.tank}: {displayStatus(getStatus)}

@@ -1,7 +1,7 @@
 
 .App {
   width: 100%;
-  background-color: #d1d0bb;
+  background-color: #EEEEEE;
   min-height: 100vh;
   height: auto;
 }
@@ -12,26 +12,15 @@
   pointer-events: none;
 }
 
-.topTitle {
-  height: 11vh;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  background-color: #c5a901;
-}
-
 .allButtons {
     box-sizing: border-box;
-    color: #5c4925;
+    color: black;
     letter-spacing: normal;
     text-transform: none;
     border-radius: 6px;
     background: #fff;
     font-size: 16px;
-    border-color: #5c4925;
+    border-color: #455a64;
     border-width: 2px;
     border-style: solid;
     padding: .6em 1em;
@@ -39,8 +28,7 @@
 
 .allButtons:hover,
 .allButtons:focus {
-  color: white;
-  background-color: #5c4925;
+  background-color: #EEEEEE;
   outline: none;
 }
 
@@ -114,6 +102,12 @@ h2 {
   background-color: white;
 }
 
+#brewCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap
+}
 .cFermenter {
   margin-top: 16px;
   text-align: center;
@@ -159,6 +153,7 @@ h2 {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  
 }
 
 #fermentationFormBox {
@@ -205,6 +200,20 @@ h2 {
   align-items: center;
 }
 
+.gridStats {
+  display: grid;
+  grid-template-columns: 50% auto;
+}
+
+.stats {
+  box-sizing: border-box;
+  flex-grow: 2;
+}
+
+#mainBrewButton {
+  display: none;
+}
+
 
 @keyframes App-logo-spin {
   from {
@@ -220,7 +229,7 @@ h2 {
     flex-direction: column;
     align-items: center; 
     padding-right: 0;
-    width:auto
+    width:auto;
   }
 
   #fermentationForm {
@@ -232,6 +241,17 @@ h2 {
   #fermentationVisuals {
     height: auto;
     width: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  #navBrew {
+    display: none;
+  }
+  #mainBrewButton {
+    display: inherit;
+    margin-top: 16px;
+    text-align: center;
   }
 }
 

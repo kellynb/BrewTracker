@@ -17,7 +17,10 @@ import {updateFermentation, clearFermenter} from './ProductionFetch';
 import '../../App.css';
 
 class ProductionTank extends Component  {
-    state = this.props.currentState;
+    constructor(props) {
+      super(props);
+      this.state = {...this.props.currentState}
+    }
 
     userInput = (e) => {
         const selectName = e.target.name;
@@ -135,7 +138,7 @@ class ProductionTank extends Component  {
         if (!this.state.tank) {
           this.props.setTank(getTankParams.tank)
             .then(() => {
-              this.setState(this.props.currentState);
+              this.setState({...this.props.currentState});
             })
             .catch(err => {
               console.error("Request failed", err);
@@ -150,7 +153,7 @@ class ProductionTank extends Component  {
               <Nav />
               {this.state.tank ? (
                 <div id="fermentationBox">
-                  <FermenterIcon componentStatus={this.state.status} />
+                  <FermenterIcon componentStatus={this.state.status} id="fermentationVisuals" view= "50 0 432 288"/>
                   <section id="fermentationFormBox">
                     <div id="fermentationForm">
                       <AppBar

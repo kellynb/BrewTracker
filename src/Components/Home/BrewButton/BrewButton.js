@@ -6,7 +6,7 @@ const BrewButton = () => {
 
     return (
         
-        <Link to='/Brew' className='links'>
+        <Link to='/Brew' >
             <button className="allButtons">
                 Brew Batch
             </button>

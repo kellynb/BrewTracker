@@ -49,6 +49,7 @@ const styles = theme => ({
     if (inputDate && select) {
       return inputDate
     } else if (inputDate && !select)  {
+      // should i setstate and change this since im technically changing state
       const toDayMonthYear = moment.utc(inputDate).format('YYYY-MM-DD');
       return toDayMonthYear;
     } else {

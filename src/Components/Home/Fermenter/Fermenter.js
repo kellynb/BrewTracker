@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import FermenterView from './FermenterView';
 
+import '../../../App.css';
+
 class Fermenter extends Component {
 
     componentDidMount () {
@@ -10,7 +12,7 @@ class Fermenter extends Component {
 
     render () {
         return (
-            <FermenterView tanks={this.props.tanks} setTank={this.props.setTank}/>
+            <FermenterView tanks={this.props.tanks} setTank={this.props.setTank} />
         )
     }   
     

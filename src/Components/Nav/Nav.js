@@ -4,10 +4,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import logo from '../../Images/beerLogo.png';
 import MenuList from './MenuList/MenuList';
 import MenuIcon from '@material-ui/icons/Menu';
 import '../../App.css';
+import BrewButton from '../Home/BrewButton/BrewButton';
 
 const styles = {
   root: {
@@ -15,24 +15,29 @@ const styles = {
   },
 
   appbar: {
-    backgroundColor: '#5c4925',    
+    backgroundColor: '#455a64',    
   },
 
-  grow: {
-    fontFamily: 'Fira Sans Condensed',
-    color: '#e6e5d4',
-    fontSize: '25px',
+  title: {
+    color: '#FFFFFF',
+    marginLeft: 20,
     flexGrow: 1
   },
 
   toolbar: {
     display: 'flex',
-    flexDirection: 'row',
-    textAlign: 'center',  
+    direction: 'row',
+    textAlign: 'center'
   },
 
   menuButton: {
-    padding: 0
+    padding: 0,
+    color: '#FFFFFF'
+  },
+
+  brew: {
+    flexGrow: 1,
+    textAlign: 'center'
   }
 
 };
@@ -59,17 +64,19 @@ class Nav extends Component {
       <div className={classes.root}>
         <AppBar position="static" className={classes.appbar}>
           <Toolbar className={classes.toolbar}>
-            <img src={logo} alt='Thirsy Planet Logo' id='logo' />
-            <Typography variant="h1" color="inherit" className={classes.grow}>
-              Very Good Brewing Company
-            </Typography>
-            <IconButton className={classes.menuButton} color="inherit"
+            <IconButton className={classes.menuButton} 
               aria-owns={anchorEl ? 'simple-menu' : undefined}
               aria-haspopup="true"
               onClick={this.handleClick}>
               <MenuIcon/>
             </IconButton>
             <MenuList anchorEl ={this.state.anchorEl} handleClose={this.handleClose}/>
+            <Typography variant="h6" className={classes.title}>
+              Very Good Brewing Company
+            </Typography>
+            <div className={classes.brew} id="navBrew">
+              <BrewButton/>
+            </div>
           </Toolbar>
         </AppBar>
       </div>
