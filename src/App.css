@@ -14,13 +14,13 @@
 
 .allButtons {
     box-sizing: border-box;
-    color: black;
+    color: #424242;
     letter-spacing: normal;
     text-transform: none;
     border-radius: 6px;
     background: #fff;
     font-size: 16px;
-    border-color: #455a64;
+    border-color: #424242;
     border-width: 2px;
     border-style: solid;
     padding: .6em 1em;
@@ -42,12 +42,12 @@
 }
 
 #saveButton {
-  background-color: #d1d0bb;
+  background-color: white;
 }
 
 #saveButton:hover,
 #saveButton:focus {
-  background-color: #5c4925;
+  background-color: #EEEEEE;
   outline: none;
 }
 
@@ -150,34 +150,57 @@ h2 {
 }
 
 #fermentationBox {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto auto;  
+  justify-items: center;
+  align-items: center;
+  min-height: 98vh;
+  background-color: white;
+}
+
+#fermentationSummary{
+  grid-row: span 1;
+  grid-column: span 2;
+  width: 100%;
+  margin-top: 1.5px;
+  background-color: white;
+}
+
+.fermentationTitle {
+  text-align: center;
 }
 
 #fermentationFormBox {
   height: auto;
   display: flex;
-  align-items: center;
 }
 
 #fermentationForm {
-  margin-right: 50px;
-  margin-top: 60px;
-  min-width: 300px;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  margin-top: 32px;
+  min-width: 425px;
+  box-shadow: 0 14px 14px rgba(0, 0, 0, 0.137), 0 10px 5px rgba(0,0,0,0.22);
   margin-bottom: 20px;
+  background-color: white;
+}
+
+.statusBar {
+  box-shadow: 0 7px 2px rgba(0, 0, 0, 0.041), 0 5px 2px rgba(0, 0, 0, 0.068);
+  height: 48px;
+  width: 100%;
 }
 
 #fermentationVisuals {
-  width: auto;
-  height: 600px;
-  padding-top: 64px;
+  margin-top: 16px;
+  width: 740px;
+}
+
+.tankText {
+  background-color: black;
 }
 
 .fermentationData {
-  border-bottom: 0.5px solid #5c4925;
+  border-bottom: 0.5px solid #424242;
   padding-bottom: 10px;
   min-height: 100px;
   padding-left: 10px;
@@ -214,6 +237,9 @@ h2 {
   display: none;
 }
 
+p {
+  margin-bottom: 0;
+}
 
 @keyframes App-logo-spin {
   from {
@@ -224,23 +250,29 @@ h2 {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 950px) {
   #fermentationBox {
-    flex-direction: column;
-    align-items: center; 
-    padding-right: 0;
-    width:auto;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto; 
+  }
+
+  #fermentationSummary{
+    grid-column: span 1;
+  }
+
+  #fermentationFormBox {
+    grid-row: 2 / 3;
   }
 
   #fermentationForm {
-    min-width: 275px;
     margin-left: 32px;
     margin-right: 32px;
   }
 
   #fermentationVisuals {
-    height: auto;
-    width: auto;
+    margin-top: 16px;
+    margin-left: 45px;
+    width: 640px;
   }
 }
 
@@ -256,10 +288,24 @@ h2 {
 }
 
 @media (max-width: 550px) {
-  
+
+  #fermentationForm {
+    min-width: 350px;
+    width: 350px;
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+
+  .organizeFermentation {
+    justify-content: center;
+  }
+
+  #selectCondition {
+    text-align: center;
+  }
 
   #fermentationVisuals {
-    height: auto;
     width: auto;
+    margin-left: 30px;
   }
 }

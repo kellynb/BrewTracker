@@ -15,13 +15,14 @@ const styles = {
   },
 
   appbar: {
-    backgroundColor: '#455a64',    
+    backgroundColor: '#78909C',    
   },
 
   title: {
-    color: '#FFFFFF',
+    color: 'white',
     marginLeft: 20,
-    flexGrow: 1
+    flexGrow: 1,
+    fontWeight: 'bold'
   },
 
   toolbar: {
@@ -32,7 +33,7 @@ const styles = {
 
   menuButton: {
     padding: 0,
-    color: '#FFFFFF'
+    color: 'white'
   },
 
   brew: {

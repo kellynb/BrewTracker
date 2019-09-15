@@ -40,14 +40,16 @@ const TemperatureList = props => {
         />
         <Time arrInput={props.temp} value="tankTemp" />
       </div>
-        <Toggle
-          checked={props.conditioning}
-          onChange={props.toggle}
-          value={props.condtioning}
-          label="Condition"
-          name="conditioning"
-          id="selectCondition"
-        />
+        <div id="selectCondition">
+            <Toggle
+              checked={props.conditioning}
+              onChange={props.toggle}
+              value={props.condtioning}
+              label="Condition"
+              name="conditioning"
+              id="selectCondition"
+            />
+        </div>
     </div>
   );
 };

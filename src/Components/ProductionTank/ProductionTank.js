@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-import AppBar from './AppComponents/AppBar/AppBar';
+import ConditionBar from './AppComponents/AppBar/AppBar';
 import Button from './AppComponents/SubComponents/Button';
 import Brix from './AppComponents/Brix/Brix';
 import CIP from './AppComponents/CIP/CIP';     
@@ -153,10 +153,16 @@ class ProductionTank extends Component  {
               <Nav />
               {this.state.tank ? (
                 <div id="fermentationBox">
-                  <FermenterIcon componentStatus={this.state.status} id="fermentationVisuals" view= "50 0 432 288"/>
+                  <FermenterIcon 
+                    componentStatus={this.state.status}
+                    batch = {this.state.number}
+                    tank = {this.state.tank} 
+                    id="fermentationVisuals" 
+                    view= "55 0 350 288"
+                  />
                   <section id="fermentationFormBox">
                     <div id="fermentationForm">
-                      <AppBar
+                      <ConditionBar
                         batchStatus={this.state.status}
                         tank={this.state.tank}
                       />

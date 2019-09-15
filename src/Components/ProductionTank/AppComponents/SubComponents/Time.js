@@ -9,19 +9,18 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        backgroundColor: '#d1d0bb',
-        maxWidth: '175px',
-        minWidth: '100px'
+        backgroundColor: '#EEEEEE',
+        width: '175px'
       },
     
     input: {
-        color: '#5c4925',
+        color: '#424242',
         width: 'auto'
     },
 
     cssLabel: {
         '&$cssFocused': {
-          color: '#5c4925',
+          color: '#424242',
           fontWeight: 'bold',
           fontSize: 15
         },
@@ -29,12 +28,12 @@ const styles = theme => ({
     cssFocused: {},
     cssUnderline: {
         '&:after': {
-          borderBottomColor: '#5c4925',
+          borderBottomColor: '#424242',
         },
       },
     cssOutlinedInput: {
         '&$cssFocused $notchedOutline': {
-          borderColor: '#5c4925',
+          borderColor: '#424242',
         },
       },
 

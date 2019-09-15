@@ -33,7 +33,7 @@ const FermenterView = (props) => {
                         component: <Dirty fermenter={fermenter} />
                     },
                     clean: {
-                        backgroundColor: "#ffee58",
+                        backgroundColor: "#0093c4",
                         component: <Clean fermenter= {fermenter} />
                     },
                     sanitize: {
