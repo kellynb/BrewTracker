@@ -4,7 +4,7 @@ import BrewMetricsStyle from './BrewMetricsStyle';
 
 const BrewMetrics = (props) => {
     return (
-        <section className="userInputs">
+        <section>
             <h2>Brew Data</h2>
             <form className="batchValue">
                 <BrewMetricsStyle {...props} />

@@ -1,9 +1,23 @@
 
-.App {
+#root {
   width: 100%;
   background-color: #EEEEEE;
   min-height: 100vh;
   height: auto;
+}
+
+main {
+  min-height: 100vh;
+  padding-bottom: 32px;
+}
+
+#brewMain {
+  background-color: #fff;
+}
+
+#spinner {
+  margin-top: 20%;
+  text-align: center;
 }
 
 #logo {
@@ -52,54 +66,43 @@
 }
 
 #transferButton {
-  background-color: #d1d0bb;
+  background-color: white;
 }
 
 #transferButton:hover,
 #transferButton:focus {
-  background-color: #5c4925;
+  background-color: #EEEEEE;
   outline: none;
 }
 
-#brewMain {
-  height: 100%;
-}
-
 #startBatch {
-  padding-top: 32px;
-  margin-bottom: 32px;
-  text-align: center;
+  margin-top: 32px;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: white;
 }
 
 .batchValue {
   display: flex;
+  padding-left: 8px;
+  padding-right: 8px;
   flex-wrap: wrap;
-  justify-content: center;
 }
 
 #batchEnter {
-  margin-top: 8px;
-  text-align: center
+  margin-top: 32px;
+  margin-left: 16px;
+  padding-bottom: 32px;
 }
 
 h2 {
-  margin: 0;
-  padding-top: 16px;
-  text-align: center;
-  font-family: 'Rakkas', cursive;
-  font-weight: normal;
-  font-size: 30px;
-  color:  black;
+  margin-left: 16px;
+  padding-top: 32px;
 }
 
-.userInputs {
-  margin-left: 10%;
-  margin-right: 10%;
-  margin-bottom: 32px;
-  padding-bottom: 32px;
-  border: 2px solid #282c34;
-  border-radius: 6px;
-  background-color: white;
+#brewData {
+  border-top: 1px solid #424242; 
+  padding-bottom: 32px
 }
 
 #brewCard {
@@ -107,6 +110,11 @@ h2 {
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap
+}
+
+#brewTransfer {
+  margin-top: 32px;
+  margin-left: 16px;
 }
 .cFermenter {
   margin-top: 16px;
@@ -187,7 +195,7 @@ h2 {
 .statusBar {
   box-shadow: 0 7px 2px rgba(0, 0, 0, 0.041), 0 5px 2px rgba(0, 0, 0, 0.068);
   height: 48px;
-  width: 100%;
+  width: 100.5%;
 }
 
 #fermentationVisuals {
@@ -284,6 +292,17 @@ p {
     display: inherit;
     margin-top: 16px;
     text-align: center;
+  }
+  .batchValue {
+    justify-content: center;
+  }
+  #batchEnter {
+    text-align: center;
+    margin-left: 0;
+  }
+  #brewTransfer {
+    text-align: center;
+    margin-left: 0;
   }
 }
 

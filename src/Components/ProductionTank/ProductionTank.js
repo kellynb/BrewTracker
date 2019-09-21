@@ -148,7 +148,7 @@ class ProductionTank extends Component  {
         
     render () {
         return (
-          <main>
+          <main id="brewMain">
             <div>
               <Nav />
               {this.state.tank ? (

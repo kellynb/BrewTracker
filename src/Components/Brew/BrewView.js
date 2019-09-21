@@ -8,14 +8,16 @@ import Transfer from './Transfer/Transfer';
 const BrewView = (props) => {
 
     return (
-        <main id="brewMain">
+        <main>
             <Nav />
             <section id="startBatch">
                 <StartBatch {...props} />
                 {props.brewBatch.batch.enter ? 
-                    <section>
+                    <section id="brewData">
                         <BrewMetrics {...props}/>
-                        <Transfer {...props} /> 
+                        <div id="brewTransfer">
+                            <Transfer {...props} /> 
+                        </div>
                     </section>
                     : 
                     null

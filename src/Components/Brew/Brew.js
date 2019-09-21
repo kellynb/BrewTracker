@@ -300,7 +300,6 @@ class BrewContainer extends Component {
 
     render () {
       return(
-        <div>
             <BrewView 
               brewBatch={this.state} 
               handleBrewNumber={this.handleBrewNumber} 
@@ -309,7 +308,6 @@ class BrewContainer extends Component {
               handleTransfer={this.handleTransfer}
               handleDelete={this.handleDelete}
             />
-        </div>
         )
     }  
 }

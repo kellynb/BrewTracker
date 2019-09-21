@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import FermenterView from './FermenterView';
 
-import '../../../App.css';
+import FermenterView from './FermenterView';
 
 class Fermenter extends Component {
 
     componentDidMount () {
       this.props.getTanks()
     }
-    // use sort to change into one line
+    
 
     render () {
         return (

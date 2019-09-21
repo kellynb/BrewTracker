@@ -14,17 +14,17 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         width: 200,
-        backgroundColor: '#d1d0bb',
+        backgroundColor: '#EEEEEE',
       },
     
     input: {
-        color: '#5c4925',
+        color: '#424242',
         fontSize: 15
     },
 
       cssLabel: {
         '&$cssFocused': {
-          color: '#5c4925',
+          color: '#424242',
           fontWeight: 'bold',
           fontSize: 15
         },
@@ -33,12 +33,12 @@ const styles = theme => ({
       },
       cssUnderline: {
         '&:after': {
-          borderBottomColor: '#5c4925',
+          borderBottomColor: '#424242',
         },
       },
       cssOutlinedInput: {
         '&$cssFocused $notchedOutline': {
-          borderColor: '#5c4925',
+          borderColor: '#424242',
         },
       },
 
