@@ -182,6 +182,8 @@ h2 {
 #fermentationFormBox {
   height: auto;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #fermentationForm {
@@ -279,7 +281,7 @@ p {
 
   #fermentationVisuals {
     margin-top: 16px;
-    margin-left: 45px;
+    padding-left: 65px;
     width: 640px;
   }
 }
@@ -309,10 +311,7 @@ p {
 @media (max-width: 550px) {
 
   #fermentationForm {
-    min-width: 350px;
-    width: 350px;
-    margin-left: 32px;
-    margin-right: 32px;
+    min-width: 275px;
   }
 
   .organizeFermentation {
@@ -325,6 +324,6 @@ p {
 
   #fermentationVisuals {
     width: auto;
-    margin-left: 30px;
+    padding-left: 35px;
   }
 }

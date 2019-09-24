@@ -17,10 +17,10 @@ import {updateFermentation, clearFermenter} from './ProductionFetch';
 import '../../App.css';
 
 class ProductionTank extends Component  {
-    constructor(props) {
-      super(props);
-      this.state = {...this.props.currentState}
-    }
+  constructor(props){
+    super(props)
+    this.state = this.props.state
+  }
 
     userInput = (e) => {
         const selectName = e.target.name;
@@ -31,7 +31,7 @@ class ProductionTank extends Component  {
 
     switchToggle = (e) => {
         const selectName = e.target.name
-
+    
         if (selectName === 'spund') {
           this.setState({
             [selectName] : !this.state[selectName]
@@ -48,7 +48,7 @@ class ProductionTank extends Component  {
     // For this to work, need previous status stored in the database
     changeStatus = (currentStatus) => {
       const previousStatus = this.state.status;
-
+      
       if (this.state[currentStatus]) {
         this.setState({
           prevStatus: previousStatus,
@@ -99,7 +99,7 @@ class ProductionTank extends Component  {
     }
 
     sendUpdate = () => {
-        
+        // might need to refactor. only record items from state that are different from current state
         const tankObj= {};
         const loopState = Object.entries(this.state);
         for (const [key, value] of loopState) {
@@ -108,18 +108,16 @@ class ProductionTank extends Component  {
                     [key]: value,
                     date: new Date()
                 }
-            } else if
-              (value && (
-               key !== 'fBrix' 
+            } else if (value !== this.props.state[key] && (
+                  key !== 'fBrix' 
                && key !== 'temp' 
                && key !== 'tank'
                && key !== 'number'
                && key !== 'brix' 
-              )) {
+            )) {
                 tankObj[key] = value;
             }
         }
-        
         // fetch to update fermentation tank then redirect to homepage
         updateFermentation(tankObj,this.state.tank,this.state.number)
             .then(() => {
@@ -138,7 +136,7 @@ class ProductionTank extends Component  {
         if (!this.state.tank) {
           this.props.setTank(getTankParams.tank)
             .then(() => {
-              this.setState({...this.props.currentState});
+              this.setState(this.props.state);
             })
             .catch(err => {
               console.error("Request failed", err);

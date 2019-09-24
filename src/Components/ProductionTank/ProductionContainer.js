@@ -23,8 +23,10 @@ const mapStateToProps = (state) => {
       tank: currentTank.tank,
       ppm: currentTank.ppm,
       conditioning: currentTank.conditioning
-   }
-    return {currentState}
+   };
+    return {
+      state: currentState
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
