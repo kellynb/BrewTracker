@@ -44,6 +44,16 @@ export function fillFermenters(id, tankObj, batch) {
     })
 }
 
+export function clearFermenters(tankObj, batch) {
+  return fetch(`/fermenters/${tankObj.tank}/transfer/${batch}`, {
+    body: JSON.stringify(tankObj),
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'PUT'
+    })
+}
+
 
 export function getBatch() {
   return fetch("/brews", {

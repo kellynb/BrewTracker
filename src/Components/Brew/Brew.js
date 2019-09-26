@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BrewView from './BrewView';
-import {createNewBatch, addNewBrew, getBatch, updateBatch, fillFermenters, getLastSubmit, deleteBrew, deleteBatch} from './BrewFetch';
+import {createNewBatch, addNewBrew, getBatch, updateBatch, fillFermenters, getLastSubmit, deleteBrew, deleteBatch, clearFermenters} from './BrewFetch';
 import {getFermenters} from '../Home/Fermenter/FermenterFetch';
 
 class BrewContainer extends Component {
@@ -163,13 +163,22 @@ class BrewContainer extends Component {
             tankTemp: this.state.batch.tankTemp,
             status: this.state.status
         }
+          
         
         updateBatch(batchObj)
+          .then ( () => {
+            if(batch.id === 'A') {
+              const tankNumber = {
+                tank: tank
+              }
+              clearFermenters(tankNumber, id)
+            }
+          })
           .then(() => {
             fillFermenters(id, tankObj, batch.id)
-              .then(() => {
-                this.renderRedirect();
-              });
+          })
+          .then(() => {
+            this.renderRedirect();
           })
           .catch(err => {
             console.error('Request failed', err)
